@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background: dark parchment-newspaper -->
+  <rect width="32" height="32" rx="4" fill="#1a1208"/>
+
+  <!-- Top rule -->
+  <rect x="3" y="4" width="26" height="1.5" fill="#b0a080"/>
+
+  <!-- "DC" monogram in Playfair-style serifs, centered -->
+  <text
+    x="16" y="22"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="16"
+    font-weight="bold"
+    fill="#f0e8d0"
+    letter-spacing="1"
+  >DC</text>
+
+  <!-- Bottom rule -->
+  <rect x="3" y="26.5" width="26" height="1.5" fill="#b0a080"/>
+</svg>

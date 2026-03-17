@@ -1,0 +1,2 @@
+# Generated year JSON files go in content/years/
+# Run: npm run generate
