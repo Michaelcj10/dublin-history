@@ -13,9 +13,9 @@ const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const CONTENT_DIR = path.join(process.cwd(), "content", "dublin");
 
 // ── Year range ────────────────────────────────────────────────────────────────
-// 1916–1926 = 11 years.
+// 1916–2000 = 85 years.
 const FIRST_YEAR = 1916;
-const LAST_YEAR  = 1926;
+const LAST_YEAR = 2000;
 const ALL_YEARS = Array.from(
   { length: LAST_YEAR - FIRST_YEAR + 1 },
   (_, i) => FIRST_YEAR + i,
@@ -88,12 +88,15 @@ async function generateBatch(
     }
 
     const sanitized = sanitizeJson(raw);
-    const parsed = JSON.parse(sanitized) as DublinBatchResponse | DublinYearData;
+    const parsed = JSON.parse(sanitized) as
+      | DublinBatchResponse
+      | DublinYearData;
 
     // Support both batch format {years:[...]} and single-year object directly
-    const items: DublinYearData[] = "years" in parsed && Array.isArray(parsed.years)
-      ? parsed.years
-      : [parsed as DublinYearData];
+    const items: DublinYearData[] =
+      "years" in parsed && Array.isArray(parsed.years)
+        ? parsed.years
+        : [parsed as DublinYearData];
 
     return items.map((y) => ({
       ...y,

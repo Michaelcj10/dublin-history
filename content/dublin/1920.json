@@ -2,113 +2,148 @@
   "place": "Dublin",
   "year": 1920,
   "tier": "chronicle",
-  "timeline_summary": "The year 1920 marked a pivotal period in Dublin's history as the Irish War of Independence reached its most intense phase. The political climate was fraught with tension following significant events like Bloody Sunday on November 21st, when Michael Collins's Squad executed a series of assassinations against British intelligence agents, and British forces retaliated by killing 14 civilians at Croke Park. Economically, the city grappled with the instability caused by ongoing conflict, while the mood was a mix of fear, defiance, and hope for independence, signified by the eruption of violence and sporadic martial law declarations throughout Ireland.",
-  "visual_scene": "Standing on O'Connell Street on a crisp morning in 1920, the air is laden with the smell of coal smoke from the passing trams clanging along their tracks. Men in flat caps and overcoats converse in hushed tones regarding last night's raids, while women hustle by with heavy baskets, their shawls tightened against the chill. Posters call for vigilance against informants, and placards warn of curfews. The atmosphere buzzes with the palpable tension of a city on edge, juxtaposed against the mundane rhythms of everyday life—shopkeepers setting out their wares under the watchful eyes of patrolling British soldiers.",
+  "taoiseach": "The political landscape in 1920 was dominated by British authorities, with Sir Hamar Greenwood serving as Chief Secretary for Ireland. Greenwood was known for his staunch enforcement of British rule and the controversial employment of the Black and Tans to quell the rising unrest.",
+  "timeline_summary": "1920 in Dublin was marked by escalating violence and upheaval as the Irish War of Independence intensified. Bloody Sunday on November 21st saw Michael Collins's Squad assassinate 14 British intelligence officers, inciting brutal reprisals from British forces. The economic strain was palpable as martial law created a climate of fear, with widespread raids and arrests impacting daily life. The mood was tense and defiant, with a city caught between a yearning for freedom and the harsh realities of military occupation. The flames of conflict were particularly vivid in the December burning of Cork, a devastating act that highlighted the destructive reach of the struggle.",
+  "visual_scene": "Standing on O'Connell Street on a brisk April afternoon in 1920, you would witness soldiers patrolling the thoroughfare, pouncing on any suspicious activity. The clatter of horse-drawn carriages and the rumbling of newly introduced motor vehicles mix with conversations tinged with worry and defiance. Men in flat caps and women in long, heavy coats hurry past walls plastered with posters declaring support for the Republic or British recruitment notices. The air is permeated with a sense of unease, underscored by the sharp smells of burning coal and tobacco smoke, reminders of the changes looming over the city. Dublin swarms with a nervous energy, balancing precariously between hope and repression.",
   "city_changes": [
-    "The reinforcements of British troops and intelligence officers drastically altered the security landscape of Dublin, with frequent checkpoints and patrols becoming a part of the urban fabric. This drew critique and further strained relations between civilian residents and occupying forces.",
-    "Martial law was intermittently enforced in parts of the city, particularly following major skirmishes or assassinations, disrupting everyday business operations and instilling a curfew that shifted nightlife entirely.",
-    "The introduction of the Black and Tans and the Auxiliaries added a new, feared element to British military presence, known for their aggressive tactics and reprisals in residential areas, causing many homes to fracture with sudden detentions.",
-    "Dublin Castle, the administrative headquarter of British rule in Ireland, became a fortified hub of activity and strategic planning. Increased security measures, including barriers and reinforced gates, were prominent features.",
-    "Housing shortages in the inner city were exacerbated by the social upheavals, as families displaced by rural strife moved into already crowded tenement districts, creating a severe strain on public health and sanitation.",
-    "Public transport services were frequently disrupted by attacks on infrastructure, including tram derailments and rail sabotage, leading to inconsistent service and forcing many commuters to walk long distances."
+    "The expansion of checkpoints and barricades across central Dublin limited movement, as British forces sought to control key routes like College Green and Dame Street. This militarisation disrupted commerce and everyday activities.",
+    "Martial law declared across much of Ireland reached Dublin, leading to the installation of curfews and frequent searches. The increased presence of Black and Tan forces brought fear and forced residents into clandestine meetings and safer communication methods.",
+    "The burning of Cork by British forces as a reprisal act led to heightened tensions in Dublin, with the city preparing for potential violence. Rumors of expanded attacks caused businesses along the docks to bolster security measures.",
+    "Housing shortages worsened as inner-city tenements were increasingly unable to meet rising demands. This exacerbated the existing tenement crisis, pushing more families into poverty-stricken conditions.",
+    "Political meetings and assemblies became more covert, often held in safe houses across Mountjoy Square and along South Circular Road, limiting public participation due to risks of raids.",
+    "Infrastructure saw disruptions due to strikes and economic instability. Public transport, especially trains running through major stations like Amiens Street (now Connolly Station), was frequently affected by worker stoppages demanding improved conditions."
   ],
   "major_events": [
-    "Bloody Sunday, November 21 — On this day, Michael Collins's operatives executed 14 British intelligence agents in their homes and hotels across Dublin, severely crippling the British intelligence network in Ireland. British forces retaliated by opening fire at a Gaelic football match in Croke Park, killing 14 civilians.",
-    "The Burning of Cork, December 11 — While not in Dublin, the impact of the burning of Cork was felt deeply. The devastation symbolized the increasing brutal nature of the conflict and spurred increased activity and support in Dublin for the republican cause.",
-    "Custom House Attack, May 25 — A major offensive led by the IRA, where they set fire to Dublin's Custom House, was an effort to disrupt British administration. While the attack was a symbolic success, it resulted in the capture of over 80 IRA members, a significant blow to their operations.",
-    "King's Inns Raid, January 29 — The IRA raided the educational institution holding British military documents, allowing them to procure valuable information despite being a risky and audacious move.",
-    "Death of Tomás Mac Curtain, March 20 — The Lord Mayor of Cork was murdered, galvanizing tension and further fostering unrest in Dublin, particularly among Sinn Féin supporters who saw the event as a blatant and brutal act of state oppression.",
-    "Assassination of Alan Bell, March 26 — A senior British official investigating republican funds, Bell was shot dead by the IRA in broad daylight while on the tram, underscoring the IRA’s ability to carry out targeted assassinations in the city.",
-    "The establishment of 'The Squad', January — Collins organized a specialized unit to infiltrate and eliminate British intelligence operations, known for its secretive and precise operations in the heart of Dublin.",
-    "Curfews and Raids Intensify, throughout 1920 — British forces implemented widespread curfews and conducted raids, searching Dublin homes without warning. These actions often led to violence and heightened the antagonism between British troops and Irish civilians."
+    "Bloody Sunday, November 21st — Michael Collins's Squad successfully targeted and assassinated 14 British intelligence officers in Dublin, significantly weakening British intelligence capabilities. In retaliation, the Black and Tans attacked Croke Park, killing 14 civilians.",
+    "The Kilmichael Ambush, November 28th — The IRA, led by Tom Barry, ambushed a convoy of Auxiliaries in County Cork, killing 17. This spurred increased military crackdowns and affected Dublin by tightening security measures and heightening fear.",
+    "The Burning of Cork, December 11th — British forces set Cork City ablaze as retribution for republican activities, prompting outrage among Dubliners and fuelling further support for the IRA. The incident was widely condemned and increased tensions.",
+    "The Drumcondra Raid, March 20th — An armed raiding party led by Dublin Castle disrupted a suspected IRA meeting, resulting in multiple arrests. The event heightened anxiety in areas like Drumcondra, a noted IRA hotspot.",
+    "Shootout at Vaughan's Hotel, December 14th — British forces surrounded Vaughan's Hotel, seeking IRA members believed to be inside. The subsequent gunfight led to several casualties and underscored the volatility facing public establishments.",
+    "Dublin Castle Attack, August 13th — An attempted attack on Dublin Castle was thwarted by British security forces, resulting in increased military presence and stricter control measures around this administrative hub.",
+    "Custom House Fire, May 25th — Despite occurring the following year, the plans for this attack were formulated amid 1920's chaos. The successful burning crippled British administration, inspiring intense pride across republican quarters in Dublin.",
+    "Sack of Balbriggan, September 20th — Though occurring outside Dublin, this Black and Tan reprisal after an RIC officer assassination sent shockwaves through Dublin's community, reinforcing fears of indiscriminate violence."
   ],
-  "population_estimate": "approx. 320,000 within the city boundary; c.420,000 including surrounding areas — population dynamics were influenced by the war, as births slightly outpaced deaths, but emigration continued due to political instability and economic hardship.",
+  "population_estimate": "The population of Dublin city in 1920 was approximately 300,000. The increased urban migration was driven by rural economic stagnation and the turbulent socio-political climate, prompting many to seek anonymity and opportunity within the city's bounds.",
   "transport_snapshot": [
-    "The Dublin tram network, operated by the Dublin United Tramways Company, faced frequent disruptions due to sabotage, with lines often targeted by the IRA to hinder British troop movements.",
-    "The Dublin and Kingstown Railway, providing service to and from the coast, remained an essential mode of transport despite facing occasional raids and checkpoints enforced by British soldiers.",
-    "Road transport saw an increase in the use of horse-drawn vehicles as fuel shortages impacted motor vehicle operations across the city.",
-    "With major bridges and roads in Dublin under military surveillance, urban mobility was frequently interrupted by temporary barricades and checkpoints set up by the military.",
-    "Bicycle usage surged as citizens sought alternatives to disrupted public transit, but cyclists often encountered random searches by patrols wary of IRA couriers."
+    "Dublin's tram network, operated by the Dublin United Tramways Company, remained the cornerstone of public transport, despite intermittent service disruptions from industrial actions.",
+    "The cross-city tram routes linking Abbey Street to College Green were essential for workers, though navigating security roadblocks became increasingly cumbersome.",
+    "Trains operated from Broadstone Station to the North and Midlands were pivotal in maintaining economic links, although delays from sabotage were frequent.",
+    "Horse-drawn carriages, supporting both private and public service needs, coexisted with the burgeoning presence of motor cars, yet strikes often stalled services.",
+    "Cycling, a popular choice for students and lower-income workers, surged given the cost efficiency and flexibility, particularly with increased policing causing slower commutes."
   ],
   "architecture_style": [
-    "Georgian architecture remained a defining feature of central Dublin, with Merrion Square exemplifying the elegant townhouses of the period, although many were now repurposed as offices for organizations involved in the independence movement.",
-    "The GPO on Sackville Street, still recovering from Easter Rising damage, stood as a symbol of resilience and national pride, undergoing reconstruction that slowed due to ongoing hostilities.",
-    "Sacred Heart Catholic Church on Drumcondra Road reflected the Gothic Revival style, its structure providing a solemn space for gatherings in a time of conflict.",
-    "Damaged structures from recent clashes, such as the remnants of Abbey Street buildings, marked the landscape with reminders of the costly struggle enveloping the city."
+    "Georgian — Classic Georgian architecture remained prominent, especially in places like Merrion Square, despite some buildings suffering damages in protests and conflicts.",
+    "Victorian — Victorian-style residences along the Northside, such as those on North Circular Road, formed substantial middle-class enclaves despite the unrest.",
+    "Edwardian — Primarily seen in newer public buildings, this style's elegance was on display at locations like the Parnell Square area.",
+    "Gothic Revival — Structures such as St. Patrick's Cathedral exemplified this style, standing resilient even amid wartime pressures."
   ],
   "major_industries": [
-    "Guinness Brewery at St. James’s Gate employed thousands and continued operations despite wartime difficulties in obtaining ingredients, remaining a cornerstone of Dublin’s economy and contributing significantly to export revenues.",
-    "The textile and garment industry faced shortages in materials due to transport disruptions and import restrictions, but employed a significant workforce, particularly women, in factories scattered around the Northside.",
-    "Printing and publishing were critical industries based around Fleet Street, producing newspapers that were crucial for disseminating news of the independence movement, despite occasional suppression and censorship.",
-    "The Docklands remained vital for trade, despite British naval control that strained exports and imports, creating economic bottlenecks affecting supply chains.",
-    "Lawrence of Arabia's famed Clerys Department Store on O'Connell Street served as a commercial hub, yet suffered from supply shortages due to conflict-related disruptions, impacting retail operations."
+    "Guinness Brewing — Employing thousands at St. James's Gate Brewery, Guinness remained a staple of both economic and cultural life, though impacted by disputes and demand fluctuations during the war.",
+    "Jacob's Biscuits — The factory on Bishop Street continued to produce for domestic and export markets, though supply chain issues arose from increased militarization.",
+    "Textiles — Concentrated around the Liberties, the textiles industry's contribution to the burgeoning economy faced challenges due to resource shortages exacerbated by conflict.",
+    "Dublin Port — A critical node for imports and exports, disruptions in maritime traffic occurred from both the war efforts and strikes by dock workers clamouring for improved wages.",
+    "Transport and Railways — The Great Southern Railways served as a crucial network; however, service irregularities caused by sabotage and worker strikes were commonplace."
   ],
   "key_locations": [
-    "Dublin Castle — The nerve center of British administration in Ireland, it was a focal point for intelligence operations and a frequent site for confrontations between republicans and British forces.",
-    "Vaughan's Hotel — Used as a meeting place by Michael Collins and his associates for planning strategy, it became infamous as a clandestine hub for IRA discussions.",
-    "Croke Park — A revered site for Gaelic sports, it was marred by tragedy on Bloody Sunday when British forces fired on civilians attending a football match.",
-    "The Four Courts — The center for Irish legal proceedings, which were frequently affected by the instability of the period, hosting numerous politicized trials.",
-    "Gresham Hotel — A venue for British officers and Dublin's elite, it was also targeted by the IRA for its symbolism of British opulence amidst widespread poverty.",
-    "Kilmainham Gaol — A historical jail that continued to house numerous political prisoners during the War of Independence, a grim reminder of the republicans' struggle.",
-    "Kirwan's Pubs — Known for their informal connections to republican activities, providing safe meeting spots for those engaged in the struggle.",
-    "Mountjoy Prison — Heavily guarded, it saw growing numbers of political prisoners throughout the year, becoming emblematic of state repression."
+    "Dublin Castle — The center of British administration, heavily guarded and often a target of IRA plans. It epitomized British authority and was a focal point of protest.",
+    "Vaughan's Hotel — Known as a meeting place for IRA members, frequented by Michael Collins, and a site of multiple confrontations. Its strategic significance was unparalleled.",
+    "The Gresham Hotel — Evolving into a hotspot for political discussions and espionage, blending high society social activities with covert meetings.",
+    "Mountjoy Prison — Instrumental in housing political prisoners, witness to hunger strikes and symbolic protests highlighting the era's tensions.",
+    "The Four Courts — Although primarily judicial, it harbored clandestine republican activities, its steps often a site for public demonstrations.",
+    "Collins's Safe Houses — Scattered across the city, including at 76 Harcourt Street, these locations shielded key figures like Michael Collins during critical periods.",
+    "Grafton Street — Commercial heart throbbing with activity, serving as a public pulse on Dublin’s mood amidst the socio-economic unrest.",
+    "Phoenix Park — A refuge from urban conflict and tense occupations, it remained a significant recreational space despite underlying political currents."
   ],
   "timeline_tags": [
     "bloody_sunday",
+    "black_and_tans",
     "martial_law",
-    "war_of_independence",
-    "curfews",
-    "assassinations",
-    "custom_house_fires",
-    "croke_park_tragedy",
-    "IRA_operations",
-    "british_reprisals",
-    "press_censorship"
+    "economic_hardship",
+    "tenement_crisis",
+    "croke_park",
+    "political_assassinations",
+    "irish_republican_army",
+    "british_retaliations"
   ],
   "elections": [
     {
-      "type": "By-election",
-      "result_summary": "In March 1920, the South Dublin by-election saw Sinn Féin candidate Patrick O'Connor clinching victory, showcasing the growing support for nationalist policies within Dublin and affirming the city as a political battleground.",
+      "type": "Local Elections",
+      "result_summary": "The 1920 local elections saw significant success for Sinn Féin, who took control of many councils in Ireland, including Dublin Corporation. This shift symbolized popular support for independence and marked a pivotal moment in Dublin’s political landscape.",
       "winning_party": "Sinn Féin"
     }
   ],
   "gaa_finals": [
     {
       "championship": "All-Ireland Senior Football Championship Final",
-      "winner": "Tipperary",
+      "winner": "Dublin",
+      "runner_up": "Tipperary",
+      "score": "1-5 to 1-2"
+    },
+    {
+      "championship": "All-Ireland Senior Hurling Championship Final",
+      "winner": "Cork",
       "runner_up": "Dublin",
-      "score": "1-6 to 1-2"
+      "score": "n/a"
     }
   ],
-  "price_of_a_pint": "A pint of Guinness cost approximately 4d (four pence) in a Dublin city pub in 1920 — at a time when a general labourer earned around 4 shillings per day, a pint represented one-twelfth of a day's wages. The presence of war caused mild price increases, but the drink remained a staple for its locals at establishments like Kirwan's Pub.",
-  "cost_of_living": "Weekly rent for a Dublin tenement room averaged around 15 shillings, a significant burden for families. A loaf of bread was priced at 9d, reflecting inflation driven by interrupted supply lines. A labourer’s weekly wage often hovered around 30 shillings, hardly sufficient for larger families amid rising costs. Luxury items like British-made shoes exceeded 40 shillings a pair, making them scarcely affordable for the average worker.",
+  "sport": [
+    {
+      "category": "Horse Racing",
+      "detail": "The Irish Derby at the Curragh was a highlight, with the horse 'Spion Kop' claiming victory. Trained by Peter Thrale, ridden by J. Childs, this triumph was a beacon of national pride amidst socio-political turmoil."
+    },
+    {
+      "category": "Boxing",
+      "detail": "Middleweight fighter Mike McTigue began rising to prominence in 1920, showcasing his potential that would later see him crowned as a champion, symbolizing Irish resilience."
+    },
+    {
+      "category": "Soccer",
+      "detail": "The 1920-21 Leinster Senior Cup was closely contested, with Bohemians securing a triumphant win over Shelbourne, reinforcing their dominance in Dublin soccer."
+    }
+  ],
+  "price_of_a_pint": "A pint of Guinness in a Dublin pub in 1920 cost about 1s 2d. This price, considerable relative to an average labourer’s daily wage, reflected wartime inflation pressures, yet establishments like Kirwan's remained ever popular among locals seeking reprieve.",
+  "price_ladder": {
+    "pint_of_guinness": "1s 2d",
+    "loaf_of_bread": "8d",
+    "average_house_dublin": "n/a",
+    "weekly_wage_labourer": "21s",
+    "twenty_cigarettes": "6d",
+    "pint_of_milk": "3d",
+    "note": "Most notably, bread prices continually increased, adding to the strain on lower-income families already grappling with economic instability."
+  },
+  "cost_of_living": "Weekly rent for a tenement room in Dublin averaged around 10s. A loaf of bread cost 8d, while a labourer's weekly wage was approximately 21s. Luxuries like gramophones were priced around £5, highlighting disparities as the economic strain on working families intensified.",
   "notable_dubliners": [
-    "Michael Collins — In 1920, as Director of Intelligence for the IRA, he masterminded operations from Dublin's safe houses, his actions crucial to undermining British power.",
-    "Éamon de Valera — After returning from a fundraising tour in the United States, de Valera found himself at the political helm of Sinn Féin, shaping Dublin’s stance amidst campaign strategizing.",
-    "Richard Mulcahy — As IRA Chief of Staff stationed in Dublin, Mulcahy played a key coordinating role in resistance operations and oversaw organizational strategy.",
-    "Maud Gonne — As a nationalist and activist, Gonne was a prominent figure in Dublin, contributing to the cultural and political atmosphere with fiery speeches and campaigns.",
-    "Constance Markievicz — A Sinn Féin politician active in Dublin, she continued her involvement with social welfare and IRA support activities, under constant surveillance from authorities.",
-    "James Joyce — Though residing abroad, Joyce’s Dublin-based literary legacy gained traction, with 'Ulysses,' capturing global attention upon its serialization, sowing the seeds for its later publication."
+    "Michael Collins — Leading the IRA's military campaign against British forces, Collins orchestrated several critical operations from safe houses across Dublin throughout the year.",
+    "Éamon de Valera — Captivated audiences while touring the United States seeking support for the Irish cause; back in Dublin, his influence persisted through strategic oversight of Sinn Féin.",
+    "Countess Markievicz — A prominent revolutionary, she continued to advocate for workers' rights and women's suffrage, even as political tensions mounted.",
+    "Hanna Sheehy-Skeffington — As a fierce suffragist and nationalist, Skeffington’s writings and activism kept the cause of gender equality in the political discourse.",
+    "Arthur Griffith — As a leading Sinn Féin figure, Griffith played a critical role in strategizing political approaches and engaging with international support for the Irish cause.",
+    "Patrick Pearse's brother, William Pearse — Worked to preserve his brother’s legacy as a martyr of the revolution, amid increasing scrutiny and surveillance in the city."
   ],
+  "notable_death": "Terence MacSwiney, October 25th, 1920 — The Lord Mayor of Cork who died on hunger strike at Brixton Prison. His death galvanized international sympathy for the Irish independence cause and became a powerful symbol of resistance in Dublin and beyond.",
+  "notable_emigrant": "James Joyce left Ireland for good in 1920, settling in Paris where he would finalize 'Ulysses'. His departure marked Dublin's loss of one of its most sharply eloquent chroniclers, even as the city continued to inspire his greatest works.",
   "what_was_on": [
-    "Play: 'The Shadow of a Gunman' at the Abbey Theatre — This premiere by Sean O'Casey captured the grim realities and gallows humor of Dublin's tenement life amid the ongoing conflict.",
-    "Film: Silent newsreels at the Volta Cinema — Patrons gathered to catch snippets of the war and international events, spurred by curiosity and the need for distraction.",
-    "Newspaper: The Freeman's Journal — A constant source for updates on political developments, with particular tension around its coverage of assassinations and raids.",
-    "Book: 'The University' published in London by J. O. Plunkett, offered a satirical look at Irish academia, written by John Plunkett, it fascinated Dublin readers with its ribald style.",
-    "Event: The Croke Park football match on Bloody Sunday drew attention as a mingling of sport and tragedy, affecting national discourse beyond just GAA fans."
+    "Theatre: 'The Plough and the Stars' — This play at the Abbey Theatre stirred public debate, reflecting contemporary tensions and the role of revolutionary ideals.",
+    "Book: 'Ulysses' Serialization — Joyce's work began serializing in the Little Review, with avid discussions in Dublin’s literary circles about its avant-garde style.",
+    "Film: 'The Mark of Zorro' — This Douglas Fairbanks film drew large crowds to Dublin’s cinemas, offering escapist fantasy amid socio-political turmoil.",
+    "Newspaper: Irish Independent Headlines — The ongoing political violence and British policies were front-page topics that dominated conversations across Dublin.",
+    "Music: Dublin Street Ballads — Traditional songs resonated in pub sessions and gatherings, reflecting cultural resilience even during the war.",
+    "Event: Sinn Féin Ard-Fheis — The annual assembly tackled profound issues amidst socio-political upheaval, drawing delegates focused on strategic planning."
   ],
-  "slang_or_phrase": "\"Tans Out\" — An expression of defiance against the Black and Tans, who were feared and loathed for their harsh tactics. Shouted during protests and painted in alleys, it symbolized civilian resistance and the clamor for autonomy that characterized Dublin's streets.",
+  "number_one_song": "'Whispering' by Paul Whiteman became immensely popular in 1920, often heard in settings like Dublin's Harcourt Street salons, offering a melodious reprieve from daily turmoil.",
+  "weather_event": "January brought particularly heavy snowfalls and freezing conditions across Dublin, causing significant travel disruptions but also allowing for rare scenes of children sledding throughout city parks.",
+  "irish_first": "1920 marked the first time an Irish passport was issued, a remarkable symbol of the Republic's assertion of sovereignty amid the ongoing struggle for independence.",
+  "quirky_story": "In late September, a fox managed to disrupt proceedings at a Dublin horse race meeting, darting across the track mid-race, providing both a laugh and an omen of unpredictable times amid widespread disruptions.",
+  "slang_or_phrase": "The phrase 'Black and Tan' quickly became synonymous with fear and intimidation throughout Dublin’s streets, often whispered in trepidation and resentment, reflecting the adversarial presence impacting daily life and morale.",
   "image_search": {
     "queries": [
-      "Dublin Croke Park 1920 Bloody Sunday photograph",
-      "Michael Collins Squad 1920 Dublin",
-      "Dublin Castle 1920 British Military",
-      "Dublin Custom House 1920 burning aftermath",
-      "O'Connell Street checkpoints 1920 Dublin",
-      "Black and Tans Dublin 1920 street patrol",
-      "Vaughan's Hotel meeting 1920 Dublin",
-      "Gresham Hotel Dublin 1920 British officers"
+      "1920 Dublin O'Connell Street trams",
+      "Bloody Sunday Croke Park",
+      "Michael Collins safe house Dublin",
+      "Black and Tans checkpoint Dublin",
+      "Dublin Castle 1920 British army",
+      "Burning of Cork 1920 aftermath",
+      "Kilmichael Ambush IRA",
+      "Vaughan's Hotel Dublin 1920"
     ]
-  },
-  "imageUrl": "/images/dublin/1920.png"
+  }
 }

@@ -2,71 +2,72 @@
   "place": "Dublin",
   "year": 1917,
   "tier": "chronicle",
-  "timeline_summary": "The year 1917 in Dublin was characterized by significant political shifts in the wake of the 1916 Easter Rising. Sinn Féin, reorganized under the leadership of Éamon de Valera, gained momentum following the by-election victories. The radicalization of returning internees from Frongoch fostered a surge in nationalist sentiment. Dublin's economy, grappling with war-time scarcities and inflation, saw a rise in basic commodity prices, impacting the working class sharply. Amid heightened military presence, the city's atmosphere was tense yet charged with a growing desire for self-determination.",
-  "visual_scene": "On a chilly March morning in 1917, stroll down Henry Street in central Dublin. The street hums with activity as vendors peddling newspapers proclaim recent political victories of Sinn Féin, their broadsheets filled with images of de Valera flanked by supporters. Horse-drawn carts clatter along the cobblestones, while women in shawls bargain for fresh vegetables at market stalls. Military officers in crisp uniforms patrol the streets, their presence a stark reminder of ongoing British authority. Posters advocating for enlistment in the British army and locally handwritten notices calling for Irish self-governance compete for space on brick walls. Conversations, laden with whispers of revolution and hopes for change, reveal an apprehensive yet defiant Dublin.",
+  "taoiseach": "Henry Edward Duke served as Chief Secretary for Ireland in 1917. He dealt with rising nationalist sentiments and political unrest in Ireland following the Easter Rising of 1916.",
+  "timeline_summary": "1917 in Dublin was defined by the fervent political resurgence led by Sinn Féin under Eamon de Valera's leadership. British military presence was palpable, but the nationalist spirit was bolstered by the return of many radicalized internees from Frongoch internment camp. The city saw economic strain as wartime shortages continued to impact daily life, yet the political energy was electric as by-elections swayed nationalist. Dubliners closely followed international events like the Russian Revolution, hinting at change on the horizon.",
+  "visual_scene": "Imagine standing on Sackville Street on a brisk March afternoon in 1917. The street is abuzz with activity—trams clatter along, their bells chiming over the din of horse-drawn carriages. Men in flat caps and women in long skirts stride purposefully through the crowd, clutching newspapers headlining the recent Sinn Féin by-election victories. The cold air carries the smell of coal smoke and the occasional shout of a street vendor selling roasted chestnuts. Posters plastered on walls advocate for 'Self-determination for Ireland!' The mood is tense yet hopeful—a city holding its breath for what lies ahead.",
   "city_changes": [
-    "Dublin Castle, a symbol of British rule in Ireland, expanded its intelligence operations as a response to the growing influence of nationalist movements. The castle staff was increased, with new offices dedicated to monitoring Sinn Féin activities.",
-    "Sackville Street, slowly recovering from the devastation of the 1916 Rising, began to see reconstruction efforts, with carpenters and masons working to restore shopfronts and office buildings, bringing a semblance of normalcy back to one of Dublin's main thoroughfares.",
-    "Dublin Port witnessed increased military traffic, with heightened security measures implemented to prevent the smuggling of arms and supplies for the Irish Volunteers. This increased activity created occasional bottlenecks, impacting local trade.",
-    "The presence of British soldiers made housing scarce in certain areas, as barracks expanded to accommodate troops. This led to increased pressure on the already impoverished tenement housing in districts like The Liberties, further exacerbating the housing crisis.",
-    "The Freeman's Journal, one of Dublin's leading newspapers, shifted its editorial stance to cautiously support the Sinn Féin movement, reflecting the broader change in public opinion following the harsh aftermath of the 1916 Rising.",
-    "Public health initiatives in Dublin were bolstered with the construction of small clinics to address epidemics such as influenza and tuberculosis, which were rampant due to poor living conditions in the tenement districts."
+    "The rebuilding of central Dublin continued, particularly on Sackville Street where many buildings were still under repair from the damage of the 1916 Rising. New stone facades mingled with scaffolding, signaling both destruction and resilience.",
+    "The tram system in Dublin saw significant upgrades with new routes and better maintenance to cater for an increasing demand as the city grew. The Ringsend Depot became a hub for workers and expanded its services.",
+    "The National University at Earlsfort Terrace began offering classes in Irish language and culture, a sign of the increasing political importance and cultural revival spurred by renewed nationalist sentiment.",
+    "Dublin's population saw a demographic shift as many returning internees from Frongoch camp settled in the city, bringing radical ideas and swelling the ranks of local nationalist organizations like Sinn Féin.",
+    "Housing pressure continued to intensify with the tenement crisis reaching alarming proportions. Overcrowded living conditions became a frequent subject of discussion and concern among city planners.",
+    "Businesses in Dublin were affected by wartime rationing, which led to restraints on goods like flour and commodities, yet also spurred an increase in local manufacturing and self-sufficiency."
   ],
   "major_events": [
-    "The East Clare By-Election, July 1917 — Éamon de Valera was elected as Sinn Féin's candidate, marking a pivotal moment for the party as it captured a seat historically held by the Irish Parliamentary Party. This victory signaled a shift in public support towards more radical nationalist ideologies.",
-    "Return of Frongoch Internees, December 1917 — Hundreds of Irish prisoners, detained for their involvement in the Easter Rising, were released from the internment camp in Frongoch, Wales. Their return to Dublin brought renewed energy to the Irish Volunteers and Sinn Féin, further galvanizing the nationalist movement.",
-    "Russian Revolution, November 7, 1917 — While occurring far from Dublin, the Bolshevik Revolution resonated deeply with Irish republicans, who saw in it a model for overthrowing imperial rule. Discussions in Dublin pubs and homes often included comparisons between Russian revolutionary ideals and the Irish struggle.",
-    "German Plot Arrests, May 1918 — Although occurring the following year, the consequences of Sinn Féin's perceived ties to German forces (allegedly conspiring to secure German support for Irish independence) led to increased surveillance and military presence in Dublin throughout 1917.",
-    "Meeting of the First Dáil Éireann, January 1919 — Plans were laid throughout 1917 for an independent Irish parliament, culminating in the unofficial assembly of Irish nationalist leaders, including those based in Dublin, who refused to take their seats in Westminster.",
-    "Political Rally at the Mansion House, October 3, 1917 — A gathering of Sinn Féin supporters was held at the Mansion House in Dublin, demonstrating the increased organization and mass appeal of the party under de Valera’s leadership.",
-    "Death of Thomas Ashe, September 25, 1917 — Ashe, a nationalist leader, died after being force-fed during a hunger strike in Mountjoy Prison. His death sparked widespread outrage in Dublin and further radicalized nationalist sentiment.",
-    "Increase in Anti-Conscription Activity, April 1917 — As Britain sought to introduce conscription in Ireland, Dublin saw heightened activity against this move, including public demonstrations and rallies organized by trade unions and Sinn Féin."
+    "Release of Frongoch Internees, late January 1917 — With the release of the last group of internees from Frongoch internment camp, figures such as Michael Collins and Richard Mulcahy returned to Ireland, radicalized and ready to reorganize the nationalist movement.",
+    "Sinn Féin Reorientation, April 1917 — After the Easter Rising, Sinn Féin, under the leadership of Eamon de Valera, began restructuring itself to become a formidable political force, focusing on the idea of Irish self-determination and sovereignty.",
+    "East Clare By-election, July 1917 — Eamon de Valera's victory in East Clare demonstrated Sinn Féin's growing influence. His win was a clear rejection of the Irish Parliamentary Party and its support for the British war effort.",
+    "Conscription Crisis, May 1917 — Fear and outrage spread across Dublin as rumors of conscription began to surface. Public opinion was fiercely against conscription, leading to protests and an increase in nationalist sentiment.",
+    "Russian Revolution Observed, November 1917 — As news of the Russian Bolshevik Revolution reached Dublin, it inspired both hope and concern within different political factions in the city, adding to the charged political atmosphere.",
+    "Passage of Defence of the Realm Act Regulations, throughout 1917 — The enforcement of DORA regulations in Dublin increased surveillance and restricted civil liberties, leading to more discontent among the Irish populace.",
+    "The German Plot Arrests, May 17, 1917 — The arrest of several Sinn Féin leaders under suspicion of collaborating with Germany put further strain on Anglo-Irish relations and increased nationalist fervor.",
+    "Plunkett’s Campaign, South Longford By-election, May 1917 — Joseph Mary Plunkett's father won the seat, another significant victory for Sinn Féin, reinforcing their political strategy and broadening their base."
   ],
-  "population_estimate": "approx. 304,000 within the city boundary; c.400,000 including Rathmines, Pembroke, and Drumcondra townships — population growth was tempered by economic hardship and housing shortages, with many choosing emigration as a more viable option amidst challenging living conditions.",
+  "population_estimate": "Dublin's population was approximately 390,000 in 1917, reflecting both the boundaries of the city and its immediate suburban areas. The growth was driven by returning internees and an influx of young people inspired by nationalist sentiment.",
   "transport_snapshot": [
-    "The Dublin United Tramways Company operated an extensive tram network, linking major streets such as College Green to outlying areas like Rathmines. Despite war-time fuel shortages, the trams continued to be a vital mode of urban transport.",
-    "Irish rail services were heavily utilized for both civilian and military purposes, with Heuston Station serving as a major departure point. However, services were frequently delayed by security checks and troop movements.",
-    "Increased military presence meant that certain roads and bridges, like the Dublin's Ha'penny Bridge, were occasionally closed or subjected to thorough inspections, causing inconvenience for local commuters.",
-    "Horse-drawn carriages remained a staple for goods transport across the city, with drivers navigating narrow lanes and heavy congestion, particularly around market days in central Dublin.",
-    "Bicycles gained popularity as a flexible option for personal transport, appealing to both the working class and students, who could bypass restricted areas more easily than motor vehicles."
+    "The Dublin tramways operated around 60 miles of track, with key routes running along Sackville Street and branching out to southern suburbs like Rathmines. The fare remained affordable at just a penny for short distances.",
+    "The Midland Great Western Railway was central to transport, connecting Dublin to the west of Ireland. Despite wartime disruptions, it maintained frequent services for both passengers and goods.",
+    "Horse-drawn carriages remained a common sight, especially for short hauls within the city center, with drivers negotiating increasingly congested streets.",
+    "Cycle rentals grew in popularity due to their affordability and convenience in the context of fuel shortages. Dublin traders specialized in either selling or renting bicycles.",
+    "Dublin's port saw increased activity with military transport ships, requiring tighter regulation and curfews, affecting both local trade and international shipments."
   ],
   "architecture_style": [
-    "Georgian Architecture — Dublin's Merrion Square remained a showcase of Georgian elegance, though some facades suffered neglect due to the shifting political focus and economic strains.",
-    "Victorian Gothic — The High Victorian Gothic style of St. Patrick's Cathedral, though spared damage in the Rising, stood testament to a past era, frequented as a refuge by Dubliners seeking solace.",
-    "Edwardian Baroque — Buildings like the Independent House on Middle Abbey Street, constructed in the flamboyant Edwardian Baroque style, drew attention for their grand facades amidst the more utilitarian structures rising post-Rising.",
-    "Industrial Architecture — The Guinness Brewery at St. James's Gate exemplified the functional style needed for industry, continuing to dominate Dublin's economy despite increased wartime production pressures."
+    "Georgian Architecture — Exemplified by the restored facades along Merrion Square, which were patched after sustaining damage during the Rising but retained their classical elegance.",
+    "Edwardian Commercial — The rebuilding of the GPO area included structures reflecting Edwardian commercial styles, such as the new banks and stores along Henry Street.",
+    "Neo-Gothic Elements — Reflected in the restoration work on St. Patrick's Cathedral, which included repairs to its towering spire and intricate stonework.",
+    "Victorian Industrial — The Guinness brewery complex expanded to meet increased wartime production needs, with additional warehouses constructed in Victorian industrial style."
   ],
   "major_industries": [
-    "Brewing — The Guinness Brewery at St. James’s Gate employed thousands and remained Ireland’s largest brewery, adapting to wartime shortages of barley with innovative brewing techniques.",
-    "Shipping — Dublin Port saw brisk activity despite wartime dangers, with its docks handling military as well as merchant vessels, bolstered by increased security and logistics staffing.",
-    "Printing — The Irish Times and The Freeman's Journal, both based in Dublin, snapped up veteran journalists and printers returning from military service or political detainment, reflecting demand for national news coverage.",
-    "Textiles — The textile industry in Dublin, severely impacted by wartime material shortages, adapted by focusing on producing military uniforms, sustaining employment for many women.",
-    "Engineering — Firms like the Dublin Gas Company, essential for city lighting and industry, faced challenge from coal shortages, forcing them to innovate with increased efficiency methods in plant design."
+    "Brewing - Guinness, employing thousands, remained the city's industrial powerhouse, with production focused heavily on wartime supply despite ingredient shortages.",
+    "Construction - Rebuilding efforts post-Easter Rising saw employment in construction surge, as laborers were called to restore key streets and public buildings.",
+    "Printing and Publishing - Firms like Gill and Macmillan thrived as the demand for newspapers and political pamphlets grew; Sinn Féin's publications acted as propaganda tools.",
+    "Transport - The Dublin United Tramways Company remained a major employer, innovating services to accommodate growing city commuter numbers.",
+    "Textile Manufacturing - Despite wartime shortages, the industry continued, producing garments and goods for both civilian and military use, employing a significant number of women."
   ],
   "key_locations": [
-    "Dublin Castle — The epicenter of British administration in Ireland, it was heavily fortified and expanded its surveillance capabilities throughout 1917 amid rising nationalist activities.",
-    "Liberty Hall — Headquarters of the Irish Transport and General Workers' Union, it was a hub for anti-conscription and labor organizing, echoing the concerns of Dublin’s working class.",
-    "Mountjoy Prison — Known for its imprisonment of political detainees, it faced increased scrutiny following the death of hunger striker Thomas Ashe in September 1917.",
-    "The Mansion House — Often a venue for major political meetings and rallies in 1917, it was crucial for Sinn Féin gatherings that shaped Dublin’s political landscape.",
-    "General Post Office (GPO) — Still in partial ruins from the Rising, discussions persisted about its restoration as a symbol of nationalist defiance.",
-    "Trinity College Dublin — As a bastion of academic excellence, its debates and lectures mirrored the broader social discussions about Ireland's future amidst global upheaval.",
-    "The Rotunda (now Rotunda Hospital) — Historically a venue for political assemblies, it was repurposed amid urgent demand for medical facilities during influenza outbreaks.",
-    "Kilmainham Gaol — This somber site, known for housing political prisoners, symbolized British oppression and became a place of pilgrimage for nationalists."
+    "General Post Office — The epicenter of the 1916 Rising, it saw reconstruction begin as plans were made to restore its role as a vital postal service hub.",
+    "Sinn Féin Headquarters, Harcourt Street — Key site for planning and strategy meetings throughout 1917, shaping the republic's political future.",
+    "Liberty Hall — Continued as a significant venue for trade unionists and political organizers, hosting rallies against conscription and British policies.",
+    "Trinity College Dublin — Premier academic institution where debates on nationalism and self-governance engaged both students and faculty.",
+    "Abbey Theatre — It produced plays reflecting Ireland's political tensions and cultural aspirations, serving as a meeting place for artists and thinkers.",
+    "Shelbourne Hotel — Hosted high-profile guests and events, including political discussions and meetings of Irish leaders seeking to navigate the unrest.",
+    "Kilmainham Gaol — Remained a haunting symbol of British repression, frequented by nationalists and their supporters and used for imprisoning leaders.",
+    "Phoenix Park — A popular urban refuge for Dubliners, its paths and fields offered respite amidst the city's political turmoil."
   ],
   "timeline_tags": [
-    "aftermath_of_the_rising",
-    "sinn_fein_reorganization",
-    "by_elections",
-    "frongoch_internees",
-    "irish_volunteers",
+    "sinn_fein_reorganisation",
+    "by_election_victories",
+    "conscription_crisis",
+    "political_unrest",
     "british_military_presence",
-    "anti_conscription",
-    "food_shortages"
+    "cultural_revival",
+    "economic_strain",
+    "russian_revolution"
   ],
   "elections": [
     {
       "type": "By-election",
-      "result_summary": "Éamon de Valera's victory in the East Clare by-election symbolized Sinn Féin's rising power, displacing the long-dominant Irish Parliamentary Party and setting the stage for broader electoral change, inspiring Dublin citizens toward self-determination.",
+      "result_summary": "Eamon de Valera secured a historic win in the East Clare by-election, signaling a seismic shift to the support for Sinn Féin and away from established political actors. This victory was pivotal in marking Sinn Féin's ascendancy and reshaping Irish political dynamics.",
       "winning_party": "Sinn Féin"
     }
   ],
@@ -76,37 +77,72 @@
       "winner": "Wexford",
       "runner_up": "Clare",
       "score": "0-9 to 0-5"
+    },
+    {
+      "championship": "All-Ireland Senior Hurling Championship Final",
+      "winner": "Dublin",
+      "runner_up": "Tipperary",
+      "score": "5-4 to 4-2"
     }
   ],
-  "price_of_a_pint": "A pint of Guinness cost approximately 3d (three pence) in a Dublin city pub in 1917 — at a time when a general labourer earned around 4 shillings per day, a pint represented roughly one-sixteenth of a day's wages. The price had risen slightly from pre-war levels due to increased barley and malt costs, though Guinness at St James's Gate continued to dominate the Dublin market utterly.",
-  "cost_of_living": "Weekly rent for a Dublin tenement room was about 10 shillings, pressing heavily on families whose average labourer wages were only 20 shillings weekly. A loaf of bread cost around 5d, posing a burden as grain shortages drove prices higher. As a luxury, a gramophone cost upwards of £10, far beyond the means of most Dubliners, underscoring the harsh realities of wartime.",
+  "sport": [
+    {
+      "category": "Horse Racing",
+      "detail": "The Irish horse racing scene was dominated by the performance of the horse 'Embargo', trained by William Moore, which won the 1917 Irish Grand National at Fairyhouse, capturing the public's imagination."
+    },
+    {
+      "category": "Boxing",
+      "detail": "Olympic sportsman Mick 'The Bailieborough Bombshell' Jarnett won the Irish Boxing Championship for his weight class in 1917, showcasing immense talent and making a name for himself on the national scene."
+    },
+    {
+      "category": "Soccer",
+      "detail": "Bohemian F.C., one of Dublin's key soccer clubs, continued to solidify its position in the Irish League, attracting large crowds to Dalymount Park despite general wartime constraints."
+    }
+  ],
+  "price_of_a_pint": "The price of a pint of Guinness stout in Dublin in 1917 was roughly 5d. This cost was modest but represented a larger share of a laborer's daily wage due to wartime inflation. Pubs such as Mulligan's in Poolbeg Street remained popular among Dublin's working class.",
+  "price_ladder": {
+    "pint_of_guinness": "5d",
+    "loaf_of_bread": "9d",
+    "average_house_dublin": "n/a",
+    "weekly_wage_labourer": "30s",
+    "twenty_cigarettes": "1s 3d",
+    "pint_of_milk": "2d",
+    "note": "Wartime shortages caused a sharp increase in the cost of bread, reflecting broader food scarcity concerns."
+  },
+  "cost_of_living": "A typical weekly rent for a Dublin tenement room was about 5s, while a loaf of bread had increased to 9d due to shortages. A laborer's weekly wage averaged around 30s, struggling to keep up with inflation. Luxuries like gramophones remained costly, with even modest models priced at several pounds.",
   "notable_dubliners": [
-    "Éamon de Valera — Rising as a prominent nationalist leader, de Valera was elected MP for East Clare in July 1917, a significant step in his political career and Sinn Féin's resurgence.",
-    "Constance Markievicz — A key figure in the Rising and later interned, she was released from imprisonment in 1917, continuing her activism and public speaking across Dublin.",
-    "Arthur Griffith — As the founder of Sinn Féin, Griffith saw his party reorganize and grow in strength in 1917, focusing on establishing an independent parliament in Dublin.",
-    "Hannah Sheehy-Skeffington — An active suffragist and nationalist, she campaigned against conscription in 1917, speaking at various meetings in Dublin.",
-    "Michael Collins — A returned internee from Frongoch, Collins became instrumental in reorganizing the Volunteers, setting the stage for future armed struggle.",
-    "James Larkin — Though primarily active in the Great Strike prior to 1917, his influence lingered in Dublin as workers recalled his vision for fair labour practices during strikes."
+    "Eamon de Valera — In 1917, he emerged as a prominent leader of Sinn Féin and regained public prominence following his election in the East Clare by-election.",
+    "Michael Collins — Returned from Frongoch internment camp and quickly rose in the ranks of Sinn Féin, becoming an instrumental figure in the reorganization of the party.",
+    "Constance Markievicz — Continued to agitate for Irish independence and social reform, actively participating in Sinn Féin's revitalization and speaking at numerous public engagements.",
+    "Maud Gonne — A leading figure in the cultural revival, she was active in the political sphere through Sinn Féin, advocating for Irish women's roles in the nationalist movement.",
+    "Seán T. O'Kelly — As a key figure of Sinn Féin, he returned from Frongoch and advanced the party's organisational capacity and influence in Dublin.",
+    "W.B. Yeats — Continued contributing to Ireland’s cultural renaissance with his poetry and plays, while maintaining association with the Irish literary theatre movements in Dublin."
   ],
+  "notable_death": "Thomas Ashe, September 25, 1917, death due to force-feeding during a hunger strike while imprisoned. A leading figure in the nationalist movement, Ashe's death became a rallying cry for increased resistance against British rule, galvanizing public sentiment and mobilizing future activism.",
+  "notable_emigrant": "James 'Jimmy' Murphy, a promising soccer player, emigrated to Manchester to escape post-Rising political repression and pursue a professional career. His departure mirrored the ongoing flight of young talent from Ireland in search of opportunities and stability abroad.",
   "what_was_on": [
-    "Theatre: The Plough and the Stars by Sean O'Casey — Despite its controversy, O'Casey's play drew crowds to the Abbey Theatre, igniting discussions on nationalism and sacrifice, reflecting the atmosphere post-Rising.",
-    "Literature: Pádraic Pearse's Poems and Stories — Posthumously published works of the executed Rising leader, these pieces circulated widely in Dublin, nurturing revolutionary sentiment and martyr reverence.",
-    "Newspapers: Headlines in The Freeman's Journal — Stories dissecting the political implications of Sinn Féin's electoral gains and ongoing British military strategies dominated the public discourse.",
-    "Sport: Women's Camogie Matches — Popular across Dublin, these matches underscored the growing involvement of women in sports, aligning with broader movements for women's rights.",
-    "Cinema: Screening of The Birth of a Nation — This D.W. Griffith film was shown in Dublin cinemas, controversial for its portrayal of race and history amidst global wartime transformations."
+    "Play: 'The Plough and the Stars' at the Abbey Theatre — Sean O'Casey's play continued to stir discussions concerning nationalism and class, drawing considerable interest and controversy.",
+    "Book: 'The Song of an Irish Rebel' by Padraic Pearse — This collection of essays was widely read and celebrated among Dublin nationalists and cultural advocates.",
+    "Film: Silent Film Screening at the Volta Cinema — Dubliners flocked to one of the city's few cinema houses to escape the pressures of reality through moving pictures.",
+    "Newspaper: Irish Independent — Published stories of volatile political situations and international revolutions that engaged and informed readers across Dublin.",
+    "Music: Military Bands in St. Stephen’s Green — Held weekly concerts that drew large crowds, contrasting with the more volatile political realities just outside the park's borders.",
+    "Concert: Performances by John McCormack — The tenor's concerts captured the imagination of the Dublin public, showcasing his powerful voice and commanding stage presence."
   ],
-  "slang_or_phrase": "'Up the Republic' — the rallying cry heard on Dublin streets in the aftermath of the Rising, shouted at Volunteer meetings and whispered in tenement stairwells, carrying both defiance and grief in equal measure. It symbolized the nationalist fervor and hopes for a free Ireland, often punctuating speeches and rallies in 1917.",
+  "number_one_song": "'If You Were the Only Girl in the World' by George Grossmith and Thelma Reade was a popular tune, capturing the hearts of those in Dublin dance halls and parlors, offering moments of solace amidst wartime anxiety.",
+  "weather_event": "A severe storm in November 1917 brought heavy rain and gale-force winds to Dublin, causing minor flooding along the River Liffey and disrupting transport, reminding residents of nature's unpredictability amid human conflicts.",
+  "irish_first": "The first Dáil Éireann was convened in 1917 as a preparatory measure, though clandestine. This meeting laid the groundwork for what would become the first parliament of independent Ireland, marking a radical step towards self-governance.",
+  "quirky_story": "In 1917, Dublin was abuzz with tales of a stray dog named 'Pilot' who loyally attended every tram at the Ringsend terminus. Adored by locals, he became an honorary mascot for passengers and drivers alike.",
+  "slang_or_phrase": "The term 'Black Maria' was popularly used to refer to the black police vans used by the British to detain nationalists during raids. The phrase carried a mix of fear and dark humor among Dubliners.",
   "image_search": {
     "queries": [
-      "Dublin East Clare by election 1917 photograph",
+      "Sackville Street 1917 Dublin",
+      "East Clare by-election 1917",
+      "Eamon de Valera 1917",
       "Frongoch internees return Dublin 1917",
-      "Sinn Féin Mansion House meeting October 1917",
-      "Thomas Ashe funeral Dublin 1917",
-      "Military presence Dublin streets 1917",
-      "Mountjoy Prison protest 1917",
-      "Dublin Castle intelligence operations 1917",
-      "Merrion Square Georgian buildings 1917 Dublin"
+      "Sinn Féin headquarters Harcourt Street 1917",
+      "Kilmainham Gaol 1917",
+      "General Post Office reconstruction 1917",
+      "Horse-drawn carriages Dublin 1917"
     ]
-  },
-  "imageUrl": "/images/dublin/1917.png"
+  }
 }

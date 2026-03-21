@@ -125,7 +125,7 @@ ul{list-style:none}
 /* ── Era Variable Colours ───────────────────────────────────────────── */
 .era-victorian  {--bg:#f5edd8;--fg:#1a0e00;--accent:#8a6030;--border:#a09060}
 .era-artdeco     {--bg:#0e0c04;--fg:#d4aa20;--accent:#b08000;--border:#8a6800}
-.era-depression  {--bg:#e0d8c0;--fg:#1a1208;--accent:#5a4020;--border:#8a7850}
+.era-depression  {--bg:#f5f1e8;--fg:#1a1208;--accent:#5a4020;--border:#c8b890}
 .era-wartime     {--bg:#d4cdb0;--fg:#1a1208;--accent:#8a1a1a;--border:#a07030}
 .era-postwar     {--bg:#f0e8d0;--fg:#111;   --accent:#1a4a8a;--border:#888}
 .era-mod         {--bg:#fff;   --fg:#111;   --accent:#e91e8c;--border:#e91e8c}
@@ -200,6 +200,17 @@ ul{list-style:none}
 
 .np-editorial{background:rgba(0,0,0,.04);padding:12px 24px;font-size:12px;line-height:1.75;border-top:2px solid var(--fg);margin-top:0}
 .era-artdeco .np-editorial{border-color:#8a6800;background:rgba(212,170,32,.04)}
+.era-depression .np-editorial{background:rgba(0,0,0,.02);border-top-color:var(--border)}
+
+/* Depression era (1930–1940): lighter, cleaner newspaper feel */
+.era-depression .np-mast{background:var(--fg)}
+.era-depression .np-band{border-bottom-width:2px;border-bottom-style:solid}
+.era-depression .np-splash{border-bottom-color:var(--border)}
+.era-depression .np-main{border-bottom-color:var(--border);border-bottom-width:1px}
+.era-depression .np-section-rule{border-top-color:var(--border);border-bottom-color:var(--border)}
+.era-depression .np-bottom{border-bottom-color:var(--border);border-bottom-width:1px}
+.era-depression .np-ad{border-width:1px;border-style:solid;border-color:var(--border)}
+.era-depression .np-col{border-right-color:var(--border)}
 .np-editorial-label{background:var(--fg);color:var(--bg);padding:1px 8px;font-size:9px;text-transform:uppercase;letter-spacing:2px;margin-right:10px;font-weight:900}
 .np-editorial strong{font-size:13px}
 .np-editorial p{margin-top:6px;color:var(--accent)}

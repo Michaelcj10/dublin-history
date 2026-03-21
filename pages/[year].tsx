@@ -1,16 +1,21 @@
 import GAAScoreboard from "../components/GAAScoreboard";
-import PoliticalBreakdown from "../components/politicalbreakdown";
+import PoliticalBreakdown, {
+  hasPoliticalData,
+} from "../components/politicalbreakdown";
 import CigaretteAd from "../components/cigad";
 import TransportIllustration from "../components/transport";
 import WeatherReport from "../components/WeatherReport";
-import DublinMap from "../components/DublinMap";
 import DeathNotices from "../components/DeathNotices";
 import Head from "next/head";
 import fs from "fs";
 import path from "path";
 import { useRouter } from "next/router";
-import { useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
+import CurrencyAd from "@/components/currencyAd";
+import Masthead from "../components/Masthead";
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 interface Election {
   type: string;
@@ -23,8 +28,22 @@ interface GAAFinal {
   runner_up: string;
   score?: string;
 }
+interface SportItem {
+  category: string;
+  detail: string;
+}
+interface PriceLadder {
+  pint_of_guinness: string;
+  loaf_of_bread: string;
+  average_house_dublin: string;
+  weekly_wage_labourer: string;
+  twenty_cigarettes: string;
+  pint_of_milk: string;
+  note: string;
+}
 interface YearData {
   year: number;
+  taoiseach?: string;
   timeline_summary: string;
   visual_scene: string;
   city_changes: string[];
@@ -39,13 +58,24 @@ interface YearData {
   timeline_tags: string[];
   elections: Election[];
   gaa_finals: GAAFinal[];
+  sport?: SportItem[];
   price_of_a_pint?: string;
+  price_ladder?: PriceLadder;
   cost_of_living?: string;
   notable_dubliners?: string[];
+  notable_death?: string;
+  notable_emigrant?: string;
   what_was_on?: string[];
+  number_one_song?: string;
+  weather_event?: string;
+  irish_first?: string;
+  quirky_story?: string;
+  north_headline?: string;
   slang_or_phrase?: string;
   imageUrl?: string;
 }
+
+// ── Field helpers ──────────────────────────────────────────────────────────────
 
 const ev = (e: YearData["major_events"][0]) =>
   typeof e === "string"
@@ -56,21 +86,14 @@ const arch = (a: YearData["architecture_style"][0]) => {
     const [s, ...r] = a.split(/[—:–]/);
     return { style: s.trim(), ex: r.join(" ").trim() };
   }
-  return {
-    style: a.style,
-    ex: (a as { style: string; example?: string }).example ?? "",
-  };
+  return { style: a.style, ex: (a as any).example ?? "" };
 };
 const ind = (i: YearData["major_industries"][0]) => {
   if (typeof i === "string") {
     const [n, ...r] = i.split(/[—:–]/);
     return { name: n.trim(), detail: r.join(" ").trim() };
   }
-  return {
-    name: i.industry,
-    detail:
-      (i as { industry: string; significance?: string }).significance ?? "",
-  };
+  return { name: i.industry, detail: (i as any).significance ?? "" };
 };
 const loc = (l: string) => {
   const [p, ...r] = l.split(/[:—–]/);
@@ -85,307 +108,20 @@ function parsePintPrice(text: string): string {
   return m ? m[1] : "—";
 }
 
-function GuinnessPint({ price }: { price: string }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 8,
-      }}
-    >
-      <svg
-        viewBox="0 0 90 160"
-        width={90}
-        height={160}
-        style={{ display: "block" }}
-      >
-        <defs>
-          <linearGradient id="g-body" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%" stopColor="#0e0804" />
-            <stop offset="45%" stopColor="#1e1208" />
-            <stop offset="100%" stopColor="#080402" />
-          </linearGradient>
-          <linearGradient id="g-cream" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#f8f3ee" />
-            <stop offset="100%" stopColor="#e0dbd4" />
-          </linearGradient>
-          <linearGradient id="g-shine" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%" stopColor="rgba(255,255,255,.22)" />
-            <stop offset="50%" stopColor="rgba(255,255,255,.03)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,.07)" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M20,142 L14,58 Q12,42 20,36 L70,36 Q78,42 76,58 L70,142 Z"
-          fill="url(#g-body)"
-          stroke="rgba(255,255,255,.18)"
-          strokeWidth={0.8}
-        />
-        <path
-          d="M14,58 Q12,42 20,36 L70,36 Q78,42 76,58 Q68,50 56,53 Q45,56 34,53 Q22,50 14,58 Z"
-          fill="url(#g-cream)"
-        />
-        {[22, 33, 45, 56, 66].map((x, i) => (
-          <ellipse
-            key={i}
-            cx={x}
-            cy={45 + (i % 2) * 2}
-            rx={3.5 + (i % 3)}
-            ry={2}
-            fill="rgba(255,255,255,.55)"
-          />
-        ))}
-        <path
-          d="M20,142 L14,58 Q12,44 20,38 L26,38 L29,58 L29,142 Z"
-          fill="url(#g-shine)"
-        />
-        <path
-          d="M20,142 L14,58 Q12,42 20,36"
-          fill="none"
-          stroke="rgba(255,255,255,.32)"
-          strokeWidth={1}
-        />
-        <path
-          d="M70,142 L76,58 Q78,42 70,36"
-          fill="none"
-          stroke="rgba(255,255,255,.07)"
-          strokeWidth={1}
-        />
-        {[24, 38, 55, 67].map((x, i) => (
-          <circle
-            key={i}
-            cx={x}
-            cy={95 + i * 13}
-            r={0.9}
-            fill="rgba(160,100,30,.35)"
-          />
-        ))}
-        <text
-          x="45"
-          y="102"
-          textAnchor="middle"
-          fontSize="9"
-          fontFamily="Georgia,serif"
-          fill="rgba(255,255,255,.08)"
-          fontStyle="italic"
-        >
-          Guinness
-        </text>
-        <path
-          d="M20,142 Q45,148 70,142 L70,145 Q45,152 20,145 Z"
-          fill="rgba(255,255,255,.06)"
-        />
-        <ellipse cx="45" cy="145" rx="25" ry="3.5" fill="rgba(0,0,0,.4)" />
-      </svg>
-      <div
-        style={{
-          border: "2px solid #1a1208",
-          background: "#f0e8d0",
-          padding: "5px 14px",
-          textAlign: "center",
-          minWidth: 80,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 8,
-            fontFamily: "Georgia,serif",
-            textTransform: "uppercase",
-            letterSpacing: 2,
-            color: "#5a4020",
-            marginBottom: 2,
-          }}
-        >
-          Price
-        </div>
-        <div
-          style={{
-            fontFamily: "'Playfair Display',Georgia,serif",
-            fontSize: 24,
-            fontWeight: 900,
-            color: "#1a1208",
-            lineHeight: 1,
-          }}
-        >
-          {price}
-        </div>
-      </div>
-    </div>
-  );
+function getEra(year: number): string {
+  if (year <= 1921) return "Revolution";
+  if (year <= 1923) return "Civil War";
+  if (year <= 1931) return "Free State";
+  if (year <= 1938) return "de Valera";
+  if (year <= 1945) return "Emergency";
+  if (year <= 1959) return "Post-War";
+  if (year <= 1969) return "The Sixties";
+  if (year <= 1979) return "The Seventies";
+  if (year <= 1989) return "The Eighties";
+  return "Celtic Tiger";
 }
 
-function PreDecimalCoins({ text }: { text: string }) {
-  const m = text.match(/(\d+)\/(\d+)/);
-  const d = text.match(/^(\d+)d/);
-  const sh = m ? parseInt(m[1]) : 0;
-  const pe = m ? parseInt(m[2]) : d ? parseInt(d[1]) : 4;
-  function C({
-    cx,
-    cy,
-    r,
-    fill,
-    stroke,
-    label,
-    sub,
-  }: {
-    cx: number;
-    cy: number;
-    r: number;
-    fill: string;
-    stroke: string;
-    label: string;
-    sub?: string;
-  }) {
-    return (
-      <g>
-        <ellipse
-          cx={cx + 1.5}
-          cy={cy + 1.5}
-          rx={r}
-          ry={r * 0.28}
-          fill="rgba(0,0,0,.4)"
-        />
-        <circle
-          cx={cx}
-          cy={cy}
-          r={r}
-          fill={fill}
-          stroke={stroke}
-          strokeWidth={1}
-        />
-        <circle
-          cx={cx}
-          cy={cy}
-          r={r * 0.76}
-          fill="none"
-          stroke={stroke}
-          strokeWidth={0.5}
-          opacity={0.4}
-        />
-        <text
-          x={cx}
-          y={cy + 1}
-          textAnchor="middle"
-          fontSize={r * 0.65}
-          fill={stroke}
-          fontFamily="Georgia,serif"
-          fontStyle="italic"
-        >
-          ♦
-        </text>
-        <text
-          x={cx}
-          y={cy + r * 0.58}
-          textAnchor="middle"
-          fontSize={r * 0.48}
-          fill={stroke}
-          fontWeight="bold"
-          fontFamily="Georgia,serif"
-        >
-          {label}
-        </text>
-        {sub && (
-          <text
-            x={cx}
-            y={cy + r * 0.82}
-            textAnchor="middle"
-            fontSize={r * 0.34}
-            fill={stroke}
-            opacity={0.65}
-            fontFamily="Georgia,serif"
-          >
-            {sub}
-          </text>
-        )}
-      </g>
-    );
-  }
-  return (
-    <svg
-      viewBox="0 0 240 75"
-      style={{ width: "100%", maxWidth: 240, display: "block" }}
-    >
-      {sh >= 2 && (
-        <C
-          cx={32}
-          cy={36}
-          r={29}
-          fill="#b0b8c2"
-          stroke="#607080"
-          label="2/-"
-          sub="Florin"
-        />
-      )}
-      {sh === 1 && (
-        <C
-          cx={32}
-          cy={36}
-          r={25}
-          fill="#c0c8d2"
-          stroke="#7080a0"
-          label="1/-"
-          sub="Shilling"
-        />
-      )}
-      {pe >= 6 && (
-        <C
-          cx={92}
-          cy={36}
-          r={21}
-          fill="#c8d0d8"
-          stroke="#8898a8"
-          label="6d"
-          sub="Sixpence"
-        />
-      )}
-      {pe >= 4 && pe < 6 && (
-        <C cx={92} cy={36} r={18} fill="#c8a860" stroke="#907030" label="4d" />
-      )}
-      {pe >= 3 && pe < 4 && (
-        <C
-          cx={92}
-          cy={36}
-          r={17}
-          fill="#b87333"
-          stroke="#8B5A2B"
-          label="3d"
-          sub="Thrup'ny"
-        />
-      )}
-      {pe >= 2 && (
-        <C cx={144} cy={38} r={15} fill="#b87333" stroke="#8B5A2B" label="2d" />
-      )}
-      {pe >= 1 && (
-        <C
-          cx={180}
-          cy={38}
-          r={14}
-          fill="#b87333"
-          stroke="#8B5A2B"
-          label="1d"
-          sub="Penny"
-        />
-      )}
-      {pe >= 5 && sh === 0 && (
-        <C cx={33} cy={36} r={20} fill="#c8a860" stroke="#906820" label="5d" />
-      )}
-      <text
-        x={120}
-        y={68}
-        textAnchor="middle"
-        fontSize={7}
-        fill="#7a6040"
-        fontFamily="Georgia,serif"
-        fontStyle="italic"
-      >
-        Pre-decimal Irish coinage · {sh > 0 ? `${sh}s` : ""}
-        {pe > 0 ? ` ${pe}d` : ""}
-      </text>
-    </svg>
-  );
-}
+// ── Shared primitives ──────────────────────────────────────────────────────────
 
 const HRule = ({ thick }: { thick?: boolean }) => (
   <div
@@ -461,6 +197,271 @@ const SmallCap = ({ children }: { children: string }) => (
   </span>
 );
 
+// ── Guinness pint SVG ──────────────────────────────────────────────────────────
+
+function GuinnessPint({ price }: { price: string }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 8,
+      }}
+    >
+      <svg
+        viewBox="0 0 90 160"
+        width={90}
+        height={160}
+        style={{ display: "block" }}
+      >
+        <defs>
+          <linearGradient id="g-body" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stopColor="#0e0804" />
+            <stop offset="45%" stopColor="#1e1208" />
+            <stop offset="100%" stopColor="#080402" />
+          </linearGradient>
+          <linearGradient id="g-cream" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#f8f3ee" />
+            <stop offset="100%" stopColor="#e0dbd4" />
+          </linearGradient>
+          <linearGradient id="g-shine" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stopColor="rgba(255,255,255,.22)" />
+            <stop offset="50%" stopColor="rgba(255,255,255,.03)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,.07)" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M20,142 L14,58 Q12,42 20,36 L70,36 Q78,42 76,58 L70,142 Z"
+          fill="url(#g-body)"
+          stroke="rgba(255,255,255,.18)"
+          strokeWidth={0.8}
+        />
+        <path
+          d="M14,58 Q12,42 20,36 L70,36 Q78,42 76,58 Q68,50 56,53 Q45,56 34,53 Q22,50 14,58 Z"
+          fill="url(#g-cream)"
+        />
+        {[22, 33, 45, 56, 66].map((x, i) => (
+          <ellipse
+            key={i}
+            cx={x}
+            cy={45 + (i % 2) * 2}
+            rx={3.5 + (i % 3)}
+            ry={2}
+            fill="rgba(255,255,255,.55)"
+          />
+        ))}
+        <path
+          d="M20,142 L14,58 Q12,44 20,38 L26,38 L29,58 L29,142 Z"
+          fill="url(#g-shine)"
+        />
+        <text
+          x="45"
+          y="102"
+          textAnchor="middle"
+          fontSize="9"
+          fontFamily="Georgia,serif"
+          fill="rgba(255,255,255,.08)"
+          fontStyle="italic"
+        >
+          Guinness
+        </text>
+        <ellipse cx="45" cy="145" rx="25" ry="3.5" fill="rgba(0,0,0,.4)" />
+      </svg>
+      <div
+        style={{
+          border: "2px solid #1a1208",
+          background: "#f0e8d0",
+          padding: "5px 14px",
+          textAlign: "center",
+          minWidth: 80,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 8,
+            fontFamily: "Georgia,serif",
+            textTransform: "uppercase",
+            letterSpacing: 2,
+            color: "#5a4020",
+            marginBottom: 2,
+          }}
+        >
+          Price
+        </div>
+        <div
+          style={{
+            fontFamily: "'Playfair Display',Georgia,serif",
+            fontSize: 24,
+            fontWeight: 900,
+            color: "#1a1208",
+            lineHeight: 1,
+          }}
+        >
+          {price}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Price Ladder table ─────────────────────────────────────────────────────────
+
+function PriceLadderPanel({ ladder }: { ladder: PriceLadder }) {
+  const rows = [
+    { label: "Pint of Guinness", value: ladder.pint_of_guinness, icon: "🍺" },
+    { label: "Loaf of Bread", value: ladder.loaf_of_bread, icon: "🍞" },
+    { label: "Pint of Milk", value: ladder.pint_of_milk, icon: "🥛" },
+    { label: "20 Cigarettes", value: ladder.twenty_cigarettes, icon: "🚬" },
+    { label: "Weekly Wage", value: ladder.weekly_wage_labourer, icon: "💷" },
+    { label: "Average House", value: ladder.average_house_dublin, icon: "🏠" },
+  ];
+  return (
+    <div style={{ paddingTop: 6 }}>
+      {rows.map(({ label, value, icon }, i) => (
+        <div
+          key={i}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "baseline",
+            padding: "5px 0",
+            borderBottom: "1px dotted #c0b090",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "Georgia,serif",
+              fontSize: 10.5,
+              color: "#3a2810",
+            }}
+          >
+            <span style={{ marginRight: 5 }}>{icon}</span>
+            {label}
+          </span>
+          <span
+            style={{
+              fontFamily: "'Playfair Display',Georgia,serif",
+              fontWeight: 700,
+              fontSize: 13,
+              color: "#1a1208",
+            }}
+          >
+            {value || "—"}
+          </span>
+        </div>
+      ))}
+      {ladder.note && (
+        <p
+          style={{
+            fontFamily: "Georgia,serif",
+            fontSize: 10,
+            fontStyle: "italic",
+            color: "#5a4020",
+            lineHeight: 1.65,
+            marginTop: 8,
+          }}
+        >
+          {ladder.note}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ── Sport panel ────────────────────────────────────────────────────────────────
+
+function SportPanel({ sport }: { sport: SportItem[] }) {
+  return (
+    <div style={{ paddingTop: 6, columns: 2, gap: 18 }}>
+      {sport.map((s, i) => (
+        <div
+          key={i}
+          style={{
+            breakInside: "avoid",
+            marginBottom: 10,
+            paddingBottom: 10,
+            borderBottom: "1px dotted #c0b090",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 8,
+              textTransform: "uppercase",
+              letterSpacing: 2,
+              fontFamily: "Georgia,serif",
+              color: "#5a4020",
+              fontWeight: 700,
+              marginBottom: 2,
+            }}
+          >
+            {s.category}
+          </div>
+          <p
+            style={{
+              fontFamily: "Georgia,serif",
+              fontSize: 11,
+              lineHeight: 1.7,
+              color: "#2a1a08",
+            }}
+          >
+            {s.detail}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── Callout box ────────────────────────────────────────────────────────────────
+
+function CalloutBox({
+  label,
+  body,
+  accent = "#1a1208",
+}: {
+  label: string;
+  body: string;
+  accent?: string;
+}) {
+  return (
+    <div
+      style={{
+        borderLeft: `3px solid ${accent}`,
+        paddingLeft: 10,
+        marginBottom: 12,
+      }}
+    >
+      <div
+        style={{
+          fontSize: 8,
+          textTransform: "uppercase",
+          letterSpacing: 2,
+          fontFamily: "Georgia,serif",
+          color: "#5a4020",
+          fontWeight: 700,
+          marginBottom: 3,
+        }}
+      >
+        {label}
+      </div>
+      <p
+        style={{
+          fontFamily: "Georgia,serif",
+          fontSize: 11,
+          lineHeight: 1.75,
+          color: "#2a1a08",
+          textAlign: "justify",
+        }}
+      >
+        {body}
+      </p>
+    </div>
+  );
+}
+
+// ── Audio ──────────────────────────────────────────────────────────────────────
+
 function playRustle() {
   try {
     const ctx = new (
@@ -477,7 +478,6 @@ function playRustle() {
     bpf.frequency.value = 600;
     bpf.Q.value = 0.5;
     const gain = ctx.createGain();
-    // Fade in, hold briefly, then fade out slowly
     gain.gain.setValueAtTime(0, ctx.currentTime);
     gain.gain.linearRampToValueAtTime(0.045, ctx.currentTime + 0.08);
     gain.gain.setValueAtTime(0.045, ctx.currentTime + 0.2);
@@ -488,36 +488,29 @@ function playRustle() {
     src.start();
     src.stop(ctx.currentTime + duration);
   } catch (_) {
-    /* audio blocked — silent fail */
+    /* silent fail */
   }
 }
+
+// ── Page ───────────────────────────────────────────────────────────────────────
 
 export default function YearPage({ content }: { content: YearData }) {
   const router = useRouter();
   const { year } = content;
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const ALL_YEARS = Array.from({ length: 85 }, (_, i) => 1916 + i);
+  const HALF = 7;
+  const winStart = Math.max(1916, Math.min(year - HALF, 2000 - HALF * 2));
+  const visibleYears = ALL_YEARS.slice(winStart - 1916, winStart - 1916 + 15);
 
   const go = useCallback(
     (y: number) => {
-      if (y < 1916 || y > 1926) return;
+      if (y < 1916 || y > 2000) return;
       playRustle();
-      const el = overlayRef.current;
-      if (!el) {
-        router.push(`/${y}`);
-        return;
-      }
-      el.classList.add("sweeping");
-      setTimeout(() => {
-        router.push(`/${y}`);
-        setTimeout(() => {
-          el.classList.remove("sweeping");
-          el.classList.add("retreating");
-          setTimeout(() => el.classList.remove("retreating"), 200);
-        }, 60);
-      }, 180);
+      router.push(`/${y}`);
     },
     [router],
   );
+
   useEffect(() => {
     const fn = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") go(year - 1);
@@ -527,9 +520,15 @@ export default function YearPage({ content }: { content: YearData }) {
     return () => window.removeEventListener("keydown", fn);
   }, [year, go]);
 
+  // useState for typewriter (state must be declared before any early effects)
+  const [typedHeadline, setTypedHeadline] = useState("");
+  const [cursorVisible, setCursorVisible] = useState(true);
+
   const price = content.price_of_a_pint ?? "";
-  const pintDisp = parsePintPrice(price);
-  const popNum = content.population_estimate.match(/[\d,]+/)?.[0] ?? "";
+  const pintDisp =
+    content.price_ladder?.pint_of_guinness ?? parsePintPrice(price);
+  const popNum =
+    content.population_estimate.match(/\b\d{3,}(?:,\d{3})+\b/)?.[0] ?? "";
   const [headlineEvent, ...otherEvents] = content.major_events;
   const headlineText = ev(headlineEvent);
   const [rawHeadlineTitle, ...headlineBody] = headlineText.split(" — ");
@@ -538,24 +537,183 @@ export default function YearPage({ content }: { content: YearData }) {
     .replace(/,\s+[A-Z][a-z]+\.?\s+\d+.*$/, "")
     .trim();
 
+  // Typewriter effect — only animates the last 5 characters
+  const fullHeadline = headlineTitle?.trim() || `Dublin in ${year}`;
+  const headlinePrefix = fullHeadline.slice(0, -5);
+  const headlineSuffix = fullHeadline.slice(-5);
+  useEffect(() => {
+    setTypedHeadline("");
+    setCursorVisible(true);
+    const delay = 120;
+    let i = 0;
+    const ticker = setInterval(() => {
+      i++;
+      setTypedHeadline(headlineSuffix.slice(0, i));
+      if (i >= headlineSuffix.length) {
+        clearInterval(ticker);
+        let blinks = 0;
+        const blinker = setInterval(() => {
+          setCursorVisible((v) => !v);
+          if (++blinks >= 6) {
+            clearInterval(blinker);
+            setCursorVisible(false);
+          }
+        }, 300);
+      }
+    }, delay);
+    return () => clearInterval(ticker);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [year]);
+
+  // Paper background per era — mirrors the SSG <style> blocks below
+  const paperBg =
+    year <= 1919
+      ? "#f0e4c4"
+      : year <= 1929
+        ? "#f0e8d0"
+        : year <= 1940
+          ? "#f5f3ee"
+          : year <= 1945
+            ? "#ddd8c0"
+            : year <= 1959
+              ? "#ece8dc"
+              : year <= 1969
+                ? "#fafaf8"
+                : year <= 1979
+                  ? "#f0ede4"
+                  : year <= 1989
+                    ? "#f2efea"
+                    : "#ffffff";
+
+  // Masthead background colour per era
+  const mastheadBg =
+    year <= 1919
+      ? "#1a0804" // wartime brown-black
+      : year <= 1929
+        ? "#0d2818" // Free State deep green
+        : year <= 1940
+          ? "#1c1004" // Depression dark umber
+          : year <= 1945
+            ? "#141414" // Emergency near-black
+            : year <= 1959
+              ? "#0a1a2e" // Post-war navy
+              : year <= 1969
+                ? "#1a280e" // Modernising dark teal
+                : year <= 1979
+                  ? "#1a1404" // Troubles olive-black
+                  : year <= 1989
+                    ? "#1c1c1e" // Recession charcoal
+                    : "#0f0f12"; // Celtic Tiger near-black
+
+  // Masthead text/accent colour per era
+  const mastheadText =
+    year <= 1919
+      ? "#f0dfc0"
+      : year <= 1929
+        ? "#d4ecc8"
+        : year <= 1940
+          ? "#f0e4c0"
+          : year <= 1945
+            ? "#d8d8d4"
+            : year <= 1959
+              ? "#c8d8e8"
+              : year <= 1969
+                ? "#c8e8c0"
+                : year <= 1979
+                  ? "#e8dcc0"
+                  : year <= 1989
+                    ? "#e8e4df"
+                    : "#ffffff";
+
+  // Tagline beneath masthead title
+  const mastheadTagline =
+    year <= 1919
+      ? "For King & Country · Dublin, Ireland"
+      : year <= 1929
+        ? "Faithful to the Free State · Dublin, Ireland"
+        : year <= 1940
+          ? "Steady Through Lean Times · Dublin, Ireland"
+          : year <= 1945
+            ? "Steadfast in the Emergency · Dublin, Éire"
+            : year <= 1959
+              ? "Building a New Ireland · Dublin, Ireland"
+              : year <= 1969
+                ? "Dublin Forward · All the News Worth Knowing"
+                : year <= 1979
+                  ? "Reporting Dublin through Difficult Days"
+                  : year <= 1989
+                    ? "The Independent Voice of Dublin"
+                    : "DUBLIN · IRELAND · THE WORLD";
+
+  // Newspaper price per era
+  const mastheadPrice =
+    year <= 1919
+      ? "Price: One Halfpenny"
+      : year <= 1929
+        ? "Price: One Penny"
+        : year <= 1945
+          ? "Price: One Penny"
+          : year <= 1959
+            ? "Price: Twopence"
+            : year <= 1969
+              ? "Price: Threepence"
+              : year <= 1979
+                ? "Price: 5p"
+                : year <= 1989
+                  ? "Price: 20p"
+                  : "Price: £1.00";
+
+  // Masthead title font per era
+  const mastheadFont =
+    year <= 1929
+      ? "'UnifrakturMaguntia','Times New Roman',serif"
+      : year <= 1940
+        ? "'IM Fell English','Times New Roman',serif"
+        : year <= 1945
+          ? "'UnifrakturMaguntia','Times New Roman',serif"
+          : year <= 1969
+            ? "'Playfair Display',Georgia,serif"
+            : year <= 1989
+              ? "'Libre Baskerville',Georgia,serif"
+              : "'Arial Black','Impact','Helvetica Neue',sans-serif";
+
+  // Masthead accent/rule colour per era
+  const mastheadAccent =
+    year <= 1919
+      ? "#b09040"
+      : year <= 1929
+        ? "#3a8030"
+        : year <= 1940
+          ? "#505050"
+          : year <= 1945
+            ? "#504a40"
+            : year <= 1959
+              ? "#2a5888"
+              : year <= 1969
+                ? "#408840"
+                : year <= 1979
+                  ? "#cc2020"
+                  : year <= 1989
+                    ? "#7040aa"
+                    : "#00b4d8";
+
   const stats = [
     { label: "City Population", value: popNum, sub: "city boundary" },
     { label: "Price of a Pint", value: pintDisp, sub: "Guinness stout" },
     {
-      label: "Year of the State",
-      value: year >= 1922 ? `Yr ${year - 1921}` : "—",
-      sub: "Irish Free State",
-    },
-    {
-      label: "Years Since Rising",
-      value: year === 1916 ? "The Rising" : String(year - 1916),
-      sub: "Easter 1916",
+      label: "Taoiseach",
+      value: content.taoiseach?.split(" ").slice(0, 2).join(" ") ?? "—",
+      sub: "in office",
     },
     {
       label: "Era",
-      value:
-        year <= 1920 ? "Conflict" : year <= 1923 ? "Civil War" : "Recovery",
+      value: getEra(year),
       sub: content.timeline_tags[0]?.replace(/_/g, " ") ?? "",
+    },
+    {
+      label: "Since the Rising",
+      value: year === 1916 ? "The Rising" : `${year - 1916} yrs`,
+      sub: "Easter 1916",
     },
   ];
 
@@ -567,93 +725,195 @@ export default function YearPage({ content }: { content: YearData }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap');
           *{box-sizing:border-box;margin:0;padding:0}
           body{background:#e8dfc8}
           ::selection{background:#1a1208;color:#f0e8d0}
-
-          /* ── Hero image ───────────────────────────────────────────── */
-          .hero-img-wrap{width:100%;margin-bottom:12px}
-          .hero-img-wrap img{width:100%;height:280px;object-fit:cover;display:block;filter:sepia(.8) contrast(1.12) brightness(.9);border:1px solid #b0a080}
-          .hero-img-placeholder{width:100%;height:280px;background:#e0d8c0;border:1px solid #b0a080;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:12px;gap:8px}
-          @media(max-width:640px){
-            .hero-img-wrap img{height:220px}
-            .hero-img-placeholder{height:180px}
-          }
           .stats-banner{display:grid;grid-template-columns:repeat(5,1fr);background:#e8dfc8;border-bottom:3px double #1a1208}
           .stats-banner .stat{padding:10px 12px;text-align:center;border-right:1px solid #b0a080}
           .stats-banner .stat:last-child{border-right:none}
-          /* On mobile: 2 columns with the last item full-width */
           @media(max-width:640px){
             .stats-banner{grid-template-columns:1fr 1fr}
             .stats-banner .stat{border-right:none;border-bottom:1px solid #b0a080}
             .stats-banner .stat:nth-child(odd){border-right:1px solid #b0a080}
             .stats-banner .stat:last-child{grid-column:1/-1;border-right:none}
           }
-
-          /* ── Paper grid ───────────────────────────────────────────── */
           .paper-grid{display:grid;grid-template-columns:220px 10px 1fr 10px 230px}
           @media(max-width:1100px){.paper-grid{grid-template-columns:1fr}}
           @media(max-width:1100px){.paper-grid>*:nth-child(2),.paper-grid>*:nth-child(4){display:none}}
-
-          /* Page-turn overlay */
           .page-turn-overlay{position:fixed;inset:0;z-index:998;pointer-events:none;background:#f0e4c0;clip-path:inset(0 100% 0 0);transition:clip-path 0.18s ease-in}
           .page-turn-overlay.sweeping{clip-path:inset(0 0% 0 0)}
           .page-turn-overlay.retreating{clip-path:inset(0 0 0 100%);transition:clip-path 0.18s ease-out}
-
-          /* Paper texture & vignette */
           .paper-texture::before{content:'';position:fixed;inset:0;z-index:997;pointer-events:none;opacity:0.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat;background-size:200px 200px}
           .paper-texture::after{content:'';position:fixed;inset:0;z-index:996;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(26,18,8,0.18) 100%)}
-
-          @media print{
-            nav{display:none!important}
-            body{background:#fff!important}
-            .paper-grid{grid-template-columns:1fr 2fr 1fr!important}
-            *{color:#000!important;box-shadow:none!important}
-            img{filter:none!important}
-          }
+          .north-box{border:2px solid #8b0000;background:#fdf5f5;padding:12px;margin:10px 0}
+          @media print{nav{display:none!important}body{background:#fff!important}.paper-grid{grid-template-columns:1fr 2fr 1fr!important}*{color:#000!important}img{filter:none!important}}
+          .year-carousel::-webkit-scrollbar{display:none}
         `}</style>
-      </Head>
 
-      <div ref={overlayRef} className="page-turn-overlay" />
+        {/* ── 1916–1919: Wartime parchment, heavy vignette ── */}
+        {year >= 1916 && year <= 1919 && (
+          <style>{`
+          body{background:#f0e4c4}
+          .paper-texture{background:#f0e4c4 !important}
+          .paper-texture::before{opacity:0.06}
+          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 50%,rgba(26,18,8,0.25) 100%) !important}
+          .stats-banner{background:#ede4c8 !important;border-bottom:4px double #1a1208 !important}
+          .stats-banner .stat{border-right-color:#8a7040 !important}
+          .page-turn-overlay{background:#ede4c8}
+        `}</style>
+        )}
+
+        {/* ── 1920–1929: Free State warm cream ── */}
+        {year >= 1920 && year <= 1929 && (
+          <style>{`
+          body{background:#f0e8d0}
+          .paper-texture{background:#f0e8d0 !important}
+          .paper-texture::before{opacity:0.035}
+          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 55%,rgba(26,18,8,0.15) 100%) !important}
+          .stats-banner{background:#ece4c8 !important;border-bottom:3px double #1a1208 !important}
+          .stats-banner .stat{border-right-color:#b0a080 !important}
+          .page-turn-overlay{background:#ece4c8}
+        `}</style>
+        )}
+
+        {/* ── 1930–1940: Depression, lighter paper, IM Fell English ── */}
+        {year >= 1930 && year <= 1940 && (
+          <style>{`
+          body{background:#f2f0ea}
+          .paper-texture{background:#f5f3ee !important;font-family:'IM Fell English','Lora',Georgia,serif !important}
+          .paper-texture::before{opacity:0.025}
+          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 60%,rgba(26,18,8,0.06) 100%) !important}
+          .stats-banner{background:#f5f3ee !important;border-bottom:2px solid #c8bfa0 !important}
+          .stats-banner .stat{border-right-color:#c8bfa0 !important}
+          .page-turn-overlay{background:#f5f3ee}
+        `}</style>
+        )}
+
+        {/* ── 1941–1945: Emergency, greyish newsprint, heavy vignette ── */}
+        {year >= 1941 && year <= 1945 && (
+          <style>{`
+          body{background:#ddd8c0}
+          .paper-texture{background:#ddd8c0 !important}
+          .paper-texture::before{opacity:0.055}
+          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 50%,rgba(26,18,8,0.22) 100%) !important}
+          .stats-banner{background:#d0c8a8 !important;border-bottom:4px double #1a1208 !important}
+          .stats-banner .stat{border-right-color:#a09070 !important}
+          .page-turn-overlay{background:#d8d0b8}
+        `}</style>
+        )}
+
+        {/* ── 1946–1959: Post-War, warm grey newsprint ── */}
+        {year >= 1946 && year <= 1959 && (
+          <style>{`
+          body{background:#ece8dc}
+          .paper-texture{background:#ece8dc !important}
+          .paper-texture::before{opacity:0.03}
+          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 58%,rgba(26,18,8,0.12) 100%) !important}
+          .stats-banner{background:#e4e0d4 !important;border-bottom:2px solid #888 !important}
+          .stats-banner .stat{border-right-color:#b0a890 !important}
+          .page-turn-overlay{background:#e8e4d8}
+        `}</style>
+        )}
+
+        {/* ── 1960–1969: Modernising, near-white, no vignette, Libre Baskerville ── */}
+        {year >= 1960 && year <= 1969 && (
+          <style>{`
+          body{background:#fafaf8}
+          .paper-texture{background:#fafaf8 !important;font-family:'Libre Baskerville','Lora',Georgia,serif !important}
+          .paper-texture::before{opacity:0.015}
+          .paper-texture::after{display:none !important}
+          .stats-banner{background:#f0f0ee !important;border-bottom:2px solid #888 !important}
+          .stats-banner .stat{border-right-color:#d0d0d0 !important}
+          .page-turn-overlay{background:#f8f8f6}
+        `}</style>
+        )}
+
+        {/* ── 1970–1979: Troubles, off-white, deep border, red north-box ── */}
+        {year >= 1970 && year <= 1979 && (
+          <style>{`
+          body{background:#f0ede4}
+          .paper-texture{background:#f0ede4 !important}
+          .paper-texture::before{opacity:0.03}
+          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 55%,rgba(26,18,8,0.12) 100%) !important}
+          .stats-banner{background:#e8e4d8 !important;border-bottom:3px solid #1a1208 !important}
+          .stats-banner .stat{border-right-color:#c0b090 !important}
+          .north-box{border:2px solid #8b0000;background:#fdf5f5}
+          .page-turn-overlay{background:#ede8dc}
+        `}</style>
+        )}
+
+        {/* ── 1980–1989: Recession, pale cream, thin border ── */}
+        {year >= 1980 && year <= 1989 && (
+          <style>{`
+          body{background:#f2efea}
+          .paper-texture{background:#f2efea !important}
+          .paper-texture::before{opacity:0.02}
+          .paper-texture::after{display:none !important}
+          .stats-banner{background:#ece8e0 !important;border-bottom:1px solid #aaa !important}
+          .stats-banner .stat{border-right-color:#c8c0b0 !important}
+          .page-turn-overlay{background:#eeeae4}
+        `}</style>
+        )}
+
+        {/* ── 1990–2000: Celtic Tiger, pure white, no vignette ── */}
+        {year >= 1990 && year <= 2000 && (
+          <style>{`
+          body{background:#ffffff}
+          .paper-texture{background:#ffffff !important}
+          .paper-texture::before{opacity:0.01}
+          .paper-texture::after{display:none !important}
+          .stats-banner{background:#f8f8f8 !important;border-bottom:2px solid #1a1208 !important}
+          .stats-banner .stat{border-right-color:#e0e0e0 !important}
+          .page-turn-overlay{background:#f8f8f8}
+        `}</style>
+        )}
+      </Head>
 
       <div
         className="paper-texture"
         style={{
-          background: "#f0e8d0",
+          background: paperBg,
           color: "#1a1208",
           fontFamily: "'Lora','Times New Roman',Georgia,serif",
           minHeight: "100vh",
           paddingBottom: 90,
         }}
       >
-        {/* ══ MASTHEAD ════════════════════════════════════════════════ */}
+        {/* ══ MASTHEAD ══════════════════════════════════════════════════════════ */}
         <div
-          style={{ background: "#1a1208", color: "#f0e8d0", padding: "0 28px" }}
+          style={{
+            background: mastheadBg,
+            color: mastheadText,
+            padding: "0 28px",
+          }}
         >
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
-              borderBottom: "1px solid rgba(240,232,208,.2)",
+              borderBottom: `1px solid ${mastheadAccent}55`,
               padding: "5px 0",
               fontSize: 8,
-              fontFamily: "Georgia,serif",
-              letterSpacing: 2,
+              fontFamily:
+                year >= 1990
+                  ? "'Helvetica Neue',Arial,sans-serif"
+                  : "Georgia,serif",
+              letterSpacing: year >= 1990 ? 3 : 2,
               textTransform: "uppercase",
             }}
           >
             <span>Established 1859 · Vol. {year - 1859}</span>
             <span>The Newspaper of Record for the Irish Capital</span>
-            <span>Price: One Penny</span>
+            <span>{mastheadPrice}</span>
           </div>
           <div style={{ textAlign: "center", padding: "14px 0 6px" }}>
             <div
               style={{
-                fontFamily: "'UnifrakturMaguntia','Times New Roman',serif",
+                fontFamily: mastheadFont,
                 fontSize: "clamp(40px,7vw,84px)",
                 lineHeight: 1,
-                letterSpacing: 3,
+                letterSpacing: year >= 1990 ? -2 : 3,
               }}
             >
               The Dublin Chronicle
@@ -665,26 +925,32 @@ export default function YearPage({ content }: { content: YearData }) {
                 gap: 14,
                 justifyContent: "center",
                 marginTop: 6,
-                fontSize: 8,
-                letterSpacing: 3,
+                fontSize: year >= 1990 ? 7 : 8,
+                letterSpacing: year >= 1990 ? 6 : 3,
                 textTransform: "uppercase",
-                fontFamily: "Georgia,serif",
-                opacity: 0.6,
+                fontFamily:
+                  year >= 1990
+                    ? "'Helvetica Neue',Arial,sans-serif"
+                    : "Georgia,serif",
+                opacity: 0.7,
+                color: year >= 1990 ? mastheadAccent : mastheadText,
               }}
             >
               <div
                 style={{
                   flex: 1,
-                  height: 1,
-                  background: "rgba(240,232,208,.25)",
+                  height: year >= 1990 ? 2 : 1,
+                  background: mastheadAccent,
+                  opacity: year >= 1990 ? 0.7 : 0.27,
                 }}
               />
-              All the News Fit to Print · Dublin, Ireland
+              {mastheadTagline}
               <div
                 style={{
                   flex: 1,
-                  height: 1,
-                  background: "rgba(240,232,208,.25)",
+                  height: year >= 1990 ? 2 : 1,
+                  background: mastheadAccent,
+                  opacity: year >= 1990 ? 0.7 : 0.27,
                 }}
               />
             </div>
@@ -694,21 +960,24 @@ export default function YearPage({ content }: { content: YearData }) {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              borderTop: "1px solid rgba(240,232,208,.2)",
+              borderTop: `${year >= 1990 ? 3 : 1}px solid ${year >= 1990 ? mastheadAccent : mastheadText + "33"}`,
               padding: "5px 0",
               fontSize: 9,
-              fontFamily: "Georgia,serif",
+              fontFamily:
+                year >= 1990
+                  ? "'Helvetica Neue',Arial,sans-serif"
+                  : "Georgia,serif",
             }}
           >
             <span style={{ fontStyle: "italic" }}>Dublin · Ireland</span>
             <span style={{ letterSpacing: 3, fontWeight: 700, fontSize: 11 }}>
               The Year of Our Lord {year} · Final Edition
             </span>
-            <span style={{ fontStyle: "italic" }}>One Penny</span>
+            <span style={{ fontStyle: "italic" }}>{mastheadPrice}</span>
           </div>
         </div>
 
-        {/* ══ STATS BANNER — responsive grid ═══════════════════════════ */}
+        {/* ══ STATS BANNER ══════════════════════════════════════════════════════ */}
         <div className="stats-banner">
           {stats.map((s, i) => (
             <div key={i} className="stat">
@@ -727,9 +996,9 @@ export default function YearPage({ content }: { content: YearData }) {
               <div
                 style={{
                   fontFamily: "'Playfair Display',Georgia,serif",
-                  fontSize: "clamp(18px,2.5vw,28px)",
+                  fontSize: "clamp(14px,2vw,22px)",
                   fontWeight: 900,
-                  lineHeight: 1,
+                  lineHeight: 1.1,
                   color: "#1a1208",
                 }}
               >
@@ -750,7 +1019,7 @@ export default function YearPage({ content }: { content: YearData }) {
           ))}
         </div>
 
-        {/* ══ SPLASH HEAD ═════════════════════════════════════════════ */}
+        {/* ══ SPLASH HEAD ═══════════════════════════════════════════════════════ */}
         <div
           style={{
             padding: "10px 28px 8px",
@@ -785,7 +1054,15 @@ export default function YearPage({ content }: { content: YearData }) {
                 margin: "0 auto 8px",
               }}
             >
-              {headlineTitle?.trim() || `Dublin in ${year}`}
+              {headlinePrefix}
+              {typedHeadline}
+              <span
+                style={{
+                  opacity: cursorVisible ? 1 : 0,
+                  borderRight: "3px solid currentColor",
+                  marginLeft: 2,
+                }}
+              />
             </h1>
             {headlineBody.length > 0 && (
               <p
@@ -804,46 +1081,7 @@ export default function YearPage({ content }: { content: YearData }) {
           </div>
         </div>
 
-        {/* ══ HERO IMAGE — full width, outside columns ════════════ */}
-        {content.imageUrl ? (
-          <div
-            style={{
-              maxWidth: 1240,
-              margin: "0 auto",
-              padding: "0 20px",
-              borderLeft: "1px solid #b0a080",
-              borderRight: "1px solid #b0a080",
-            }}
-          >
-            <img
-              src={content.imageUrl}
-              alt={`Dublin ${year}`}
-              style={{
-                width: "100%",
-                height: "clamp(180px, 35vw, 320px)",
-                objectFit: "cover",
-                display: "block",
-                filter: "sepia(.8) contrast(1.12) brightness(.9)",
-                border: "1px solid #b0a080",
-              }}
-            />
-            <p
-              style={{
-                fontSize: 8,
-                fontStyle: "italic",
-                fontFamily: "Georgia,serif",
-                color: "#7a6040",
-                padding: "3px 2px",
-                borderBottom: "1px solid #b0a080",
-              }}
-            >
-              A scene from Dublin, {year}. Photographed for The Dublin
-              Chronicle.
-            </p>
-          </div>
-        ) : null}
-
-        {/* ══ 3-COLUMN BODY ═══════════════════════════════════════════ */}
+        {/* ══ 3-COLUMN BODY ══════════════════════════════════════════════════════ */}
         <div
           style={{
             maxWidth: 1240,
@@ -854,7 +1092,7 @@ export default function YearPage({ content }: { content: YearData }) {
           }}
         >
           <div className="paper-grid">
-            {/* ── LEFT ─────────────────────────────────────────────── */}
+            {/* ── LEFT COLUMN ───────────────────────────────────────────────── */}
             <div style={{ padding: "12px 14px 12px 0" }}>
               <SecHead>A Year in Dublin</SecHead>
               {content.timeline_summary
@@ -866,30 +1104,42 @@ export default function YearPage({ content }: { content: YearData }) {
                     {s.endsWith(".") ? "" : "."}
                   </BodyText>
                 ))}
+
               <HRule />
               <SecHead>Our Correspondent Reports</SecHead>
-              <div style={{ padding: "8px 0" }}>
-                <div
+              <div
+                style={{
+                  borderLeft: "3px solid #1a1208",
+                  paddingLeft: 10,
+                  marginBottom: 10,
+                }}
+              >
+                <p
                   style={{
-                    borderLeft: "3px solid #1a1208",
-                    paddingLeft: 10,
-                    marginBottom: 10,
+                    fontFamily: "Georgia,serif",
+                    fontSize: 12,
+                    lineHeight: 1.85,
+                    fontStyle: "italic",
+                    color: "#2a1a08",
+                    textAlign: "justify",
                   }}
                 >
-                  <p
-                    style={{
-                      fontFamily: "Georgia,serif",
-                      fontSize: 12,
-                      lineHeight: 1.85,
-                      fontStyle: "italic",
-                      color: "#2a1a08",
-                      textAlign: "justify",
-                    }}
-                  >
-                    {content.visual_scene}
-                  </p>
-                </div>
+                  {content.visual_scene}
+                </p>
               </div>
+
+              {content.irish_first && (
+                <>
+                  <HRule />
+                  <SecHead>An Irish First</SecHead>
+                  <CalloutBox
+                    label="First in Ireland"
+                    body={content.irish_first}
+                    accent="#2a5a2a"
+                  />
+                </>
+              )}
+
               <HRule />
               <SecHead>Notable Addresses</SecHead>
               <div id="key-locations" style={{ paddingTop: 6 }}>
@@ -931,6 +1181,7 @@ export default function YearPage({ content }: { content: YearData }) {
                   );
                 })}
               </div>
+
               <HRule />
               <SecHead>Building &amp; Architecture</SecHead>
               <div style={{ paddingTop: 6 }}>
@@ -974,6 +1225,34 @@ export default function YearPage({ content }: { content: YearData }) {
                   );
                 })}
               </div>
+
+              {/* Notable Death */}
+              {content.notable_death && (
+                <>
+                  <HRule />
+                  <SecHead>Obituary</SecHead>
+                  <div
+                    style={{
+                      borderLeft: "3px solid #4a3418",
+                      paddingLeft: 10,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontFamily: "Georgia,serif",
+                        fontSize: 11,
+                        lineHeight: 1.8,
+                        fontStyle: "italic",
+                        color: "#2a1a08",
+                      }}
+                    >
+                      {content.notable_death}
+                    </p>
+                  </div>
+                </>
+              )}
+
               <DeathNotices
                 year={year}
                 notableDubliners={content.notable_dubliners ?? []}
@@ -982,8 +1261,41 @@ export default function YearPage({ content }: { content: YearData }) {
 
             <ColRule />
 
-            {/* ── CENTRE ───────────────────────────────────────────── */}
+            {/* ── CENTRE COLUMN ─────────────────────────────────────────────── */}
             <div style={{ padding: "12px 20px" }}>
+              {/* Northern headline — conditional, only for Troubles era */}
+              {content.north_headline && (
+                <>
+                  <div className="north-box">
+                    <div
+                      style={{
+                        fontSize: 8,
+                        textTransform: "uppercase",
+                        letterSpacing: 2,
+                        fontFamily: "Georgia,serif",
+                        color: "#8b0000",
+                        fontWeight: 700,
+                        marginBottom: 4,
+                      }}
+                    >
+                      The North · Dispatches from the Border
+                    </div>
+                    <p
+                      style={{
+                        fontFamily: "Georgia,serif",
+                        fontSize: 11.5,
+                        lineHeight: 1.8,
+                        color: "#1a1208",
+                        textAlign: "justify",
+                      }}
+                    >
+                      {content.north_headline}
+                    </p>
+                  </div>
+                  <HRule />
+                </>
+              )}
+
               <SecHead>Affairs of the Nation &amp; the City</SecHead>
               <div style={{ paddingTop: 6, columns: 2, gap: 18 }}>
                 {otherEvents.map((e, i) => {
@@ -1053,16 +1365,28 @@ export default function YearPage({ content }: { content: YearData }) {
                   was suspended owing to the disruptions of that year.
                 </div>
               )}
-              <HRule />
 
-              <SecHead>The Political Landscape</SecHead>
-              <div style={{ padding: "8px 0" }}>
-                <PoliticalBreakdown year={year} />
-              </div>
-              <HRule />
+              {/* Sport */}
+              {content.sport && content.sport.length > 0 && (
+                <>
+                  <HRule />
+                  <SecHead>Sport &amp; Pastimes</SecHead>
+                  <SportPanel sport={content.sport} />
+                </>
+              )}
+
+              {hasPoliticalData(year) && (
+                <>
+                  <HRule />
+                  <div style={{ padding: "8px 0" }}>
+                    <PoliticalBreakdown year={year} />
+                  </div>
+                </>
+              )}
 
               {content.elections.length > 0 && (
                 <>
+                  <HRule />
                   <SecHead>Elections &amp; the Ballot</SecHead>
                   {content.elections.map((el, i) => (
                     <div
@@ -1107,10 +1431,10 @@ export default function YearPage({ content }: { content: YearData }) {
                       <BodyText size={12}>{el.result_summary}</BodyText>
                     </div>
                   ))}
-                  <HRule />
                 </>
               )}
 
+              <HRule />
               <SecHead>City Dispatches</SecHead>
               <div style={{ paddingTop: 6, columns: 2, gap: 18 }}>
                 {content.city_changes.map((c, i) => {
@@ -1147,92 +1471,40 @@ export default function YearPage({ content }: { content: YearData }) {
               </div>
               <HRule thick />
 
+              {/* Quirky story */}
+              {content.quirky_story && (
+                <>
+                  <SecHead>The Talk of the Town</SecHead>
+                  <div
+                    style={{
+                      border: "1px solid #b0a080",
+                      background: "#e8dfc8",
+                      padding: "12px 14px",
+                      marginBottom: 12,
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontFamily: "Georgia,serif",
+                        fontSize: 11.5,
+                        lineHeight: 1.8,
+                        color: "#1a1208",
+                        fontStyle: "italic",
+                        textAlign: "justify",
+                      }}
+                    >
+                      {content.quirky_story}
+                    </p>
+                  </div>
+                  <HRule />
+                </>
+              )}
+
               {content.what_was_on && content.what_was_on.length > 0 && (
                 <>
                   <SecHead>Arts, Theatre &amp; Culture</SecHead>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: 14,
-                      margin: "8px 0 12px",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <div style={{ flex: "0 0 50%" }}>
-                      <img
-                        src={`/images/dublin/${year}-culture.png`}
-                        alt={`Dublin arts & culture ${year}`}
-                        onError={(e) => {
-                          (
-                            e.target as HTMLImageElement
-                          ).parentElement!.style.display = "none";
-                        }}
-                        style={{
-                          width: "100%",
-                          border: "1px solid #b0a080",
-                          display: "block",
-                          filter: "sepia(.6) contrast(1.1) brightness(.92)",
-                        }}
-                      />
-                      <p
-                        style={{
-                          fontSize: 8,
-                          fontStyle: "italic",
-                          fontFamily: "Georgia,serif",
-                          color: "#7a6040",
-                          padding: "3px 2px",
-                          borderBottom: "1px solid #b0a080",
-                        }}
-                      >
-                        Arts &amp; culture in Dublin, {year}.
-                      </p>
-                    </div>
-                    {content.what_was_on[0] &&
-                      (() => {
-                        const ci = content.what_was_on[0].indexOf(":");
-                        const cat =
-                          ci !== -1
-                            ? content.what_was_on[0].slice(0, ci)
-                            : content.what_was_on[0];
-                        const body =
-                          ci !== -1 ? content.what_was_on[0].slice(ci + 1) : "";
-                        return (
-                          <div
-                            style={{
-                              flex: 1,
-                              borderLeft: "1px solid #b0a080",
-                              paddingLeft: 14,
-                            }}
-                          >
-                            <div
-                              style={{
-                                fontSize: 8,
-                                textTransform: "uppercase",
-                                letterSpacing: 2,
-                                fontFamily: "Georgia,serif",
-                                color: "#5a4020",
-                                fontWeight: 700,
-                                marginBottom: 4,
-                              }}
-                            >
-                              {cat.trim()}
-                            </div>
-                            <p
-                              style={{
-                                fontFamily: "Georgia,serif",
-                                fontSize: 11,
-                                lineHeight: 1.75,
-                                color: "#2a1a08",
-                              }}
-                            >
-                              {body.trim()}
-                            </p>
-                          </div>
-                        );
-                      })()}
-                  </div>
                   <div style={{ paddingTop: 6, columns: 2, gap: 18 }}>
-                    {content.what_was_on.slice(1).map((item, i) => {
+                    {content.what_was_on.map((item, i) => {
                       const ci = item.indexOf(":");
                       const cat = ci !== -1 ? item.slice(0, ci) : item;
                       const body = ci !== -1 ? item.slice(ci + 1) : "";
@@ -1293,13 +1565,61 @@ export default function YearPage({ content }: { content: YearData }) {
                 </>
               )}
 
-              <DublinMap year={year} keyLocations={content.key_locations} />
+              {/* Commerce & Industry */}
+              <SecHead>Commerce &amp; Industry</SecHead>
+              <div style={{ paddingTop: 6 }}>
+                {content.major_industries.map((industry, i) => {
+                  const { name, detail } = ind(industry);
+                  return (
+                    <div
+                      key={i}
+                      style={{
+                        marginBottom: 9,
+                        paddingBottom: 9,
+                        borderBottom: "1px dotted #c0b090",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontFamily: "'Playfair Display',serif",
+                          fontWeight: 700,
+                          fontSize: 12,
+                          marginBottom: 2,
+                        }}
+                      >
+                        {name}
+                      </div>
+                      {detail && (
+                        <p
+                          style={{
+                            fontFamily: "Georgia,serif",
+                            fontSize: 10.5,
+                            lineHeight: 1.7,
+                            color: "#3a2810",
+                          }}
+                        >
+                          {detail}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              <HRule />
+
+              {/* Currency display */}
+              <CurrencyAd year={year} />
+              <HRule />
             </div>
 
             <ColRule />
 
-            {/* ── RIGHT ────────────────────────────────────────────── */}
+            {/* ── RIGHT COLUMN ──────────────────────────────────────────────── */}
             <div style={{ padding: "12px 0 12px 14px" }}>
+              {/* Era-relevant period ad */}
+              <CigaretteAd year={year} />
+
+              {/* Price of a Pint */}
               <SecHead>The Price of a Pint</SecHead>
               <div
                 style={{
@@ -1311,9 +1631,6 @@ export default function YearPage({ content }: { content: YearData }) {
                 }}
               >
                 <GuinnessPint price={pintDisp} />
-                <div style={{ width: "100%" }}>
-                  <PreDecimalCoins text={pintDisp || "4d"} />
-                </div>
                 <p
                   style={{
                     fontFamily: "Georgia,serif",
@@ -1330,7 +1647,62 @@ export default function YearPage({ content }: { content: YearData }) {
                   {price || "Price not recorded for this year."}
                 </p>
               </div>
+
+              {/* Price Ladder */}
+              {content.price_ladder && (
+                <>
+                  <HRule />
+                  <SecHead>The Price of Things</SecHead>
+                  <PriceLadderPanel ladder={content.price_ladder} />
+                </>
+              )}
               <HRule />
+
+              {/* Number One Song */}
+              {content.number_one_song && (
+                <>
+                  <SecHead>On the Wireless</SecHead>
+                  <div style={{ padding: "8px 0 10px", textAlign: "center" }}>
+                    <div
+                      style={{
+                        fontSize: 8,
+                        textTransform: "uppercase",
+                        letterSpacing: 2,
+                        fontFamily: "Georgia,serif",
+                        color: "#5a4020",
+                        marginBottom: 4,
+                      }}
+                    >
+                      No. 1 Song of the Year
+                    </div>
+                    <p
+                      style={{
+                        fontFamily: "Georgia,serif",
+                        fontSize: 11,
+                        lineHeight: 1.75,
+                        fontStyle: "italic",
+                        color: "#1a1208",
+                      }}
+                    >
+                      {content.number_one_song}
+                    </p>
+                  </div>
+                  <HRule />
+                </>
+              )}
+
+              {/* Notable emigrant */}
+              {content.notable_emigrant && (
+                <>
+                  <SecHead>The Emigrant Ship</SecHead>
+                  <CalloutBox
+                    label="Departure of note"
+                    body={content.notable_emigrant}
+                    accent="#5a7a9a"
+                  />
+                  <HRule />
+                </>
+              )}
 
               {content.notable_dubliners &&
                 content.notable_dubliners.length > 0 && (
@@ -1409,108 +1781,14 @@ export default function YearPage({ content }: { content: YearData }) {
               </div>
               <HRule />
 
-              <SecHead>Commerce &amp; Industry</SecHead>
-              <div style={{ paddingTop: 6 }}>
-                {content.major_industries.map((industry, i) => {
-                  const { name, detail } = ind(industry);
-                  return (
-                    <div
-                      key={i}
-                      style={{
-                        marginBottom: 9,
-                        paddingBottom: 9,
-                        borderBottom: "1px dotted #c0b090",
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontFamily: "'Playfair Display',serif",
-                          fontWeight: 700,
-                          fontSize: 12,
-                          marginBottom: 2,
-                        }}
-                      >
-                        {name}
-                      </div>
-                      {detail && (
-                        <p
-                          style={{
-                            fontFamily: "Georgia,serif",
-                            fontSize: 10.5,
-                            lineHeight: 1.7,
-                            color: "#3a2810",
-                          }}
-                        >
-                          {detail}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-              <HRule />
-
-              {content.slang_or_phrase && (
-                <>
-                  <SecHead>The Vernacular</SecHead>
-                  <div
-                    style={{
-                      padding: "10px 0 8px",
-                      textAlign: "center",
-                      position: "relative",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "'Playfair Display',Georgia,serif",
-                        fontSize: 52,
-                        lineHeight: 0.6,
-                        color: "#b0a080",
-                        marginBottom: 4,
-                        userSelect: "none",
-                      }}
-                    >
-                      &#8220;
-                    </div>
-                    <p
-                      style={{
-                        fontFamily: "'Lora',Georgia,serif",
-                        fontSize: 13,
-                        lineHeight: 1.75,
-                        fontStyle: "italic",
-                        color: "#1a1208",
-                        textAlign: "center",
-                        padding: "0 8px",
-                        borderLeft: "2px solid #b0a080",
-                        borderRight: "2px solid #b0a080",
-                        margin: "0 4px",
-                      }}
-                    >
-                      {content.slang_or_phrase}
-                    </p>
-                    <div
-                      style={{
-                        fontFamily: "'Playfair Display',Georgia,serif",
-                        fontSize: 52,
-                        lineHeight: 0.5,
-                        color: "#b0a080",
-                        marginTop: 6,
-                        userSelect: "none",
-                      }}
-                    >
-                      &#8221;
-                    </div>
-                  </div>
-                  <HRule />
-                </>
-              )}
-
+              {/* Guinness ad */}
               <div
                 style={{
                   border: "3px double #1a1208",
                   padding: "14px 10px",
                   textAlign: "center",
                   marginTop: 10,
+                  marginBottom: 10,
                   background: "#e8dfc8",
                 }}
               >
@@ -1567,19 +1845,93 @@ export default function YearPage({ content }: { content: YearData }) {
                     paddingTop: 6,
                   }}
                 >
-                  ❝ My Goodness,
-                  <br />
-                  My Guinness ❞
+                  ❝ My Goodness, My Guinness ❞
                 </div>
               </div>
 
+              <HRule />
+
+              {/* Weather event */}
+              {content.weather_event && (
+                <>
+                  <SecHead>Weather &amp; the Elements</SecHead>
+                  <div style={{ marginBottom: 10 }}>
+                    <p
+                      style={{
+                        fontFamily: "Georgia,serif",
+                        fontSize: 11,
+                        lineHeight: 1.75,
+                        color: "#2a1a08",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {content.weather_event}
+                    </p>
+                  </div>
+                  <HRule />
+                </>
+              )}
               <WeatherReport year={year} weather={(content as any).weather} />
-              <CigaretteAd year={year} />
+
+              {content.slang_or_phrase && (
+                <>
+                  <SecHead>The Vernacular</SecHead>
+                  <div
+                    style={{
+                      padding: "10px 0 8px",
+                      textAlign: "center",
+                      position: "relative",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: "'Playfair Display',Georgia,serif",
+                        fontSize: 52,
+                        lineHeight: 0.6,
+                        color: "#b0a080",
+                        marginBottom: 4,
+                        userSelect: "none",
+                      }}
+                    >
+                      &#8220;
+                    </div>
+                    <p
+                      style={{
+                        fontFamily: "'Lora',Georgia,serif",
+                        fontSize: 13,
+                        lineHeight: 1.75,
+                        fontStyle: "italic",
+                        color: "#1a1208",
+                        textAlign: "center",
+                        padding: "0 8px",
+                        borderLeft: "2px solid #b0a080",
+                        borderRight: "2px solid #b0a080",
+                        margin: "0 4px",
+                      }}
+                    >
+                      {content.slang_or_phrase}
+                    </p>
+                    <div
+                      style={{
+                        fontFamily: "'Playfair Display',Georgia,serif",
+                        fontSize: 52,
+                        lineHeight: 0.5,
+                        color: "#b0a080",
+                        marginTop: 6,
+                        userSelect: "none",
+                      }}
+                    >
+                      &#8221;
+                    </div>
+                  </div>
+                  <HRule />
+                </>
+              )}
             </div>
           </div>
         </div>
 
-        {/* ══ FOOTER ══════════════════════════════════════════════════ */}
+        {/* ══ FOOTER ═══════════════════════════════════════════════════════════ */}
         <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 20px" }}>
           <HRule thick />
           <div
@@ -1599,7 +1951,7 @@ export default function YearPage({ content }: { content: YearData }) {
         </div>
       </div>
 
-      {/* ══ NAV BAR ═════════════════════════════════════════════════ */}
+      {/* ══ NAV BAR ══════════════════════════════════════════════════════════ */}
       <nav
         style={{
           position: "fixed",
@@ -1610,95 +1962,171 @@ export default function YearPage({ content }: { content: YearData }) {
           background: "#1a1208",
           borderTop: "3px double #b0a080",
           display: "flex",
-          alignItems: "center",
           justifyContent: "center",
-          gap: 14,
-          padding: "9px 20px",
+          padding: "7px 16px",
         }}
       >
-        <button
-          onClick={() => go(year - 1)}
-          disabled={year <= 1916}
+        <div
           style={{
-            background: "none",
-            border: "1px solid #b0a080",
-            color: year <= 1916 ? "#3a3028" : "#f0e8d0",
-            width: 30,
-            height: 30,
-            cursor: year <= 1916 ? "not-allowed" : "pointer",
-            fontFamily: "Georgia,serif",
-            fontSize: 15,
-            flexShrink: 0,
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            maxWidth: 680,
+            width: "100%",
           }}
         >
-          ←
-        </button>
-        <div style={{ textAlign: "center" }}>
-          <div
+          {/* ← prev */}
+          <button
+            onClick={() => go(year - 1)}
+            disabled={year <= 1916}
             style={{
-              fontFamily: "'Playfair Display','Times New Roman',serif",
-              fontSize: 26,
-              fontWeight: 700,
-              color: "#f0e8d0",
-              lineHeight: 1,
-            }}
-          >
-            {year}
-          </div>
-          <div
-            style={{
-              fontSize: 7,
-              letterSpacing: 3,
-              textTransform: "uppercase",
+              background: "none",
+              border: "1px solid #b0a080",
+              color: year <= 1916 ? "#3a3028" : "#f0e8d0",
+              width: 28,
+              height: 28,
+              cursor: year <= 1916 ? "not-allowed" : "pointer",
               fontFamily: "Georgia,serif",
-              color: "#7a6040",
+              fontSize: 14,
+              flexShrink: 0,
             }}
           >
-            1916 – 1926
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: 3 }}>
-          {Array.from({ length: 11 }, (_, i) => 1916 + i).map((y) => (
-            <button
-              key={y}
-              onClick={() => go(y)}
+            ←
+          </button>
+
+          {/* Year + era label */}
+          <div style={{ textAlign: "center", minWidth: 54, flexShrink: 0 }}>
+            <div
               style={{
-                background: y === year ? "#b0a080" : "none",
-                border: `1px solid ${y === year ? "#b0a080" : "#2a2018"}`,
-                color: y === year ? "#1a1208" : "#7a6040",
-                width: 38,
-                height: 26,
-                cursor: "pointer",
-                fontFamily: "Georgia,serif",
-                fontSize: 10,
-                fontWeight: y === year ? 700 : 400,
+                fontFamily: "'Playfair Display','Times New Roman',serif",
+                fontSize: 24,
+                fontWeight: 700,
+                color: "#f0e8d0",
+                lineHeight: 1,
               }}
             >
-              {y}
-            </button>
-          ))}
+              {year}
+            </div>
+            <div
+              style={{
+                fontSize: 6.5,
+                letterSpacing: 2,
+                textTransform: "uppercase",
+                fontFamily: "Georgia,serif",
+                color: "#7a6040",
+              }}
+            >
+              {getEra(year)}
+            </div>
+          </div>
+
+          {/* 15-year carousel window */}
+          <div
+            style={{
+              flex: 1,
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              overflow: "hidden",
+            }}
+          >
+            {/* Fade left */}
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: 28,
+                background:
+                  "linear-gradient(to right, #1a1208 40%, transparent)",
+                zIndex: 2,
+                pointerEvents: "none",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                gap: 3,
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {visibleYears.map((y) => {
+                const isActive = y === year;
+                const isDecadeStart = y === 1916 || y % 10 === 0;
+                return (
+                  <button
+                    key={y}
+                    onClick={() => go(y)}
+                    style={{
+                      flexShrink: 0,
+                      background: isActive ? "#f0e8d0" : "transparent",
+                      border: isActive
+                        ? "1px solid #f0e8d0"
+                        : isDecadeStart
+                          ? "1px solid #5a5040"
+                          : "1px solid #2a2018",
+                      color: isActive
+                        ? "#1a1208"
+                        : isDecadeStart
+                          ? "#c0a870"
+                          : "#5a4a30",
+                      width: 36,
+                      height: 26,
+                      cursor: "pointer",
+                      fontFamily: "Georgia,serif",
+                      fontSize: isDecadeStart ? 9 : 8,
+                      fontWeight: isActive || isDecadeStart ? 700 : 400,
+                      transition: "background 0.15s, color 0.15s",
+                    }}
+                  >
+                    {y}
+                  </button>
+                );
+              })}
+            </div>
+            {/* Fade right */}
+            <div
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                bottom: 0,
+                width: 28,
+                background:
+                  "linear-gradient(to left, #1a1208 40%, transparent)",
+                zIndex: 2,
+                pointerEvents: "none",
+              }}
+            />
+          </div>
+
+          {/* → next */}
+          <button
+            onClick={() => go(year + 1)}
+            disabled={year >= 2000}
+            style={{
+              background: "none",
+              border: "1px solid #b0a080",
+              color: year >= 2000 ? "#3a3028" : "#f0e8d0",
+              width: 28,
+              height: 28,
+              cursor: year >= 2000 ? "not-allowed" : "pointer",
+              fontFamily: "Georgia,serif",
+              fontSize: 14,
+              flexShrink: 0,
+            }}
+          >
+            →
+          </button>
         </div>
-        <button
-          onClick={() => go(year + 1)}
-          disabled={year >= 1926}
-          style={{
-            background: "none",
-            border: "1px solid #b0a080",
-            color: year >= 1926 ? "#3a3028" : "#f0e8d0",
-            width: 30,
-            height: 30,
-            cursor: year >= 1926 ? "not-allowed" : "pointer",
-            fontFamily: "Georgia,serif",
-            fontSize: 15,
-            flexShrink: 0,
-          }}
-        >
-          →
-        </button>
       </nav>
     </>
   );
 }
+
+// ── Static generation ─────────────────────────────────────────────────────────
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const dir = path.join(process.cwd(), "content", "dublin");
@@ -1706,7 +2134,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const years = files
     .filter((f) => f.endsWith(".json"))
     .map((f) => f.replace(".json", ""))
-    .filter((y) => parseInt(y) >= 1916 && parseInt(y) <= 1926);
+    .filter((y) => parseInt(y) >= 1916 && parseInt(y) <= 2000);
   return {
     paths: years.map((year) => ({ params: { year } })),
     fallback: false,

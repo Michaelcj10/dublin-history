@@ -56,14 +56,14 @@ export const ERAS: EraConfig[] = [
     name: "depression",
     label: "The Depression",
     cssClass: "era-depression",
-    range: [1930, 1939],
+    range: [1930, 1940],
     layout: "newspaper",
   },
   {
     name: "wartime",
     label: "World War II",
     cssClass: "era-wartime",
-    range: [1940, 1945],
+    range: [1941, 1945],
     layout: "newspaper",
   },
   {

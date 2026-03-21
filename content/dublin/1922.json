@@ -2,74 +2,74 @@
   "place": "Dublin",
   "year": 1922,
   "tier": "chronicle",
-  "timeline_summary": "The year 1922 was marked by the onset of the Irish Civil War, beginning with the Free State's shelling of the Four Courts in Dublin on June 28th. The political landscape was fraught as the Anglo-Irish Treaty, signed the previous year, was ratified by the Dáil by a narrow margin, leading to a split between pro-Treaty and anti-Treaty forces. Economic conditions remained strained amid the instability, with regular clashes and a general air of apprehension in Dublin's streets. The deaths of prominent leaders like Michael Collins on August 22nd and Arthur Griffith on August 12th added to the somber mood prevailing in the capital.",
-  "visual_scene": "On a rainy summer day in 1922, walk along O'Connell Street, where the remnants of the Four Courts battle still smolder in the distance. The air carries the acrid scent of lingering smoke, mingled with the familiar dampness of rain-soaked cobblestones. Men in dark, heavy overcoats and women in woolen shawls hurry past, their faces taut with tension. The rumble of lorries, commandeered for military use, echoes off the buildings, while smaller Ford Model T cars weave between them. Placards on lamp posts and walls display scarred remnants of political posters, their messages torn and faded. Cautious conversations about recent arrests and skirmishes swirl among small knots of people, reflecting the city's prevailing unease.",
+  "taoiseach": "Michael Collins was a key figure in 1922 as Chairman of the Provisional Government, a role similar to a modern Taoiseach. He was a leading pro-Treaty voice and instrumental in the establishment of the Irish Free State.",
+  "timeline_summary": "1922 was a year of turmoil in Dublin, dominated by the signing and narrow ratification of the Anglo-Irish Treaty, leading to the division of opinion and the start of the Irish Civil War. Economic hardship was rampant as violence disrupted daily life. The city’s atmosphere was tense following the shelling of the Four Courts by Free State forces on June 28th, underlining the broader national division. Following the deaths of Michael Collins on August 22nd and Arthur Griffith on August 12th, Dublin was in shock and mourning, grappling with the ramifications of these losses.",
+  "visual_scene": "Imagine standing on O'Connell Street on June 28th, 1922, the day the Four Courts were attacked. Smoke billowed towards a grey sky, while the rumble of artillery echoed off the walls of nearby shops. Citizens dressed in sombre shades of brown and grey scurried along, eyes wide in panic and disbelief. Horse-drawn carts and an occasional motor vehicle weaved through the throngs of people. Posters advertising political meetings and urging calm contrasted with the disorder around. Voices were hushed, conversations urgent, with snippets of information about ongoing battles at the Four Courts carried back and forth.",
   "city_changes": [
-    "The Four Courts, a pivotal legal complex on the River Liffey, suffered significant damage in June during fighting between pro-Treaty and anti-Treaty forces. The explosion and resulting fires destroyed many important legal documents and impacted judicial proceedings in the capital.",
-    "Dublin Castle, formerly the seat of British administration, became a symbol of the new Free State authority as government offices were reorganized. The shift marked the new political era and had administrative repercussions for the capital.",
-    "Tram services in Dublin faced disruptions as tracks were blocked and cars were commandeered. Despite these challenges, routes continued to operate, albeit with delays, reflecting the city's resilience amidst upheaval.",
-    "Public housing projects experienced setbacks due to political instability, with many tenement buildings remaining overcrowded and deteriorating. The lack of investment worsened living conditions for Dublin's working-class residents.",
-    "A sense of division permeated public life as businesses aligned themselves with either the Free State or Republican causes. This polarisation often dictated management decisions and employment opportunities.",
-    "Educational institutions like Trinity College remained bastions of learning but were increasingly caught in the political crossfire, as student allegiances and actions mirrored the broader national conflict."
+    "The catastrophic shelling and subsequent destruction of the Four Courts on June 28th left the building in ruins, a symbol of the intense conflict. This action sparked numerous discussions and emotional debates in Dublin pubs and homes, signaling the opening battle of the Civil War.",
+    "The establishment of the Irish Free State in December led to political restructuring in the city. New government offices were set up along Dublin's major streets, including Merrion Square, altering the city's administrative landscape.",
+    "The General Post Office, once again a site of significance, faced minor fire damage during the disturbances. It remained a touchpoint for the city, evoking memories of the 1916 Easter Rising.",
+    "There was a significant military presence on key routes such as Dame Street and College Green as Free State forces aimed to maintain order and control. This sight became a common and somewhat unnerving occurrence for Dubliners.",
+    "Residential areas near significant conflict sites, such as the Four Courts, saw property values fluctuate as safety became a concern. The demand for housing in less volatile parts of the city increased.",
+    "New markets and small businesses emerged around streets like Moore Street, spurred by economic necessity, as Dubliners sought ways to sustain their livelihoods amid the strife."
   ],
   "major_events": [
-    "Shelling of the Four Courts, June 28th — The conflict erupted in Dublin as Free State forces, led by Michael Collins, initiated the shelling of the Four Courts, occupied by anti-Treaty Republicans under Rory O'Connor. The operation marked the start of the Irish Civil War, with significant destruction and loss of life.",
-    "Dáil Éireann ratifies the Anglo-Irish Treaty, January 7th — After heated debate, the Dáil ratified the treaty by a narrow vote of 64 to 57. This decision formalized the establishment of the Irish Free State but led to a bitter division and the eventual outbreak of civil war.",
-    "Death of Arthur Griffith, August 12th — Arthur Griffith, the President of Dáil Éireann and a key figure in the treaty negotiations, died suddenly. His death shocked the nation and exacerbated the political instability in Dublin during this turbulent period.",
-    "Death of Michael Collins, August 22nd — Michael Collins, one of the principal architects of the Free State, was killed in an ambush at Béal na Bláth in County Cork. His death was a devastating blow to the pro-Treaty side, and his funeral in Dublin was attended by thousands.",
-    "Occupation of key buildings, late June — Republican forces occupied several prominent Dublin buildings, including the Shelbourne Hotel and Hammond Lane Foundry, as strategic points in their defensive efforts. These actions led to confrontations and casualties as Free State forces sought to reclaim them.",
-    "Battle of Dublin, June 28th - July 5th — This series of engagements followed the attack on the Four Courts, with street fighting spreading through the city. It resulted in significant casualties and widespread damage to property, altering the city's urban landscape.",
-    "Execution of anti-Treaty prisoners, December 7th — In retaliation for the assassination of a pro-treaty TD, the Free State executed four Republican prisoners, including Rory O'Connor, at Mountjoy Prison. This event deepened the divisions and fueled ongoing conflict.",
-    "Constitution Act 1922 enacted, December 6th — Marking the formal establishment of the Irish Free State, this act brought legal structure to the new government, although its enforcement was marred by the civil war's turmoil."
+    "Four Courts Attack, June 28 — The battle began when Free State forces, under the command of Michael Collins, initiated an artillery assault on the anti-Treaty IRA occupying the Four Courts. It was a bold move to consolidate government control, marking the start of the Civil War, and left the iconic building heavily damaged.",
+    "Assassination of Michael Collins, August 22 — Collins was ambushed and killed by anti-Treaty forces at Béal na Bláth in County Cork. His death dealt an enormous blow to the Free State, unsettling Dubliners who revered him as a national hero and symbol of their newfound independence.",
+    "Death of Arthur Griffith, August 12 — Griffith succumbed to a cerebral hemorrhage, removing a significant political leader and Treaty advocate. His passing shocked a city already stressed by conflict and was a double blow following Collins's death.",
+    "Occupation of Public Buildings, June 1922 — Anti-Treaty forces seized and fortified positions like the Four Courts and other public buildings in Dublin, asserting their stance against the Treaty and causing severe disruptions to city life.",
+    "Execution of Republican Prisoners, November/December — As the Civil War escalated, the Free State government sanctioned executions of anti-Treaty prisoners like Rory O'Connor and Liam Mellows in December. This led to further polarization and bitterness within Dublin and across Ireland.",
+    "Dublin's General Strike, April — Workers in Dublin organized strikes to protest the militarization of the city and poor economic conditions. This highlighted the severe socio-economic strain on ordinary citizens and showed the depth of public dissent.",
+    "Treaty Debates in the Dáil, January — Intense debates were held in Dublin's Dáil Éireann over the Treaty, culminating in a narrow ratification on January 7th. These debates were pivotal in splitting Sinn Féin and shaping the political landscape.",
+    "Establishment of the Free State, December 6 — The formal establishment of the Irish Free State marked the end of British rule in most of Ireland, celebrated by many but also deeply controversial, cementing Dublin's role as the national capital."
   ],
-  "population_estimate": "approx. 320,000 within the city boundary; c.450,000 including surrounding townships. Population growth slowed due to the civil strife and economic uncertainty, with many residents either emigrating or relocating within Ireland to avoid the violence.",
+  "population_estimate": "The population of Dublin city in 1922 was approximately 320,000, a figure that reflected the socio-economic flux of the time. The civil strife and resultant economic instability deterred significant population growth, and many sought work overseas or migrated from rural areas to the city.",
   "transport_snapshot": [
-    "The Dublin tram system remained operational despite civil war disruptions. Efforts by tram workers to keep services running were praised by many residents relying on these vehicles for daily commutes.",
-    "The Great Southern and Western Railway reported disruptions, as rail lines became targets for sabotage by Republican forces. Free State troops increased rail security but faced logistical challenges.",
-    "Horse-drawn carts still remained a common sight, particularly in areas affected by civil conflict where mechanical transports were scarce or unreliable.",
-    "Bicycles became an increasingly popular mode of transport in Dublin. They allowed individuals to circumvent interruptions in other modes of transportation, providing a reliable and flexible option.",
-    "Dublin’s port facilitated reduced sea transportation due to restrictions and risks associated with transporting goods during the civil war strife. Reduced import and export activities impacted business operations."
+    "Dublin United Tramways Company operated several critical tram routes in 1922, including the 'Green Line' from Rathmines to Nelson's Pillar. These trams were vital for daily commuters, despite occasional disruptions due to strikes and conflict.",
+    "The Dublin and Blessington Steam Tramway continued serving those travelling south of the city, albeit with growing competition from motor vehicles.",
+    "Horse-drawn carts remained common on city streets, facilitating commerce and personal transport. However, the instability made goods movement sometimes challenging.",
+    "City services worked to resume regular train schedules post-Civil War disruptions, with lines connecting to Belfast and Wicklow undergoing repairs and reinforcement.",
+    "The nascent motorbus services struggled to secure footholds due to economic instability, yet they began to challenge traditional horse-drawn methods."
   ],
   "architecture_style": [
-    "Georgian architecture remained prominent in Dublin's cityscape, exemplified by the rowhouses lining Merrion Square, although some suffered damage from civil unrest.",
-    "Gothic revival structures like Saint Patrick's Cathedral continued to punctuate the skyline, enduring despite the upheaval around them.",
-    "Victorian-era buildings, such as the Shelbourne Hotel, displayed scars of recent conflicts due to their strategic occupation, bearing witness to ongoing warfare.",
-    "The Four Courts building, an exemplar of neoclassical architecture, was devastated during the shelling, leading to extensive reconstruction needs."
+    "Georgian architecture, notable in areas like Merrion Square, retained much of its presence in Dublin despite the ongoing tensions, standing as monuments to the city's history.",
+    "Victorian-style buildings, such as those on Harcourt Street, were operational but often needed repairs from successive conflicts’ wear and tear.",
+    "The Edwardian Baroque style of buildings in Dame Street still gave a sense of grandeur despite political upheaval. The Prudential Assurance Building stood tall as an architectural statement.",
+    "The Dublin Castle, though undamaged architecturally, saw a shift in its political role and symbolism in 1922 as the governance of Ireland transitioned internally."
   ],
   "major_industries": [
-    "The Guinness Brewery at St. James's Gate continued to be a major employer in Dublin. Despite the civil unrest, production persisted, although distribution faced challenges.",
-    "The textile industry in Dublin, long a traditional mainstay, struggled with supply chain disruptions. Employment fluctuated, affecting countless Dublin families who relied on this trade.",
-    "Dublin's printing and publishing industry, centered around Fleet Street, experienced relative stability despite political tensions, with newspapers like the Irish Independent maintaining a steady output.",
-    "Shipbuilding and repair operations at Dublin Port faced decreased activity as trade reduced. This particularly affected skilled laborers who faced employment uncertainties.",
-    "Retail, especially smaller local businesses throughout the city, grappled with fluctuating supply and demand conditions as the civil strife discouraged consumer spending."
+    "The Guinness Brewery at St. James's Gate was a major employer in Dublin, with hundreds of workers ensuring the exportation of stout continued despite civil unrest.",
+    "Jacob’s Biscuit Factory maintained production, though strikes and worker disputes over conditions and pay mirrored the national tension.",
+    "The shipbuilding industry in the port was vital for trade and employment, though affected by the broader economic instability.",
+    "The newspaper industry, with titles like the Irish Independent dominating, thrived as Dubliners sought news of the unfolding political events.",
+    "Textile works in areas like the Liberties remained busy, catering to both local and export needs, though often faced material shortages due to volatile situation."
   ],
   "key_locations": [
-    "GPO (General Post Office) — Though badly damaged in the 1916 Rising, it remained a symbol of Irish nationalism and was a focal point for political gatherings in 1922.",
-    "Kilmainham Gaol — Continued to serve as a prison, where notable anti-Treaty fighters were detained, highlighting its historical role in Ireland's struggle for independence.",
-    "Mountjoy Prison — Site of executions of anti-Treaty prisoners, including Rory O'Connor, resonating deeply with ongoing civil narratives.",
-    "Trinity College Dublin — An insulated academic environment but one of growing political discourse, as its student body reflected the national tensions.",
-    "Phoenix Park — A place of respite amidst chaos, hosting significant public gatherings and military events, retaining its dual civilian and military significance.",
-    "Mansion House — Dublin's mayoral residence and a common site for political meetings, reflecting its ongoing relevance in the new state's governance.",
-    "The Four Courts — A judicial hub turned battleground, with its destruction marking a poignant loss for Dublin's legal heritage.",
-    "Dublin Castle — Transitioned to the administrative center of the new Free State, emphasizing its altered role from colonial stronghold to political heart."
+    "Four Courts — The epicenter of the Civil War’s initiation in June, it was occupied by anti-Treaty forces and then bombarded, marking a pivotal moment in Dublin’s history.",
+    "Dáil Éireann, Prussia Street — The site of intense debates over the Anglo-Irish Treaty, pivotal for determining Ireland’s future direction.",
+    "O'Connell Street — A crucial thoroughfare and scene of numerous parades, protests, and sometimes clashes during the year.",
+    "Trinity College Dublin — This institution remained an intellectual oasis amidst city turmoil, continuing its educational mandate despite external chaos.",
+    "Kilmainham Gaol — This site was notoriously used for incarcerating anti-Treaty figures, adding to its historic role in Ireland’s revolutionary struggles.",
+    "Mansion House — It housed many political meetings and was a focal point for diplomatic discussions throughout the year.",
+    "Phoenix Park — Despite the year’s tribulations, it remained a city sanctuary, offering Dubliners a respite from the ongoing hardships.",
+    "Gresham Hotel — A frequent venue for political gatherings and a symbol of Dublin’s social and economic life, even as conflict enveloped the city."
   ],
   "timeline_tags": [
     "civil_war",
     "treaty",
-    "four_courts",
-    "collins_death",
-    "griffith_death",
+    "four_courts_siege",
+    "michael_collins",
+    "general_strike",
     "executions",
-    "political_division",
-    "economic_strife",
-    "transport_disruption",
-    "architectural_damage",
-    "population_shift"
+    "free_state",
+    "political_debates",
+    "population_movement",
+    "cultural_tension"
   ],
   "elections": [
     {
       "type": "General Election",
-      "result_summary": "Held on June 16th, the election resulted in a decisive victory for the pro-Treaty Sinn Féin led by Michael Collins and Arthur Griffith, reinforcing support for the Anglo-Irish Treaty and establishing the political strength of the Free State government amidst the civil strife.",
+      "result_summary": "The June 1922 General Election saw the pro-Treaty Sinn Féin party claiming a decisive victory, securing 58 seats and indicating popular support for the Treaty’s implementation despite ongoing opposition.",
       "winning_party": "Pro-Treaty Sinn Féin"
     }
   ],
@@ -77,39 +77,78 @@
     {
       "championship": "All-Ireland Senior Football Championship Final",
       "winner": "Dublin",
-      "runner_up": "Wexford",
-      "score": "0-4 to 0-2"
+      "runner_up": "Galway",
+      "score": "0-6 to 0-4"
+    },
+    {
+      "championship": "All-Ireland Senior Hurling Championship Final",
+      "winner": "Kilkenny",
+      "runner_up": "Tipperary",
+      "score": "4-2 to 2-6"
     }
   ],
-  "price_of_a_pint": "A pint of Guinness cost approximately 4d (four pence) in a Dublin city pub in 1922 — representing one-twelfth of a day's wage for a general laborer, who earned about 4 shillings per day. Prices had risen slightly due to increased production costs amidst the war, though popular pubs like John Kavanagh's continued to see a steady clientele.",
-  "cost_of_living": "Weekly rent for a room in a Dublin tenement averaged around 5 shillings, exerting a significant burden on families. A loaf of bread cost about 9d, while a laborer's weekly wage stood at approximately 30 shillings. A luxury item like a gramophone could cost upwards of £5, indicating a stark contrast between essentials and consumer goods.",
+  "sport": [
+    {
+      "category": "League of Ireland",
+      "detail": "The first official League of Ireland season was held, with St. James’s Gate dominating to claim the inaugural championship, igniting interest and excitement over local football."
+    },
+    {
+      "category": "Horse Racing",
+      "detail": "Golden Miller, a promising Irish horse, gained attention following successful outings and continued to impress at subsequent events, highlighting Ireland’s growing stature in international horse racing."
+    },
+    {
+      "category": "Boxing or Athletics or Other",
+      "detail": "Boxer Mick Dowling shone brightly, winning his weight class at the Dublin Boxing Championships, elevating local interest in amateur boxing."
+    },
+    {
+      "category": "Soccer",
+      "detail": "Bohemian FC’s thrilling matches garnered significant local support and attention; their draws against foreign teams were highlights of Dublin’s soccer calendar."
+    }
+  ],
+  "price_of_a_pint": "A pint of Guinness in 1922 cost approximately 6d (six pence). This was a small luxury for many, given the economic constraints and political instability, with wages unable to match wartime and post-war inflationary pressures. Popular pubs like Mulligan's and The Brazen Head were vital gathering spots for political discussions and camaraderie.",
+  "price_ladder": {
+    "pint_of_guinness": "6d",
+    "loaf_of_bread": "9d",
+    "average_house_dublin": "n/a",
+    "weekly_wage_labourer": "30s",
+    "twenty_cigarettes": "1s 4d",
+    "pint_of_milk": "4d",
+    "note": "The cost of bread rose notably due to supply chain issues and economic instability, reflective of the broader cost-of-living challenges faced by Dubliners."
+  },
+  "cost_of_living": "A working-class family in a Dublin tenement might have paid around 10s 6d weekly for rent. The cost of a loaf of bread could reach 9d, and a labourer’s weekly wage averaged about 30s, straining households under economic and political pressures. A luxury such as a gramophone might set one back several guineas, despite the financial realities.",
   "notable_dubliners": [
-    "Michael Collins — As Chairman of the Provisional Government and Commander-in-Chief of the Free State Army, Collins played a pivotal role in 1922 until his untimely death in an ambush on August 22nd at Béal na Bláth.",
-    "Éamon de Valera — Leader of the anti-Treaty forces, remained a central figure opposing the Anglo-Irish Treaty. He navigated political challenges and civil unrest throughout the year.",
-    "Arthur Griffith — As President of Dáil Éireann, Griffith's death on August 12th was a turning point, creating a leadership gap during a critical period for the pro-Treaty government.",
-    "Rory O'Connor — Anti-Treaty leader who took a central role in the occupation of the Four Courts. His execution in Mountjoy Prison in December was a significant event in the civil conflict.",
-    "Kevin O'Higgins — A prominent Free State politician, actively involved in the execution orders for anti-Treaty prisoners, marking him as both a central and controversial figure in 1922.",
-    "Hannah Sheehy-Skeffington — A feminist activist, she continued advocating for women's rights amid the political upheaval, stressing the socio-political needs of women in the newly forming state."
+    "Eamon de Valera — In 1922, he emerged as a leading anti-Treaty figure, vocally opposing Michael Collins and the Treaty terms, thereby shaping much of the political discourse.",
+    "Kevin O'Higgins — A forceful presence within the pro-Treaty government, he played an influential role in establishing governance structures for the new Irish Free State.",
+    "Rory O'Connor — Commander of the anti-Treaty forces, he played a crucial role in opposing the Treaty, becoming notorious for his occupation of the Four Courts.",
+    "Hannah Sheehy-Skeffington — She continued her activism, focusing on campaigning for women's suffrage and peace amidst the hostilities.",
+    "James Stephens — The noted writer resided in Dublin, capturing the city's mood through his literature, reflecting both its turmoil and resilience.",
+    "Countess Markievicz — An active participant in politics, she rallied against the Treaty and represented the republican sentiment during this tumultuous year."
   ],
+  "notable_death": "Michael Collins, August 22nd, was assassinated at Béal na Bláth, County Cork, ending the life of a pivotal leader in Irish independence and a founding father of the Free State. His death stunned the nation, leaving a legacy of determination and strategic brilliance, while igniting a wave of mourning and admiration within Dublin.",
+  "notable_emigrant": "Ernest Blythe left for the United States in the early 1920s, representing an intellectual and creative exodus driven by economic hardship. His leaving underscored the bitter irony of Irish political freedoms coinciding with empty pockets and limited opportunities at home.",
   "what_was_on": [
-    "Play: 'The Plough and the Stars' by Sean O'Casey — Premiering at the Abbey Theatre in 1922, the play offered a poignant commentary on the Irish struggle, stirring audience reactions and discussions in post-civil war Dublin.",
-    "Newspaper: The Irish Independent — Dominated public conversation with its coverage of treaty debates and civil war battles, shaping public opinion in a divided country.",
-    "Book: 'Ulysses' by James Joyce — Though published the previous year, Joyce's opus was a frequent topic of literary circles in 1922, with its depiction of Dublin resonating amidst the city's strife.",
-    "Sporting event: Dublin wins the All-Ireland Senior Football Championship, defeating Wexford. This victory added a moment of celebration in a year overshadowed by political turmoil.",
-    "Film: 'O'Neill of the Glen' — Screening in Dublin cinemas, providing escapism and entertainment to a city beset by political and civil unrest."
+    "Theatre: 'The Plough and the Stars' by Sean O'Casey — This Abbey Theatre play portrayed the lives of Dubliners during the Easter Rising, offering a reflective commentary that resonated with war-weary audiences.",
+    "Literature: 'Ulysses' by James Joyce was censored elsewhere but quietly circulated in Dublin, symbolizing Ireland’s cultural revival.",
+    "Film: 'Nanook of the North' — Screened in newly opened cinemas, it captivated audiences, providing escapism from the political turbulence.",
+    "Newspaper: Coverage of the Civil War filled columns of the Irish Independent, heightening public awareness and debate.",
+    "Music: John McCormack's recitals at local venues provided emotional balm for Dubliners seeking solace in the arts.",
+    "Songs: Percy French’s ballads were frequently heard in Dublin pubs, reminding patrons of Ireland’s hopeful and humorous spirit."
   ],
-  "slang_or_phrase": "\"Up the Free State\" — A rallying cry among pro-Treaty supporters, expressing allegiance to the newly formed Irish government amidst the civil war strife, this phrase was used at rallies, in casual conversations, and even scribbled as graffiti, symbolizing both defiant pride and the hope for peace.",
+  "number_one_song": "'My Heart Is Calling You' by John McCormack was hugely popular in 1922. Its airs were often heard in both pubs and dance halls across Dublin, providing a melodious antidote to the city's often grim reality.",
+  "weather_event": "In January 1922, a severe snowstorm swept through Dublin, bringing transportation to a standstill and causing significant disruptions. The harsh weather was a challenge for a city already beset by political unrest and scarcity of resources.",
+  "irish_first": "1922 marked the first assembly of the Provisional Government of the Irish Free State within Dublin Castle, a historic moment that symbolized the transition of power and governance to an independent Ireland. This moment was a significant step in establishing national sovereignty.",
+  "quirky_story": "A famous Dublin draper's cat, known to parade Grafton Street in a red ribbon, captivated passersby weary of political news. The feline's assurance and style offered a charming diversion from the pressing uncertainties of civil strife.",
+  "slang_or_phrase": "The phrase 'Up the Republic!' was a fervent slogan among anti-Treaty supporters. This rallying cry resonated across Dublin’s streets in debates, protests, and clandestine gatherings, symbolizing defiance and republican ideals.",
   "image_search": {
     "queries": [
-      "Four Courts Dublin destruction 1922 photograph",
+      "Four Courts Dublin 1922",
       "Michael Collins Dublin funeral 1922",
-      "Arthur Griffith funeral 1922",
-      "Dublin Castle Free State administration 1922",
-      "Mountjoy Prison executions 1922",
-      "Pro-Treaty troops O'Connell Street 1922",
-      "Republican barricades Dublin 1922",
-      "Dublin tram services 1922"
+      "O'Connell Street 1922",
+      "Dublin tram service 1922",
+      "Mansion House Dublin 1922",
+      "Irish Civil War Dublin 1922",
+      "Dublin Castle Provisional Government 1922",
+      "Grafton Street Dublin 1922"
     ]
-  },
-  "imageUrl": "/images/dublin/1922.png"
+  }
 }

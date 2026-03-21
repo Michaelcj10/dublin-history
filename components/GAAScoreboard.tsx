@@ -50,7 +50,15 @@ function sportLabel(championship: string): string {
 }
 
 // ── Score digit ───────────────────────────────────────────────────────────────
-function ScoreDigit({ value, size = 42 }: { value: string; size?: number }) {
+function ScoreDigit({
+  value,
+  size = 42,
+  modern = false,
+}: {
+  value: string;
+  size?: number;
+  modern?: boolean;
+}) {
   return (
     <div
       style={{
@@ -59,16 +67,16 @@ function ScoreDigit({ value, size = 42 }: { value: string; size?: number }) {
         justifyContent: "center",
         width: size * 0.72,
         height: size * 1.1,
-        background: "#2a1e0a",
-        border: "1px solid #6a5030",
+        background: modern ? "#f0ede4" : "#2a1e0a",
+        border: modern ? "1px solid #b8b0a0" : "1px solid #6a5030",
         margin: "0 1px",
-        boxShadow:
-          "inset 0 2px 4px rgba(0,0,0,.6), inset 0 -1px 2px rgba(255,255,255,.06)",
+        boxShadow: modern
+          ? "inset 0 1px 2px rgba(0,0,0,.08)"
+          : "inset 0 2px 4px rgba(0,0,0,.6), inset 0 -1px 2px rgba(255,255,255,.06)",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* flip board line */}
       <div
         style={{
           position: "absolute",
@@ -76,16 +84,16 @@ function ScoreDigit({ value, size = 42 }: { value: string; size?: number }) {
           left: 0,
           right: 0,
           height: 1,
-          background: "rgba(0,0,0,.6)",
+          background: modern ? "rgba(0,0,0,.1)" : "rgba(0,0,0,.6)",
           zIndex: 2,
         }}
       />
       <span
         style={{
-          fontFamily: "'Playfair Display', Georgia, serif",
+          fontFamily: "'Libre Baskerville','Playfair Display', Georgia, serif",
           fontSize: size,
-          fontWeight: 900,
-          color: "#fff8e8",
+          fontWeight: 700,
+          color: modern ? "#1a1208" : "#fff8e8",
           lineHeight: 1,
           position: "relative",
           zIndex: 1,
@@ -100,29 +108,31 @@ function ScoreDigit({ value, size = 42 }: { value: string; size?: number }) {
 function ScoreDisplay({
   parsed,
   size = 42,
+  modern = false,
 }: {
   parsed: ParsedScore;
   size?: number;
+  modern?: boolean;
 }) {
   const g = String(parsed.goals);
   const p = String(parsed.points).padStart(2, "0");
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
-      <ScoreDigit value={g} size={size} />
+      <ScoreDigit value={g} size={size} modern={modern} />
       <div
         style={{
-          fontFamily: "'Playfair Display',Georgia,serif",
+          fontFamily: "'Libre Baskerville','Playfair Display',Georgia,serif",
           fontSize: size * 0.6,
-          fontWeight: 900,
-          color: "#d0b870",
+          fontWeight: 700,
+          color: modern ? "#5a4020" : "#d0b870",
           padding: "0 1px",
           lineHeight: 1,
         }}
       >
         -
       </div>
-      <ScoreDigit value={p[0]} size={size} />
-      <ScoreDigit value={p[1]} size={size} />
+      <ScoreDigit value={p[0]} size={size} modern={modern} />
+      <ScoreDigit value={p[1]} size={size} modern={modern} />
     </div>
   );
 }
@@ -133,13 +143,14 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
   const wScore = parsed?.[0] ?? null;
   const lScore = parsed?.[1] ?? null;
   const sport = sportLabel(final.championship);
+  const modern = year >= 1930 && year <= 1940;
 
   return (
     <div
       style={{
-        background: "#181008",
-        border: "3px solid #6a5030",
-        boxShadow: "4px 4px 0 #0a0604",
+        background: modern ? "#f5f3ee" : "#181008",
+        border: modern ? "1px solid #b8b0a0" : "3px solid #6a5030",
+        boxShadow: modern ? "none" : "4px 4px 0 #0a0604",
         marginBottom: 14,
         fontFamily: "Georgia,'Times New Roman',serif",
       }}
@@ -147,8 +158,8 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
       {/* Header board */}
       <div
         style={{
-          background: "#251a08",
-          borderBottom: "2px solid #6a5030",
+          background: modern ? "#1a1208" : "#251a08",
+          borderBottom: modern ? "1px solid #3a2e1a" : "2px solid #6a5030",
           padding: "7px 14px",
           display: "flex",
           justifyContent: "space-between",
@@ -160,9 +171,11 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
             fontSize: 10,
             fontWeight: 700,
             textTransform: "uppercase",
-            letterSpacing: 3,
-            color: "#d0b870",
-            fontFamily: "Georgia,serif",
+            letterSpacing: modern ? 2 : 3,
+            color: modern ? "#f0e8d0" : "#d0b870",
+            fontFamily: modern
+              ? "'Libre Baskerville',Georgia,serif"
+              : "Georgia,serif",
           }}
         >
           All-Ireland Final · {sport}
@@ -170,7 +183,7 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
         <div
           style={{
             fontSize: 9,
-            color: "#a08850",
+            color: modern ? "#c8b890" : "#a08850",
             fontFamily: "monospace",
             letterSpacing: 1,
           }}
@@ -194,10 +207,12 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
           <div style={{ flex: 1, paddingRight: 10 }}>
             <div
               style={{
-                fontFamily: "'Playfair Display',Georgia,serif",
+                fontFamily: modern
+                  ? "'Libre Baskerville',Georgia,serif"
+                  : "'Playfair Display',Georgia,serif",
                 fontSize: "clamp(15px,2.2vw,21px)",
-                fontWeight: 900,
-                color: "#fff8e8",
+                fontWeight: 700,
+                color: modern ? "#1a1208" : "#fff8e8",
                 lineHeight: 1.1,
                 textTransform: "uppercase",
                 letterSpacing: 1,
@@ -208,7 +223,7 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
             <div
               style={{
                 fontSize: 9,
-                color: "#d0b870",
+                color: modern ? "#5a4020" : "#d0b870",
                 marginTop: 3,
                 fontFamily: "Georgia,serif",
                 letterSpacing: 2,
@@ -228,21 +243,28 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
                 gap: 4,
               }}
             >
-              <ScoreDisplay parsed={wScore} size={38} />
+              <ScoreDisplay parsed={wScore} size={38} modern={modern} />
               <div
                 style={{
                   display: "flex",
                   gap: 8,
                   fontSize: 9,
-                  color: "#c0a060",
+                  color: modern ? "#5a4020" : "#c0a060",
                   fontFamily: "monospace",
                 }}
               >
-                <span>{wScore.goals}G&nbsp;×&nbsp;3&nbsp;=&nbsp;{wScore.goals * 3}</span>
-                <span style={{ color: "#7a6040" }}>+</span>
+                <span>
+                  {wScore.goals}G&nbsp;×&nbsp;3&nbsp;=&nbsp;{wScore.goals * 3}
+                </span>
+                <span style={{ color: modern ? "#8a7850" : "#7a6040" }}>+</span>
                 <span>{wScore.points}P</span>
-                <span style={{ color: "#7a6040" }}>=</span>
-                <span style={{ color: "#d0b870", fontWeight: 700 }}>
+                <span style={{ color: modern ? "#8a7850" : "#7a6040" }}>=</span>
+                <span
+                  style={{
+                    color: modern ? "#3a2810" : "#d0b870",
+                    fontWeight: 700,
+                  }}
+                >
                   {wScore.total} pts
                 </span>
               </div>
@@ -252,7 +274,7 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
               style={{
                 fontFamily: "'Playfair Display',serif",
                 fontSize: 22,
-                color: "#d0b870",
+                color: modern ? "#5a4020" : "#d0b870",
               }}
             >
               —
@@ -264,7 +286,7 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
         <div
           style={{
             height: 1,
-            background: "#6a5030",
+            background: modern ? "#c8bfa0" : "#6a5030",
             margin: "10px 0",
             position: "relative",
           }}
@@ -275,11 +297,11 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
               left: "50%",
               top: "50%",
               transform: "translate(-50%,-50%)",
-              background: "#181008",
+              background: modern ? "#f5f3ee" : "#181008",
               padding: "0 12px",
               fontFamily: "Georgia,serif",
               fontSize: 10,
-              color: "#a08850",
+              color: modern ? "#8a7850" : "#a08850",
               letterSpacing: 3,
             }}
           >
@@ -298,10 +320,12 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
           <div style={{ flex: 1, paddingRight: 10 }}>
             <div
               style={{
-                fontFamily: "'Playfair Display',Georgia,serif",
+                fontFamily: modern
+                  ? "'Libre Baskerville',Georgia,serif"
+                  : "'Playfair Display',Georgia,serif",
                 fontSize: "clamp(15px,2.2vw,21px)",
-                fontWeight: 900,
-                color: "#c0a870",
+                fontWeight: 700,
+                color: modern ? "#3a2e1a" : "#c0a870",
                 lineHeight: 1.1,
                 textTransform: "uppercase",
                 letterSpacing: 1,
@@ -312,7 +336,7 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
             <div
               style={{
                 fontSize: 9,
-                color: "#907040",
+                color: modern ? "#8a7850" : "#907040",
                 marginTop: 3,
                 fontFamily: "Georgia,serif",
                 letterSpacing: 2,
@@ -331,21 +355,28 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
                 gap: 4,
               }}
             >
-              <ScoreDisplay parsed={lScore} size={38} />
+              <ScoreDisplay parsed={lScore} size={38} modern={modern} />
               <div
                 style={{
                   display: "flex",
                   gap: 8,
                   fontSize: 9,
-                  color: "#907040",
+                  color: modern ? "#8a7850" : "#907040",
                   fontFamily: "monospace",
                 }}
               >
-                <span>{lScore.goals}G&nbsp;×&nbsp;3&nbsp;=&nbsp;{lScore.goals * 3}</span>
-                <span style={{ color: "#5a4020" }}>+</span>
+                <span>
+                  {lScore.goals}G&nbsp;×&nbsp;3&nbsp;=&nbsp;{lScore.goals * 3}
+                </span>
+                <span style={{ color: modern ? "#a09060" : "#5a4020" }}>+</span>
                 <span>{lScore.points}P</span>
-                <span style={{ color: "#5a4020" }}>=</span>
-                <span style={{ color: "#a08850", fontWeight: 700 }}>
+                <span style={{ color: modern ? "#a09060" : "#5a4020" }}>=</span>
+                <span
+                  style={{
+                    color: modern ? "#5a4828" : "#a08850",
+                    fontWeight: 700,
+                  }}
+                >
                   {lScore.total} pts
                 </span>
               </div>
@@ -355,7 +386,7 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
               style={{
                 fontFamily: "'Playfair Display',serif",
                 fontSize: 22,
-                color: "#907040",
+                color: modern ? "#8a7850" : "#907040",
               }}
             >
               —
@@ -369,7 +400,7 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
             style={{
               marginTop: 12,
               paddingTop: 10,
-              borderTop: "1px solid #4a3820",
+              borderTop: modern ? "1px solid #c8bfa0" : "1px solid #4a3820",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -378,7 +409,7 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
             <div
               style={{
                 fontSize: 9,
-                color: "#907040",
+                color: modern ? "#8a7850" : "#907040",
                 fontFamily: "monospace",
                 letterSpacing: 2,
               }}
@@ -387,10 +418,12 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
             </div>
             <div
               style={{
-                fontFamily: "'Playfair Display',serif",
+                fontFamily: modern
+                  ? "'Libre Baskerville',serif"
+                  : "'Playfair Display',serif",
                 fontWeight: 700,
                 fontSize: 15,
-                color: "#d0b870",
+                color: modern ? "#3a2810" : "#d0b870",
               }}
             >
               {wScore.total - lScore.total}{" "}
@@ -403,30 +436,29 @@ function Scoreboard({ final, year }: { final: Final; year: number }) {
       {/* Footer — scoring guide */}
       <div
         style={{
-          background: "#0e0a04",
-          borderTop: "1px solid #4a3820",
+          background: modern ? "#ece9e0" : "#0e0a04",
+          borderTop: modern ? "1px solid #c8bfa0" : "1px solid #4a3820",
           padding: "6px 14px",
           display: "flex",
           gap: 20,
           justifyContent: "center",
         }}
       >
-        {[
-          { label: "Goal (G) = 3 pts" },
-          { label: "Point (P) = 1 pt" },
-        ].map((r, i) => (
-          <div
-            key={i}
-            style={{
-              fontSize: 9,
-              fontFamily: "monospace",
-              color: "#907040",
-              letterSpacing: 1,
-            }}
-          >
-            {r.label}
-          </div>
-        ))}
+        {[{ label: "Goal (G) = 3 pts" }, { label: "Point (P) = 1 pt" }].map(
+          (r, i) => (
+            <div
+              key={i}
+              style={{
+                fontSize: 9,
+                fontFamily: "monospace",
+                color: modern ? "#7a6840" : "#907040",
+                letterSpacing: 1,
+              }}
+            >
+              {r.label}
+            </div>
+          ),
+        )}
       </div>
     </div>
   );

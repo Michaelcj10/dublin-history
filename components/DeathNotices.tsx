@@ -96,14 +96,14 @@ function formatBirthNotice(
   i: number,
 ): string {
   const day = dayOrd(year, i);
-  return `On the ${day} inst., to the family of ${name.last.toUpperCase()}, a child — ${name.full} — whose ${detail.slice(0, 80).toLowerCase()}.`;
+  return `On the ${day} inst., to the family of ${name.last.toUpperCase()}, a child — ${name.full} — whose ${detail.toLowerCase()}.`;
 }
 
 function formatGeneralNotice(
   name: { first: string; last: string; full: string },
   detail: string,
 ): string {
-  return `${name.full.toUpperCase()}. — ${detail.slice(0, 100)}${detail.length > 100 ? "…" : ""}`;
+  return `${name.full.toUpperCase()}. — ${detail}`;
 }
 
 export default function DeathNotices({
