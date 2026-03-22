@@ -501,6 +501,7 @@ function SportPanel({ sport }: { sport: SportItem[] }) {
           }}
         >
           <div
+            className="cat-label"
             style={{
               fontSize: 8,
               textTransform: "uppercase",
@@ -549,6 +550,7 @@ function CalloutBox({
       }}
     >
       <div
+        className="cat-label"
         style={{
           fontSize: 8,
           textTransform: "uppercase",
@@ -576,38 +578,6 @@ function CalloutBox({
   );
 }
 
-// ── Audio ─────────────────────────────────────────────────────────────────────
-
-function playRustle() {
-  try {
-    const ctx = new (
-      window.AudioContext || (window as any).webkitAudioContext
-    )();
-    const duration = 0.55;
-    const buf = ctx.createBuffer(1, ctx.sampleRate * duration, ctx.sampleRate);
-    const data = buf.getChannelData(0);
-    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    const bpf = ctx.createBiquadFilter();
-    bpf.type = "bandpass";
-    bpf.frequency.value = 600;
-    bpf.Q.value = 0.5;
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(0, ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.045, ctx.currentTime + 0.08);
-    gain.gain.setValueAtTime(0.045, ctx.currentTime + 0.2);
-    gain.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
-    src.connect(bpf);
-    bpf.connect(gain);
-    gain.connect(ctx.destination);
-    src.start();
-    src.stop(ctx.currentTime + duration);
-  } catch (_) {
-    /* silent fail */
-  }
-}
-
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function YearPage({
@@ -628,7 +598,6 @@ export default function YearPage({
   const go = useCallback(
     (y: number) => {
       if (y < 1916 || y > 2000) return;
-      playRustle();
       router.push(`/${y}`);
     },
     [router],
@@ -892,9 +861,9 @@ export default function YearPage({
           .stats-banner .stat:last-child{border-right:none}
           @media(max-width:640px){
             /* MOBILE — body text */
-            .body-text{font-size:16px !important;line-height:1.75 !important;}
+            .body-text{font-size:18px !important;line-height:1.8 !important;}
             /* MOBILE — paper grid padding */
-            .paper-grid>*{padding-left:12px !important;padding-right:12px !important;}
+            .paper-grid>*{padding-left:14px !important;padding-right:14px !important;}
             /* MOBILE — stats banner: stacked flex list, label left / value right */
             .stats-banner{display:flex !important;flex-direction:column !important;}
             .stats-banner .stat{display:flex !important;justify-content:space-between !important;align-items:center !important;text-align:left !important;padding:10px 16px !important;border-right:none !important;border-bottom:1px solid #b0a080 !important;}
@@ -903,25 +872,38 @@ export default function YearPage({
             .stat-value{font-size:26px !important;font-weight:700 !important;line-height:1 !important;}
             .stat-sub{display:none !important;}
             /* MOBILE — splash headline bigger */
-            .splash-headline{font-size:clamp(26px,8vw,42px) !important;}
-            .splash-sub{font-size:15px !important;}
+            .splash-headline{font-size:clamp(28px,8vw,44px) !important;}
+            .splash-sub{font-size:17px !important;}
             /* MOBILE — section headers more breathing room */
-            .sec-head{margin:20px 0 14px !important;padding:6px 0 !important;}
-            .sec-head-text{font-size:12px !important;}
+            .sec-head{margin:22px 0 14px !important;padding:7px 0 !important;}
+            .sec-head-text{font-size:15px !important;letter-spacing:2px !important;}
             /* MOBILE — two-column sub-grids collapse to single column */
             .two-col-grid{columns:1 !important;}
             .sport-grid{columns:1 !important;}
             /* MOBILE — price ladder rows larger text */
-            .price-row{padding:10px 0 !important;}
-            .price-row-label{font-size:15px !important;}
-            .price-row-value{font-size:20px !important;font-weight:700 !important;}
+            .price-row{padding:11px 0 !important;}
+            .price-row-label{font-size:17px !important;}
+            .price-row-value{font-size:22px !important;font-weight:700 !important;}
             /* MOBILE — masthead: hide top info strip and tagline */
             .masthead-info-strip{display:none !important;}
             .masthead-tagline{display:none !important;}
-            /* MOBILE — nav: touch-action + larger hit targets */
+            /* MOBILE — column body text doubled */
+            .col-left p,.col-centre p,.col-right p{font-size:17px !important;line-height:1.85 !important;}
+            .col-left h3,.col-centre h3,.col-right h3{font-size:20px !important;line-height:1.3 !important;}
+            .col-left h4,.col-centre h4,.col-right h4{font-size:18px !important;}
+            .item-head{font-size:17px !important;font-weight:700 !important;margin-bottom:4px !important;}
+            .cat-label{font-size:12px !important;letter-spacing:1.5px !important;}
+            /* MOBILE — nav redesigned for large touch targets */
             nav{touch-action:none;}
-            .nav-arrow-btn{width:44px !important;height:44px !important;font-size:18px !important;}
-            .nav-year-btn{width:40px !important;height:34px !important;font-size:10px !important;}
+            .nav-wrapper{padding:10px 14px 14px !important;gap:8px !important;}
+            .nav-decades-row{gap:4px !important;flex-wrap:wrap !important;}
+            .nav-decade-btn{height:38px !important;font-size:12px !important;border-radius:4px !important;}
+            .nav-year-row{gap:10px !important;}
+            .nav-year-display{min-width:96px !important;}
+            .nav-year-num{font-size:42px !important;line-height:1 !important;}
+            .nav-era-label{font-size:12px !important;letter-spacing:1px !important;margin-top:3px !important;}
+            .nav-arrow-btn{width:58px !important;height:58px !important;font-size:28px !important;border-radius:6px !important;}
+            .nav-year-btn{width:50px !important;height:42px !important;font-size:13px !important;}
           }
           .paper-grid{display:grid;grid-template-columns:220px 10px 1fr 10px 230px}
           @media(max-width:1100px){.paper-grid{grid-template-columns:1fr}}
@@ -1095,7 +1077,7 @@ export default function YearPage({
         >
           <div className="paper-grid">
             {/* ── LEFT COLUMN ───────────────────────────────────────────────── */}
-            <div style={{ padding: "12px 14px 12px 0" }}>
+            <div className="col-left" style={{ padding: "12px 14px 12px 0" }}>
               <SecHead>A Year in Dublin</SecHead>
               {content.timeline_summary
                 .split(". ")
@@ -1157,6 +1139,7 @@ export default function YearPage({
                       }}
                     >
                       <div
+                        className="item-head"
                         style={{
                           fontFamily: "'Playfair Display',serif",
                           fontWeight: 700,
@@ -1202,6 +1185,7 @@ export default function YearPage({
                       }}
                     >
                       <div
+                        className="item-head"
                         style={{
                           fontFamily: "'Playfair Display',serif",
                           fontWeight: 700,
@@ -1270,7 +1254,7 @@ export default function YearPage({
             <ColRule />
 
             {/* ── CENTRE COLUMN ─────────────────────────────────────────────── */}
-            <div style={{ padding: "12px 20px" }}>
+            <div className="col-centre" style={{ padding: "12px 20px" }}>
               {content.north_headline && (
                 <>
                   <div className="north-box">
@@ -1417,6 +1401,7 @@ export default function YearPage({
                         }}
                       >
                         <span
+                          className="item-head"
                           style={{
                             fontFamily: "'Playfair Display',serif",
                             fontWeight: 700,
@@ -1427,6 +1412,7 @@ export default function YearPage({
                         </span>
                         {el.winning_party && (
                           <span
+                            className="cat-label"
                             style={{
                               fontFamily: "Georgia,serif",
                               fontSize: 9,
@@ -1539,6 +1525,7 @@ export default function YearPage({
                           }}
                         >
                           <div
+                            className="cat-label"
                             style={{
                               fontSize: 8,
                               textTransform: "uppercase",
@@ -1599,6 +1586,7 @@ export default function YearPage({
                       }}
                     >
                       <div
+                        className="item-head"
                         style={{
                           fontFamily: "'Playfair Display',serif",
                           fontWeight: 700,
@@ -1633,7 +1621,7 @@ export default function YearPage({
             <ColRule />
 
             {/* ── RIGHT COLUMN ──────────────────────────────────────────────── */}
-            <div style={{ padding: "12px 0 12px 14px" }}>
+            <div className="col-right" style={{ padding: "12px 0 12px 14px" }}>
               <PeriodAd src={adSlots[0] ?? undefined} />
 
               <SecHead>The Price of a Pint</SecHead>
@@ -1744,6 +1732,7 @@ export default function YearPage({
                             }}
                           >
                             <div
+                              className="item-head"
                               style={{
                                 fontFamily: "'Playfair Display',serif",
                                 fontWeight: 700,
@@ -2015,6 +2004,7 @@ export default function YearPage({
 
       {/* ══ NAV BAR ══════════════════════════════════════════════════════════ */}
       <nav
+        className="nav-wrapper"
         style={{
           position: "fixed",
           bottom: 0,
@@ -2026,13 +2016,14 @@ export default function YearPage({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "5px 16px 7px",
+          padding: "6px 16px 8px",
           gap: 5,
           transition: "background 0.45s ease, border-color 0.45s ease",
         }}
       >
         {/* ── Decade jump row ── */}
         <div
+          className="nav-decades-row"
           style={{
             display: "flex",
             gap: 4,
@@ -2058,6 +2049,7 @@ export default function YearPage({
               <button
                 key={d}
                 onClick={() => go(d)}
+                className="nav-decade-btn"
                 style={{
                   flex: 1,
                   background: isActive ? nav.activeBg : "transparent",
@@ -2065,10 +2057,10 @@ export default function YearPage({
                     ? `1px solid ${nav.activeBg}`
                     : `1px solid ${nav.accent}44`,
                   color: isActive ? nav.activeFg : nav.dim,
-                  height: 18,
+                  height: 24,
                   cursor: "pointer",
                   fontFamily: "Georgia,serif",
-                  fontSize: 8,
+                  fontSize: 9,
                   fontWeight: isActive ? 700 : 400,
                   letterSpacing: 0.5,
                   transition:
@@ -2084,6 +2076,7 @@ export default function YearPage({
 
         {/* ── Year track row ── */}
         <div
+          className="nav-year-row"
           style={{
             display: "flex",
             alignItems: "center",
@@ -2101,11 +2094,11 @@ export default function YearPage({
               background: "none",
               border: `1px solid ${nav.accent}`,
               color: year <= 1916 ? nav.dim : nav.fg,
-              width: 28,
-              height: 28,
+              width: 34,
+              height: 34,
               cursor: year <= 1916 ? "not-allowed" : "pointer",
               fontFamily: "Georgia,serif",
-              fontSize: 14,
+              fontSize: 16,
               flexShrink: 0,
               transition: "border-color 0.45s, color 0.45s",
             }}
@@ -2114,11 +2107,15 @@ export default function YearPage({
           </button>
 
           {/* Year + era label — shows swipe preview when swiping */}
-          <div style={{ textAlign: "center", minWidth: 60, flexShrink: 0 }}>
+          <div
+            className="nav-year-display"
+            style={{ textAlign: "center", minWidth: 68, flexShrink: 0 }}
+          >
             <div
+              className="nav-year-num"
               style={{
                 fontFamily: "'Playfair Display','Times New Roman',serif",
-                fontSize: 24,
+                fontSize: 26,
                 fontWeight: 700,
                 color: swipeYear !== null ? nav.accent : nav.fg,
                 lineHeight: 1,
@@ -2128,8 +2125,9 @@ export default function YearPage({
               {swipeYear ?? year}
             </div>
             <div
+              className="nav-era-label"
               style={{
-                fontSize: 6.5,
+                fontSize: 8,
                 letterSpacing: 2,
                 textTransform: "uppercase",
                 fontFamily: "Georgia,serif",
@@ -2200,11 +2198,11 @@ export default function YearPage({
                         : isDecadeStart
                           ? nav.decadeFg
                           : nav.dim,
-                      width: 36,
-                      height: 26,
+                      width: 40,
+                      height: 30,
                       cursor: "pointer",
                       fontFamily: "Georgia,serif",
-                      fontSize: isDecadeStart ? 9 : 8,
+                      fontSize: isDecadeStart ? 10 : 9,
                       fontWeight: isActive || isDecadeStart ? 700 : 400,
                       transition:
                         "background 0.15s, color 0.15s, border-color 0.45s",
@@ -2240,11 +2238,11 @@ export default function YearPage({
               background: "none",
               border: `1px solid ${nav.accent}`,
               color: year >= 2000 ? nav.dim : nav.fg,
-              width: 28,
-              height: 28,
+              width: 34,
+              height: 34,
               cursor: year >= 2000 ? "not-allowed" : "pointer",
               fontFamily: "Georgia,serif",
-              fontSize: 14,
+              fontSize: 16,
               flexShrink: 0,
               transition: "border-color 0.45s, color 0.45s",
             }}
