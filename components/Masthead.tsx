@@ -144,101 +144,104 @@ function getDecadeStyle(year: number): DecadeStyle {
       price: "Twopence",
     };
 
-  // ── 1960s: Modernising Ireland, dark charcoal, RTÉ-era optimism ─────────────
+  // ── 1960s: Modernising Ireland — warm off-white, black, single green rule ───
+  // Think Irish Times c.1964 — clean, confident, institutional.
+  // One thin green rule nods to RTÉ and the Lemass era optimism.
+  // No ornament. Open tracking. The decade Ireland started looking outward.
   if (year <= 1969)
     return {
-      bg: "#222222",
-      stripBg: "#1a1a1a",
+      bg: "#faf9f5",
+      stripBg: "#f0efe8",
       titleFont: "'Libre Baskerville',Georgia,serif",
-      titleSize: "clamp(36px,5.8vw,76px)",
+      titleSize: "clamp(36px,5.8vw,78px)",
       titleWeight: 700,
-      titleColor: "#ddf4d8",
-      titleLetterSpacing: 6,
-      titlePaddingY: "16px",
-      accentColor: "#50a050",
-      ruleTop: "2px solid #408840",
-      ruleBottom: "2px solid #408840",
-      accentBar: "4px solid #50a050",
+      titleColor: "#0d0d0d",
+      titleLetterSpacing: 5,
+      titlePaddingY: "14px",
+      accentColor: "#2a7a2a",
+      ruleTop: "1px solid #d0cfc8",
+      ruleBottom: "2px solid #0d0d0d",
+      accentBar: "2px solid #2a7a2a",
       tagline: "Dublin Forward · All the News Worth Knowing",
-      taglineFontSize: 8,
+      taglineFontSize: 7.5,
       taglineLetterSpacing: 4,
-      taglineColor: "#70c070",
-      stripColor: "#70c070",
+      taglineColor: "#444444",
+      stripColor: "#666666",
       price: "Threepence",
     };
 
-  // ── 1970s: Troubles, near-black, hard red accent, urgent ───────────────────
+  // ── 1970s: Troubles — warm newsprint, black, narrow red rule ───────────────
+  // Think Irish Independent c.1974 — slightly yellowed stock, heavy black title.
+  // One red rule at the top. Tagline tight and serious. No warmth.
+  // The red is the bomb. The rest is just the paper trying to hold together.
   if (year <= 1979)
     return {
-      bg: "#0c0804",
-      stripBg: "#100a06",
+      bg: "#f7f2e8",
+      stripBg: "#eee8d8",
       titleFont: "'Libre Baskerville',Georgia,serif",
-      titleSize: "clamp(36px,5.8vw,74px)",
+      titleSize: "clamp(36px,5.8vw,76px)",
       titleWeight: 700,
-      titleColor: "#e8dcc0",
+      titleColor: "#0a0a0a",
       titleLetterSpacing: 2,
       titlePaddingY: "11px",
-      accentColor: "#cc2020",
-      ruleTop: "3px solid #cc2020",
-      ruleBottom: "3px solid #cc2020",
-      accentBar: "3px solid #cc2020",
+      accentColor: "#bb1a1a",
+      ruleTop: "3px solid #bb1a1a",
+      ruleBottom: "1px solid #c8bfa8",
+      accentBar: "1px solid #c8bfa8",
       tagline: "Reporting Dublin Through Difficult Days",
       taglineFontSize: 7,
-      taglineLetterSpacing: 2,
-      taglineColor: "#c09870",
-      stripColor: "#c09870",
+      taglineLetterSpacing: 2.5,
+      taglineColor: "#3a3a3a",
+      stripColor: "#5a5a5a",
       price: "5p",
     };
 
-  // ── 1980s: Recession — dark brown-black, tight serif, subdued amber ─────────
-  // The paper is thinner, the ink cheaper, the mood bleak but dignified.
-  // Think Irish Independent c.1983 — not punk, not trendy, just hard times.
+  // ── 1980s: Recession — off-white beige, black ink, thin red rule ───────────
+  // Think Irish Independent c.1984 — clean but austere, slightly yellowed stock.
+  // One thin red rule is the only colour. No ornament. No warmth.
   if (year <= 1989)
     return {
-      bg: "#130f0a",
-      stripBg: "#0e0b07",
+      bg: "#f5f0e8",
+      stripBg: "#ede8de",
       titleFont: "'Playfair Display',Georgia,serif",
       titleSize: "clamp(36px,5.8vw,76px)",
       titleWeight: 900,
-      titleColor: "#d8ccb0",
+      titleColor: "#0a0a0a",
       titleLetterSpacing: 2,
       titlePaddingY: "11px",
-      accentColor: "#a07830",
-      ruleTop: "1px solid #604820",
-      ruleBottom: "3px double #604820",
-      accentBar: "2px solid #a07830",
+      accentColor: "#cc1a1a",
+      ruleTop: "1px solid #c0b8a8",
+      ruleBottom: "2px solid #0a0a0a",
+      accentBar: "2px solid #cc1a1a",
       tagline: "The Independent Voice of Dublin · Est. 1859",
       taglineFontSize: 7,
       taglineLetterSpacing: 2.5,
-      taglineColor: "#907050",
-      stripColor: "#806040",
+      taglineColor: "#3a3a3a",
+      stripColor: "#5a5a5a",
       price: "20p",
-      ornamentChar: "◆",
     };
 
-  // ── 1990s–2000: Celtic Tiger — warm near-black, gold rule, confident serif ──
-  // The paper has money now. Heavier stock, bolder ink, gold rule.
-  // Still a broadsheet — think Irish Times Saturday supplement c.1998.
+  // ── 1990s–2000: Celtic Tiger — pure white, black, single red hairline ───────
+  // Irish Times c.1997. White stock, heavy black title, one red rule top.
+  // Confident, clean, prosperous. No ornament, no warmth, just authority.
   return {
-    bg: "#0e0c08",
-    stripBg: "#0a0806",
+    bg: "#ffffff",
+    stripBg: "#f4f4f4",
     titleFont: "'Playfair Display',Georgia,serif",
-    titleSize: "clamp(40px,6.5vw,86px)",
+    titleSize: "clamp(40px,6.5vw,90px)",
     titleWeight: 900,
-    titleColor: "#f4ead0",
-    titleLetterSpacing: 4,
-    titlePaddingY: "15px",
-    accentColor: "#c8960c",
-    ruleTop: "3px double #c8960c",
-    ruleBottom: "3px double #c8960c",
-    accentBar: "4px double #c8960c",
+    titleColor: "#000000",
+    titleLetterSpacing: 3,
+    titlePaddingY: "14px",
+    accentColor: "#cc1a1a",
+    ruleTop: "3px solid #cc1a1a",
+    ruleBottom: "1px solid #cccccc",
     tagline: "Dublin · Ireland · Europe · The World",
-    taglineFontSize: 8,
+    taglineFontSize: 7.5,
     taglineLetterSpacing: 5,
-    taglineColor: "#c8960c",
-    stripColor: "#a07820",
+    taglineColor: "#444444",
+    stripColor: "#666666",
     price: year >= 1999 ? "£1.20" : year >= 1995 ? "£1.00" : "80p",
-    ornamentChar: "❦",
   };
 }
 
