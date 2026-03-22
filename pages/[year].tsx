@@ -928,7 +928,7 @@ export default function YearPage({
           @media(max-width:1100px){.paper-grid>*:nth-child(2),.paper-grid>*:nth-child(4){display:none}}
           .paper-texture::before{content:'';position:fixed;inset:0;z-index:997;pointer-events:none;opacity:0.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat;background-size:200px 200px}
           .paper-texture::after{content:'';position:fixed;inset:0;z-index:996;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(26,18,8,0.18) 100%)}
-          .north-box{border:2px solid #8b0000;background:#fdf5f5;padding:12px;margin:10px 0}
+          .north-box{border:2px solid #000;background:transparent;padding:12px;margin:10px 0}
           @media print{nav{display:none!important}body{background:#fff!important}.paper-grid{grid-template-columns:1fr 2fr 1fr!important}*{color:#000!important}img{filter:none!important}}
         `}</style>
 
@@ -951,7 +951,7 @@ export default function YearPage({
           <style>{`body{background:#fafaf8}.paper-texture{background:#fafaf8 !important}.paper-texture::before{opacity:0.015}.paper-texture::after{display:none !important}.stats-banner{background:#f0f0ee !important;border-bottom:2px solid #888 !important}.stats-banner .stat{border-right-color:#d0d0d0 !important}`}</style>
         )}
         {year >= 1970 && year <= 1979 && (
-          <style>{`body{background:#f0ede4}.paper-texture{background:#f0ede4 !important}.paper-texture::before{opacity:0.03}.stats-banner{background:#e8e4d8 !important;border-bottom:3px solid #1a1208 !important}.stats-banner .stat{border-right-color:#c0b090 !important}.north-box{border:2px solid #000;background:transparent}`}</style>
+          <style>{`body{background:#f0ede4}.paper-texture{background:#f0ede4 !important}.paper-texture::before{opacity:0.03}.stats-banner{background:#e8e4d8 !important;border-bottom:3px solid #1a1208 !important}.stats-banner .stat{border-right-color:#c0b090 !important}`}</style>
         )}
         {year >= 1980 && year <= 1989 && (
           <style>{`body{background:#f2efea}.paper-texture{background:#f2efea !important}.paper-texture::before{opacity:0.02}.paper-texture::after{display:none !important}.stats-banner{background:#ece8e0 !important;border-bottom:1px solid #aaa !important}.stats-banner .stat{border-right-color:#c8c0b0 !important}`}</style>
@@ -2024,11 +2024,65 @@ export default function YearPage({
           background: nav.bg,
           borderTop: nav.border,
           display: "flex",
-          justifyContent: "center",
-          padding: "7px 16px",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: "5px 16px 7px",
+          gap: 5,
           transition: "background 0.45s ease, border-color 0.45s ease",
         }}
       >
+        {/* ── Decade jump row ── */}
+        <div
+          style={{
+            display: "flex",
+            gap: 4,
+            maxWidth: 680,
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
+          {(
+            [
+              1916, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000,
+            ] as const
+          ).map((d) => {
+            const isActive =
+              d === 1916 ? year <= 1919 : year >= d && year < d + 10;
+            const label =
+              d === 1916
+                ? "'16"
+                : d === 2000
+                  ? "'00"
+                  : `'${String(d).slice(2)}s`;
+            return (
+              <button
+                key={d}
+                onClick={() => go(d)}
+                style={{
+                  flex: 1,
+                  background: isActive ? nav.activeBg : "transparent",
+                  border: isActive
+                    ? `1px solid ${nav.activeBg}`
+                    : `1px solid ${nav.accent}44`,
+                  color: isActive ? nav.activeFg : nav.dim,
+                  height: 18,
+                  cursor: "pointer",
+                  fontFamily: "Georgia,serif",
+                  fontSize: 8,
+                  fontWeight: isActive ? 700 : 400,
+                  letterSpacing: 0.5,
+                  transition:
+                    "background 0.15s, color 0.15s, border-color 0.45s",
+                  padding: 0,
+                }}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* ── Year track row ── */}
         <div
           style={{
             display: "flex",
