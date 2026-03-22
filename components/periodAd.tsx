@@ -19,7 +19,7 @@ export default function PeriodAd({ src }: Props) {
         style={{
           width: "100%",
           display: "block",
-          filter: "sepia(0.35) contrast(1.08) brightness(0.86) saturate(0.6)",
+          filter: "sepia(0.35) contrast(1.08) brightness(0.96) saturate(0.9)",
         }}
       />
       {/* Grain + vignette overlay */}
