@@ -838,7 +838,7 @@ export default function YearPage({
     { label: "City Population", value: popNum, sub: "city boundary" },
     { label: "Price of a Pint", value: pintDisp, sub: "Guinness stout" },
     {
-      label: "Taoiseach",
+      label: "Head of state",
       value: content.taoiseach?.split(" ").slice(0, 2).join(" ") ?? "—",
       sub: "in office",
     },
@@ -951,7 +951,7 @@ export default function YearPage({
           <style>{`body{background:#fafaf8}.paper-texture{background:#fafaf8 !important}.paper-texture::before{opacity:0.015}.paper-texture::after{display:none !important}.stats-banner{background:#f0f0ee !important;border-bottom:2px solid #888 !important}.stats-banner .stat{border-right-color:#d0d0d0 !important}`}</style>
         )}
         {year >= 1970 && year <= 1979 && (
-          <style>{`body{background:#f0ede4}.paper-texture{background:#f0ede4 !important}.paper-texture::before{opacity:0.03}.stats-banner{background:#e8e4d8 !important;border-bottom:3px solid #1a1208 !important}.stats-banner .stat{border-right-color:#c0b090 !important}.north-box{border:2px solid #8b0000;background:#fdf5f5}`}</style>
+          <style>{`body{background:#f0ede4}.paper-texture{background:#f0ede4 !important}.paper-texture::before{opacity:0.03}.stats-banner{background:#e8e4d8 !important;border-bottom:3px solid #1a1208 !important}.stats-banner .stat{border-right-color:#c0b090 !important}.north-box{border:2px solid #000;background:transparent}`}</style>
         )}
         {year >= 1980 && year <= 1989 && (
           <style>{`body{background:#f2efea}.paper-texture{background:#f2efea !important}.paper-texture::before{opacity:0.02}.paper-texture::after{display:none !important}.stats-banner{background:#ece8e0 !important;border-bottom:1px solid #aaa !important}.stats-banner .stat{border-right-color:#c8c0b0 !important}`}</style>
@@ -1280,7 +1280,7 @@ export default function YearPage({
                         textTransform: "uppercase",
                         letterSpacing: 2,
                         fontFamily: "Georgia,serif",
-                        color: "#8b0000",
+                        color: "#000",
                         fontWeight: 700,
                         marginBottom: 4,
                       }}
@@ -1634,7 +1634,7 @@ export default function YearPage({
 
             {/* ── RIGHT COLUMN ──────────────────────────────────────────────── */}
             <div style={{ padding: "12px 0 12px 14px" }}>
-              <PeriodAd src={adSlots[0]} />
+              <PeriodAd src={adSlots[0] ?? undefined} />
 
               <SecHead>The Price of a Pint</SecHead>
               <div
