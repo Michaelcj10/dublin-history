@@ -8,6 +8,7 @@ import DeathNotices from "../components/DeathNotices";
 import CurrencyAd from "../components/currencyAd";
 import Masthead from "../components/Masthead";
 import PeriodAd from "../components/periodAd";
+import { getMastheadBg } from "../components/Masthead";
 import { getAdImages } from "../lib/getAdImages";
 import Head from "next/head";
 import fs from "fs";
@@ -645,6 +646,21 @@ export default function YearPage({
   const [typedHeadline, setTypedHeadline] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
 
+  // ── Distribute ads across columns ────────────────────────────────────────
+  const [adSlots, setAdSlots] = useState<(string | null)[]>([null, null, null]);
+  useEffect(() => {
+    if (!adImages.length) {
+      setAdSlots([null, null, null]);
+      return;
+    }
+    const arr = [...adImages];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    setAdSlots([arr[0] ?? null, arr[1] ?? null, arr[2] ?? null]);
+  }, [year, adImages]);
+
   // ── Swipe-to-navigate on the year track ──────────────────────────────────
   const trackRef = useRef<HTMLDivElement>(null);
   const swipeRef = useRef<{
@@ -844,6 +860,7 @@ export default function YearPage({
         {/* ── Core ────────────────────────────────────────────────────── */}
         <title>{seoTitle}</title>
         <meta name="description" content={seoDesc} />
+        <meta name="theme-color" content={getMastheadBg(year)} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href={canonicalUrl} />
         {prevYear && <link rel="prev" href={`${BASE_URL}/${prevYear}`} />}
@@ -1241,6 +1258,13 @@ export default function YearPage({
                 year={year}
                 notableDubliners={content.notable_dubliners ?? []}
               />
+
+              {adSlots[2] && (
+                <>
+                  <HRule />
+                  <PeriodAd src={adSlots[2]} />
+                </>
+              )}
             </div>
 
             <ColRule />
@@ -1610,7 +1634,7 @@ export default function YearPage({
 
             {/* ── RIGHT COLUMN ──────────────────────────────────────────────── */}
             <div style={{ padding: "12px 0 12px 14px" }}>
-              <PeriodAd year={year} adImages={adImages} />
+              <PeriodAd src={adSlots[0]} />
 
               <SecHead>The Price of a Pint</SecHead>
               <div
@@ -1648,6 +1672,13 @@ export default function YearPage({
                 </>
               )}
               <HRule />
+
+              {adSlots[1] && (
+                <>
+                  <PeriodAd src={adSlots[1]} />
+                  <HRule />
+                </>
+              )}
 
               {content.number_one_song && (
                 <>

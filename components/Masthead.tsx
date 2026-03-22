@@ -245,6 +245,10 @@ function getDecadeStyle(year: number): DecadeStyle {
   };
 }
 
+export function getMastheadBg(year: number): string {
+  return getDecadeStyle(year).bg;
+}
+
 const TRANSITION =
   "background 0.45s ease, color 0.45s ease, border-color 0.45s ease";
 

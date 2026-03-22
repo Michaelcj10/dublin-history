@@ -1,20 +1,9 @@
-// ── components/PeriodAd.tsx (replace entire file) ────────────────────────────
-import { useEffect, useState } from "react";
-
 interface Props {
-  year: number;
-  adImages: string[];
+  src: string | null;
 }
 
-export default function PeriodAd({ year, adImages }: Props) {
-  const [src, setSrc] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!adImages.length) return;
-    setSrc(adImages[Math.floor(Math.random() * adImages.length)]);
-  }, [year, adImages]);
-
-  if (!adImages.length || !src) return null;
+export default function PeriodAd({ src }: Props) {
+  if (!src) return null;
 
   return (
     <div
