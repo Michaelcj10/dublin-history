@@ -13,7 +13,7 @@ import Head from "next/head";
 import fs from "fs";
 import path from "path";
 import { useRouter } from "next/router";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -125,6 +125,109 @@ function getEra(year: number): string {
   return "Celtic Tiger";
 }
 
+// ── Nav era theme (mirrors masthead palette) ──────────────────────────────────
+
+function getNavEra(year: number) {
+  if (year <= 1919)
+    return {
+      bg: "#080604",
+      border: "3px double #b09040",
+      accent: "#b09040",
+      fg: "#f0dfc0",
+      dim: "#6a5828",
+      activeBg: "#b09040",
+      activeFg: "#080604",
+      decadeFg: "#c0a060",
+    };
+  if (year <= 1929)
+    return {
+      bg: "#0d2818",
+      border: "2px solid #3a8030",
+      accent: "#3a8030",
+      fg: "#d8f0c8",
+      dim: "#3a6030",
+      activeBg: "#3a8030",
+      activeFg: "#0d2818",
+      decadeFg: "#7ac870",
+    };
+  if (year <= 1940)
+    return {
+      bg: "#0e0e0e",
+      border: "1px solid #505050",
+      accent: "#707070",
+      fg: "#d8d8d4",
+      dim: "#404040",
+      activeBg: "#707070",
+      activeFg: "#0e0e0e",
+      decadeFg: "#a0a098",
+    };
+  if (year <= 1945)
+    return {
+      bg: "#1a1a18",
+      border: "1px solid #504a40",
+      accent: "#706a60",
+      fg: "#c4c4c0",
+      dim: "#403c38",
+      activeBg: "#706a60",
+      activeFg: "#1a1a18",
+      decadeFg: "#908880",
+    };
+  if (year <= 1959)
+    return {
+      bg: "#0a1828",
+      border: "2px solid #2a5888",
+      accent: "#4870a8",
+      fg: "#c8d8e8",
+      dim: "#2a3848",
+      activeBg: "#4870a8",
+      activeFg: "#0a1828",
+      decadeFg: "#7898c0",
+    };
+  if (year <= 1969)
+    return {
+      bg: "#f0efe8",
+      border: "2px solid #0d0d0d",
+      accent: "#2a7a2a",
+      fg: "#0d0d0d",
+      dim: "#888880",
+      activeBg: "#0d0d0d",
+      activeFg: "#f0efe8",
+      decadeFg: "#2a7a2a",
+    };
+  if (year <= 1979)
+    return {
+      bg: "#f7f2e8",
+      border: "3px solid #bb1a1a",
+      accent: "#bb1a1a",
+      fg: "#0a0a0a",
+      dim: "#786858",
+      activeBg: "#bb1a1a",
+      activeFg: "#ffffff",
+      decadeFg: "#5a4020",
+    };
+  if (year <= 1989)
+    return {
+      bg: "#f5f0e8",
+      border: "1px solid #c0b8a8",
+      accent: "#cc1a1a",
+      fg: "#0a0a0a",
+      dim: "#787060",
+      activeBg: "#0a0a0a",
+      activeFg: "#f5f0e8",
+      decadeFg: "#cc1a1a",
+    };
+  return {
+    bg: "#ffffff",
+    border: "3px solid #cc1a1a",
+    accent: "#cc1a1a",
+    fg: "#000000",
+    dim: "#888888",
+    activeBg: "#cc1a1a",
+    activeFg: "#ffffff",
+    decadeFg: "#444444",
+  };
+}
+
 // ── Shared primitives ─────────────────────────────────────────────────────────
 
 const HRule = ({ thick }: { thick?: boolean }) => (
@@ -143,7 +246,8 @@ const ColRule = () => (
   />
 );
 const SecHead = ({ children }: { children: string }) => (
-  <div
+  <h2
+    className="sec-head" // MOBILE
     style={{
       textAlign: "center",
       padding: "3px 0",
@@ -153,6 +257,7 @@ const SecHead = ({ children }: { children: string }) => (
     }}
   >
     <span
+      className="sec-head-text" // MOBILE
       style={{
         fontFamily: "Georgia,'Times New Roman',serif",
         fontSize: 9,
@@ -164,7 +269,7 @@ const SecHead = ({ children }: { children: string }) => (
     >
       {children}
     </span>
-  </div>
+  </h2>
 );
 const BodyText = ({
   children,
@@ -174,6 +279,7 @@ const BodyText = ({
   size?: number;
 }) => (
   <p
+    className="body-text" // MOBILE
     style={{
       fontFamily: "Georgia,'Times New Roman',serif",
       fontSize: size,
@@ -325,6 +431,7 @@ function PriceLadderPanel({ ladder }: { ladder: PriceLadder }) {
       {rows.map(({ label, value, icon }, i) => (
         <div
           key={i}
+          className="price-row" // MOBILE
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -334,6 +441,7 @@ function PriceLadderPanel({ ladder }: { ladder: PriceLadder }) {
           }}
         >
           <span
+            className="price-row-label" // MOBILE
             style={{
               fontFamily: "Georgia,serif",
               fontSize: 10.5,
@@ -344,6 +452,7 @@ function PriceLadderPanel({ ladder }: { ladder: PriceLadder }) {
             {label}
           </span>
           <span
+            className="price-row-value" // MOBILE
             style={{
               fontFamily: "'Playfair Display',Georgia,serif",
               fontWeight: 700,
@@ -377,7 +486,9 @@ function PriceLadderPanel({ ladder }: { ladder: PriceLadder }) {
 
 function SportPanel({ sport }: { sport: SportItem[] }) {
   return (
-    <div style={{ paddingTop: 6, columns: 2, gap: 18 }}>
+    <div className="sport-grid" style={{ paddingTop: 6, columns: 2, gap: 18 }}>
+      {" "}
+      {/* MOBILE */}
       {sport.map((s, i) => (
         <div
           key={i}
@@ -534,6 +645,75 @@ export default function YearPage({
   const [typedHeadline, setTypedHeadline] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
 
+  // ── Swipe-to-navigate on the year track ──────────────────────────────────
+  const trackRef = useRef<HTMLDivElement>(null);
+  const swipeRef = useRef<{
+    startX: number;
+    startYear: number;
+    target: number;
+    didSwipe: boolean;
+  } | null>(null);
+  const isSwiping = useRef(false); // stays true until after synthetic click fires
+  const [swipeYear, setSwipeYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const onStart = (e: TouchEvent) => {
+      isSwiping.current = false;
+      swipeRef.current = {
+        startX: e.touches[0].clientX,
+        startYear: year,
+        target: year,
+        didSwipe: false,
+      };
+      setSwipeYear(null);
+    };
+    const onMove = (e: TouchEvent) => {
+      if (!swipeRef.current) return;
+      const delta = e.touches[0].clientX - swipeRef.current.startX;
+      // Once movement exceeds 6px it's a drag, not a tap
+      if (Math.abs(delta) > 6) {
+        swipeRef.current.didSwipe = true;
+        isSwiping.current = true;
+        e.preventDefault(); // block scroll while dragging the track
+      }
+      const yearDelta = -Math.round(delta / 38);
+      const target = Math.max(
+        1916,
+        Math.min(2000, swipeRef.current.startYear + yearDelta),
+      );
+      swipeRef.current.target = target;
+      setSwipeYear(target !== swipeRef.current.startYear ? target : null);
+    };
+    const onEnd = () => {
+      if (!swipeRef.current) return;
+      const t = swipeRef.current.target;
+      const didSwipe = swipeRef.current.didSwipe;
+      swipeRef.current = null;
+      setSwipeYear(null);
+      if (didSwipe) {
+        if (t !== year) go(t);
+        // Reset AFTER the browser's synthetic click fires (~50ms)
+        setTimeout(() => {
+          isSwiping.current = false;
+        }, 80);
+      } else {
+        isSwiping.current = false;
+      }
+    };
+    el.addEventListener("touchstart", onStart, { passive: true });
+    el.addEventListener("touchmove", onMove, { passive: false });
+    el.addEventListener("touchend", onEnd, { passive: true });
+    return () => {
+      el.removeEventListener("touchstart", onStart);
+      el.removeEventListener("touchmove", onMove);
+      el.removeEventListener("touchend", onEnd);
+    };
+  }, [year, go]);
+
+  const nav = getNavEra(year);
+
   const price = content.price_of_a_pint ?? "";
   const pintDisp =
     content.price_ladder?.pint_of_guinness ?? parsePintPrice(price);
@@ -573,6 +753,51 @@ export default function YearPage({
     return () => clearInterval(ticker);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [year]);
+
+  const BASE_URL =
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://dublinchronicle.ie";
+
+  // ── SEO helpers ────────────────────────────────────────────────
+  const seoTitle = `Dublin in ${year} — ${fullHeadline} | The Dublin Chronicle`;
+  const humanTags = content.timeline_tags
+    .slice(0, 2)
+    .map((t) => t.replace(/_/g, " "))
+    .join(", ");
+  const firstSentence =
+    content.timeline_summary.split(/\.\s+/)[0]?.trim() ?? "";
+  const rawDesc = `${firstSentence}. ${humanTags}${
+    content.price_of_a_pint ? `. Pint: ${content.price_of_a_pint}` : ""
+  }.`;
+  const seoDesc =
+    rawDesc.length <= 155
+      ? rawDesc
+      : rawDesc.slice(0, 152).replace(/\s+\S+$/, "") + "…";
+  const ogImage = `${BASE_URL}/images/dublin/${year}.png`;
+  const canonicalUrl = `${BASE_URL}/${year}`;
+  const prevYear = year > 1916 ? year - 1 : null;
+  const nextYear = year < 2000 ? year + 1 : null;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: fullHeadline,
+    datePublished: `${year}-01-01`,
+    description: content.timeline_summary,
+    keywords: content.timeline_tags.map((t) => t.replace(/_/g, " ")).join(", "),
+    about: { "@type": "Place", name: "Dublin, Ireland" },
+    temporalCoverage: `${year}/${year}`,
+    publisher: {
+      "@type": "Organization",
+      name: "The Dublin Chronicle",
+      url: BASE_URL,
+    },
+  };
+
+  // ── Nearby decade-boundary years for internal links ─────────────────────
+  const decadeLinks = [1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000]
+    .filter((d) => d !== year)
+    .sort((a, b) => Math.abs(a - year) - Math.abs(b - year))
+    .slice(0, 4);
 
   const paperBg =
     year <= 1919
@@ -616,12 +841,32 @@ export default function YearPage({
   return (
     <>
       <Head>
-        <title>{`The Dublin Chronicle · ${year}`}</title>
-        <meta name="description" content={content.timeline_summary} />
+        {/* ── Core ────────────────────────────────────────────────────── */}
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDesc} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href={canonicalUrl} />
+        {prevYear && <link rel="prev" href={`${BASE_URL}/${prevYear}`} />}
+        {nextYear && <link rel="next" href={`${BASE_URL}/${nextYear}`} />}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        {/* ── Open Graph ──────────────────────────────────────────── */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDesc} />
+        <meta property="og:image" content={ogImage} />
+        {/* ── Twitter Card ───────────────────────────────────────── */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seoTitle} />
+        <meta name="twitter:description" content={seoDesc} />
+        <meta name="twitter:image" content={ogImage} />
+        {/* ── JSON-LD ─────────────────────────────────────────────── */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {/* ── Styles ─────────────────────────────────────────────── */}
         <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap');
           *{box-sizing:border-box;margin:0;padding:0}
           body{background:#e8dfc8}
           ::selection{background:#1a1208;color:#f0e8d0}
@@ -629,10 +874,37 @@ export default function YearPage({
           .stats-banner .stat{padding:10px 12px;text-align:center;border-right:1px solid #b0a080}
           .stats-banner .stat:last-child{border-right:none}
           @media(max-width:640px){
-            .stats-banner{grid-template-columns:1fr 1fr}
-            .stats-banner .stat{border-right:none;border-bottom:1px solid #b0a080}
-            .stats-banner .stat:nth-child(odd){border-right:1px solid #b0a080}
-            .stats-banner .stat:last-child{grid-column:1/-1;border-right:none}
+            /* MOBILE — body text */
+            .body-text{font-size:16px !important;line-height:1.75 !important;}
+            /* MOBILE — paper grid padding */
+            .paper-grid>*{padding-left:12px !important;padding-right:12px !important;}
+            /* MOBILE — stats banner: stacked flex list, label left / value right */
+            .stats-banner{display:flex !important;flex-direction:column !important;}
+            .stats-banner .stat{display:flex !important;justify-content:space-between !important;align-items:center !important;text-align:left !important;padding:10px 16px !important;border-right:none !important;border-bottom:1px solid #b0a080 !important;}
+            .stats-banner .stat:last-child{border-bottom:none !important;}
+            .stat-label{font-size:13px !important;margin-bottom:0 !important;flex-shrink:0;margin-right:12px;}
+            .stat-value{font-size:26px !important;font-weight:700 !important;line-height:1 !important;}
+            .stat-sub{display:none !important;}
+            /* MOBILE — splash headline bigger */
+            .splash-headline{font-size:clamp(26px,8vw,42px) !important;}
+            .splash-sub{font-size:15px !important;}
+            /* MOBILE — section headers more breathing room */
+            .sec-head{margin:20px 0 14px !important;padding:6px 0 !important;}
+            .sec-head-text{font-size:12px !important;}
+            /* MOBILE — two-column sub-grids collapse to single column */
+            .two-col-grid{columns:1 !important;}
+            .sport-grid{columns:1 !important;}
+            /* MOBILE — price ladder rows larger text */
+            .price-row{padding:10px 0 !important;}
+            .price-row-label{font-size:15px !important;}
+            .price-row-value{font-size:20px !important;font-weight:700 !important;}
+            /* MOBILE — masthead: hide top info strip and tagline */
+            .masthead-info-strip{display:none !important;}
+            .masthead-tagline{display:none !important;}
+            /* MOBILE — nav: touch-action + larger hit targets */
+            nav{touch-action:none;}
+            .nav-arrow-btn{width:44px !important;height:44px !important;font-size:18px !important;}
+            .nav-year-btn{width:40px !important;height:34px !important;font-size:10px !important;}
           }
           .paper-grid{display:grid;grid-template-columns:220px 10px 1fr 10px 230px}
           @media(max-width:1100px){.paper-grid{grid-template-columns:1fr}}
@@ -690,6 +962,7 @@ export default function YearPage({
           {stats.map((s, i) => (
             <div key={i} className="stat">
               <div
+                className="stat-label" // MOBILE
                 style={{
                   fontSize: 8,
                   textTransform: "uppercase",
@@ -702,6 +975,7 @@ export default function YearPage({
                 {s.label}
               </div>
               <div
+                className="stat-value" // MOBILE
                 style={{
                   fontFamily: "'Playfair Display',Georgia,serif",
                   fontSize: "clamp(14px,2vw,22px)",
@@ -713,6 +987,7 @@ export default function YearPage({
                 {s.value}
               </div>
               <div
+                className="stat-sub" // MOBILE
                 style={{
                   fontSize: 8,
                   fontStyle: "italic",
@@ -751,6 +1026,7 @@ export default function YearPage({
                 .join("  ·  ")}
             </div>
             <h1
+              className="splash-headline" // MOBILE
               style={{
                 fontFamily: "'Playfair Display',Georgia,serif",
                 fontSize: "clamp(22px,4.5vw,54px)",
@@ -774,6 +1050,7 @@ export default function YearPage({
             </h1>
             {headlineBody.length > 0 && (
               <p
+                className="splash-sub" // MOBILE
                 style={{
                   fontFamily: "Georgia,serif",
                   fontSize: 13,
@@ -1003,7 +1280,12 @@ export default function YearPage({
               )}
 
               <SecHead>Affairs of the Nation &amp; the City</SecHead>
-              <div style={{ paddingTop: 6, columns: 2, gap: 18 }}>
+              <div
+                className="two-col-grid"
+                style={{ paddingTop: 6, columns: 2, gap: 18 }}
+              >
+                {" "}
+                {/* MOBILE */}
                 {otherEvents.map((e, i) => {
                   const text = ev(e);
                   const [title, ...body] = text.split(" — ");
@@ -1017,7 +1299,7 @@ export default function YearPage({
                         borderBottom: "1px dotted #c0b090",
                       }}
                     >
-                      <h4
+                      <h3
                         style={{
                           fontFamily: "'Playfair Display',serif",
                           fontWeight: 700,
@@ -1028,7 +1310,7 @@ export default function YearPage({
                         }}
                       >
                         {title?.trim()}
-                      </h4>
+                      </h3>
                       {body.length > 0 && (
                         <p
                           style={{
@@ -1141,7 +1423,12 @@ export default function YearPage({
 
               <HRule />
               <SecHead>City Dispatches</SecHead>
-              <div style={{ paddingTop: 6, columns: 2, gap: 18 }}>
+              <div
+                className="two-col-grid"
+                style={{ paddingTop: 6, columns: 2, gap: 18 }}
+              >
+                {" "}
+                {/* MOBILE */}
                 {content.city_changes.map((c, i) => {
                   const text = typeof c === "string" ? c : JSON.stringify(c);
                   const [first, ...rest] = text.split(". ");
@@ -1207,7 +1494,12 @@ export default function YearPage({
               {content.what_was_on && content.what_was_on.length > 0 && (
                 <>
                   <SecHead>Arts, Theatre &amp; Culture</SecHead>
-                  <div style={{ paddingTop: 6, columns: 2, gap: 18 }}>
+                  <div
+                    className="two-col-grid"
+                    style={{ paddingTop: 6, columns: 2, gap: 18 }}
+                  >
+                    {" "}
+                    {/* MOBILE */}
                     {content.what_was_on.map((item, i) => {
                       const ci = item.indexOf(":");
                       const cat = ci !== -1 ? item.slice(0, ci) : item;
@@ -1617,6 +1909,59 @@ export default function YearPage({
           </div>
         </div>
 
+        {/* ══ SEE ALSO — internal links for crawlers ═══════════════════════════ */}
+        <div
+          style={{
+            maxWidth: 1240,
+            margin: "0 auto",
+            padding: "10px 20px 16px",
+            fontFamily: "Georgia,'Times New Roman',serif",
+            fontSize: 10,
+            color: "#7a6040",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "6px 18px",
+            alignItems: "center",
+            borderTop: "1px solid #c0b090",
+          }}
+        >
+          <span
+            style={{
+              textTransform: "uppercase",
+              letterSpacing: 2,
+              fontSize: 8,
+              fontWeight: 700,
+            }}
+          >
+            See also:
+          </span>
+          {prevYear && (
+            <a
+              href={`/${prevYear}`}
+              style={{ color: "#5a4020", textDecoration: "underline" }}
+            >
+              ← Dublin in {prevYear}
+            </a>
+          )}
+          {nextYear && (
+            <a
+              href={`/${nextYear}`}
+              style={{ color: "#5a4020", textDecoration: "underline" }}
+            >
+              Dublin in {nextYear} →
+            </a>
+          )}
+          {decadeLinks.map((d) => (
+            <a
+              key={d}
+              href={`/${d}`}
+              style={{ color: "#7a6040", textDecoration: "underline" }}
+            >
+              {d}s
+            </a>
+          ))}
+        </div>
+
         {/* ══ FOOTER ═══════════════════════════════════════════════════════════ */}
         <div style={{ maxWidth: 1240, margin: "0 auto", padding: "0 20px" }}>
           <HRule thick />
@@ -1645,11 +1990,12 @@ export default function YearPage({
           left: 0,
           right: 0,
           zIndex: 100,
-          background: "#1a1208",
-          borderTop: "3px double #b0a080",
+          background: nav.bg,
+          borderTop: nav.border,
           display: "flex",
           justifyContent: "center",
           padding: "7px 16px",
+          transition: "background 0.45s ease, border-color 0.45s ease",
         }}
       >
         <div
@@ -1661,35 +2007,40 @@ export default function YearPage({
             width: "100%",
           }}
         >
+          {/* Prev button */}
           <button
             onClick={() => go(year - 1)}
             disabled={year <= 1916}
+            className="nav-arrow-btn"
             style={{
               background: "none",
-              border: "1px solid #b0a080",
-              color: year <= 1916 ? "#3a3028" : "#f0e8d0",
+              border: `1px solid ${nav.accent}`,
+              color: year <= 1916 ? nav.dim : nav.fg,
               width: 28,
               height: 28,
               cursor: year <= 1916 ? "not-allowed" : "pointer",
               fontFamily: "Georgia,serif",
               fontSize: 14,
               flexShrink: 0,
+              transition: "border-color 0.45s, color 0.45s",
             }}
           >
             ←
           </button>
 
-          <div style={{ textAlign: "center", minWidth: 54, flexShrink: 0 }}>
+          {/* Year + era label — shows swipe preview when swiping */}
+          <div style={{ textAlign: "center", minWidth: 60, flexShrink: 0 }}>
             <div
               style={{
                 fontFamily: "'Playfair Display','Times New Roman',serif",
                 fontSize: 24,
                 fontWeight: 700,
-                color: "#f0e8d0",
+                color: swipeYear !== null ? nav.accent : nav.fg,
                 lineHeight: 1,
+                transition: "color 0.15s",
               }}
             >
-              {year}
+              {swipeYear ?? year}
             </div>
             <div
               style={{
@@ -1697,22 +2048,28 @@ export default function YearPage({
                 letterSpacing: 2,
                 textTransform: "uppercase",
                 fontFamily: "Georgia,serif",
-                color: "#7a6040",
+                color: nav.accent,
+                transition: "color 0.45s",
               }}
             >
-              {getEra(year)}
+              {getEra(swipeYear ?? year)}
             </div>
           </div>
 
+          {/* Year track — swipeable */}
           <div
+            ref={trackRef}
             style={{
               flex: 1,
               position: "relative",
               display: "flex",
               alignItems: "center",
               overflow: "hidden",
+              touchAction: "none",
+              userSelect: "none",
             }}
           >
+            {/* left fade */}
             <div
               style={{
                 position: "absolute",
@@ -1720,10 +2077,10 @@ export default function YearPage({
                 top: 0,
                 bottom: 0,
                 width: 28,
-                background:
-                  "linear-gradient(to right, #1a1208 40%, transparent)",
+                background: `linear-gradient(to right, ${nav.bg} 40%, transparent)`,
                 zIndex: 2,
                 pointerEvents: "none",
+                transition: "background 0.45s",
               }}
             />
             <div
@@ -1735,32 +2092,37 @@ export default function YearPage({
               }}
             >
               {visibleYears.map((y) => {
-                const isActive = y === year;
+                const isActive = y === (swipeYear ?? year);
                 const isDecadeStart = y === 1916 || y % 10 === 0;
                 return (
                   <button
                     key={y}
-                    onClick={() => go(y)}
+                    onClick={() => {
+                      if (isSwiping.current) return; // swipe in progress — ignore tap
+                      go(y);
+                    }}
+                    className="nav-year-btn"
                     style={{
                       flexShrink: 0,
-                      background: isActive ? "#f0e8d0" : "transparent",
+                      background: isActive ? nav.activeBg : "transparent",
                       border: isActive
-                        ? "1px solid #f0e8d0"
+                        ? `1px solid ${nav.activeBg}`
                         : isDecadeStart
-                          ? "1px solid #5a5040"
-                          : "1px solid #2a2018",
+                          ? `1px solid ${nav.accent}66`
+                          : `1px solid ${nav.dim}66`,
                       color: isActive
-                        ? "#1a1208"
+                        ? nav.activeFg
                         : isDecadeStart
-                          ? "#c0a870"
-                          : "#5a4a30",
+                          ? nav.decadeFg
+                          : nav.dim,
                       width: 36,
                       height: 26,
                       cursor: "pointer",
                       fontFamily: "Georgia,serif",
                       fontSize: isDecadeStart ? 9 : 8,
                       fontWeight: isActive || isDecadeStart ? 700 : 400,
-                      transition: "background 0.15s, color 0.15s",
+                      transition:
+                        "background 0.15s, color 0.15s, border-color 0.45s",
                     }}
                   >
                     {y}
@@ -1768,6 +2130,7 @@ export default function YearPage({
                 );
               })}
             </div>
+            {/* right fade */}
             <div
               style={{
                 position: "absolute",
@@ -1775,27 +2138,30 @@ export default function YearPage({
                 top: 0,
                 bottom: 0,
                 width: 28,
-                background:
-                  "linear-gradient(to left, #1a1208 40%, transparent)",
+                background: `linear-gradient(to left, ${nav.bg} 40%, transparent)`,
                 zIndex: 2,
                 pointerEvents: "none",
+                transition: "background 0.45s",
               }}
             />
           </div>
 
+          {/* Next button */}
           <button
             onClick={() => go(year + 1)}
             disabled={year >= 2000}
+            className="nav-arrow-btn"
             style={{
               background: "none",
-              border: "1px solid #b0a080",
-              color: year >= 2000 ? "#3a3028" : "#f0e8d0",
+              border: `1px solid ${nav.accent}`,
+              color: year >= 2000 ? nav.dim : nav.fg,
               width: 28,
               height: 28,
               cursor: year >= 2000 ? "not-allowed" : "pointer",
               fontFamily: "Georgia,serif",
               fontSize: 14,
               flexShrink: 0,
+              transition: "border-color 0.45s, color 0.45s",
             }}
           >
             →

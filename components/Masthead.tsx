@@ -276,6 +276,7 @@ export default function Masthead({ year }: Props) {
     >
       {/* ── Top info strip ─────────────────────────────────────────────────── */}
       <div
+        className="masthead-info-strip" // MOBILE
         style={{
           ...stripStyle,
           background: s.stripBg,
@@ -378,6 +379,7 @@ export default function Masthead({ year }: Props) {
 
         {/* Tagline row */}
         <div
+          className="masthead-tagline" // MOBILE
           style={{
             display: "flex",
             alignItems: "center",
