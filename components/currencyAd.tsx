@@ -1,14 +1,10 @@
 // components/CurrencyAd.tsx
-// Period newspaper-style advertisement showing coins/notes in circulation
-// Automatically selects the correct currency era based on year
 
 import React from "react";
 
 interface CurrencyAdProps {
   year: number;
 }
-
-// ── Era detection ─────────────────────────────────────────────────────────────
 
 function getEra(
   year: number,
@@ -19,7 +15,7 @@ function getEra(
   return "euro_approach";
 }
 
-// ── SVG coin components ───────────────────────────────────────────────────────
+// ── Single coin — label BELOW the coin body, never overlapping ───────────────
 
 function Coin({
   cx,
@@ -27,10 +23,8 @@ function Coin({
   r,
   fill,
   stroke,
-  strokeWidth = 1.2,
-  label,
-  sublabel,
-  textFill = "#1a0a00",
+  denom,
+  name,
   motif,
 }: {
   cx: number;
@@ -38,198 +32,200 @@ function Coin({
   r: number;
   fill: string;
   stroke: string;
-  strokeWidth?: number;
-  label: string;
-  sublabel?: string;
-  textFill?: string;
-  motif?:
-    | "harp"
-    | "crown"
-    | "bull"
-    | "salmon"
-    | "woodcock"
-    | "horse"
-    | "hen"
-    | "stag"
-    | "hound"
-    | "hare";
+  denom: string;
+  name?: string;
+  motif?: string;
 }) {
-  const motifPaths: Record<string, React.ReactNode> = {
-    harp: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.55}
-        fill={textFill}
-        opacity={0.35}
-        fontFamily="Georgia,serif"
-      >
-        ♫
-      </text>
-    ),
-    crown: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-        fontFamily="serif"
-      >
-        ♛
-      </text>
-    ),
-    stag: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-      >
-        🦌
-      </text>
-    ),
-    bull: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-      >
-        🐂
-      </text>
-    ),
-    horse: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-      >
-        🐴
-      </text>
-    ),
-    hen: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-      >
-        🐓
-      </text>
-    ),
-    salmon: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-      >
-        🐟
-      </text>
-    ),
-    woodcock: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-      >
-        🐦
-      </text>
-    ),
-    hound: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-      >
-        🐕
-      </text>
-    ),
-    hare: (
-      <text
-        x={cx}
-        y={cy + r * 0.18}
-        textAnchor="middle"
-        fontSize={r * 0.5}
-        fill={textFill}
-        opacity={0.3}
-      >
-        🐰
-      </text>
-    ),
+  const motifChar: Record<string, string> = {
+    crown: "♛",
+    harp: "♜",
+    bull: "☯",
+    hen: "✦",
+    horse: "✦",
+    salmon: "~",
+    woodcock: "✦",
+    stag: "✦",
+    hare: "✦",
+    hound: "✦",
   };
 
   return (
     <g>
-      {/* Shadow */}
+      {/* Drop shadow */}
       <ellipse
-        cx={cx + 2}
-        cy={cy + 3}
-        rx={r}
-        ry={r * 0.22}
-        fill="rgba(0,0,0,0.25)"
+        cx={cx + 2.5}
+        cy={cy + r + 2}
+        rx={r * 0.85}
+        ry={r * 0.18}
+        fill="rgba(0,0,0,0.22)"
       />
-      {/* Body */}
+      {/* Coin body */}
       <circle
         cx={cx}
         cy={cy}
         r={r}
         fill={fill}
         stroke={stroke}
-        strokeWidth={strokeWidth}
+        strokeWidth={1.4}
+      />
+      {/* Outer ring */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r - 2.5}
+        fill="none"
+        stroke={stroke}
+        strokeWidth={0.6}
+        opacity={0.5}
       />
       {/* Inner ring */}
       <circle
         cx={cx}
         cy={cy}
-        r={r * 0.82}
+        r={r - 5}
+        fill="none"
+        stroke={stroke}
+        strokeWidth={0.4}
+        opacity={0.25}
+      />
+      {/* Motif — centred, generous size */}
+      {motif && (
+        <text
+          x={cx}
+          y={cy + r * 0.22}
+          textAnchor="middle"
+          fontSize={r * 0.72}
+          fontFamily="Georgia,serif"
+          fill={stroke}
+          opacity={0.28}
+        >
+          {motifChar[motif] ?? "✦"}
+        </text>
+      )}
+      {/* Denomination — centred in lower half of coin */}
+      <text
+        x={cx}
+        y={cy + r * 0.55}
+        textAnchor="middle"
+        fontSize={r * 0.48}
+        fontWeight="bold"
+        fontFamily="Georgia,serif"
+        fill={stroke}
+        opacity={0.85}
+      >
+        {denom}
+      </text>
+      {/* Name label — BELOW the coin entirely */}
+      {name && (
+        <text
+          x={cx}
+          y={cy + r + 11}
+          textAnchor="middle"
+          fontSize={7}
+          fontFamily="Georgia,serif"
+          fill="#6a5030"
+          fontStyle="italic"
+        >
+          {name}
+        </text>
+      )}
+    </g>
+  );
+}
+
+// ── Banknote ─────────────────────────────────────────────────────────────────
+
+function Note({
+  x,
+  y,
+  w,
+  h,
+  fill,
+  stroke,
+  accent,
+  denom,
+  sublabel,
+}: {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  fill: string;
+  stroke: string;
+  accent: string;
+  denom: string;
+  sublabel?: string;
+}) {
+  return (
+    <g>
+      <rect
+        x={x + 3}
+        y={y + 4}
+        width={w}
+        height={h}
+        rx={3}
+        fill="rgba(0,0,0,0.18)"
+      />
+      <rect
+        x={x}
+        y={y}
+        width={w}
+        height={h}
+        rx={3}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={1.2}
+      />
+      <rect
+        x={x + 4}
+        y={y + 4}
+        width={w - 8}
+        height={h - 8}
+        rx={2}
         fill="none"
         stroke={stroke}
         strokeWidth={0.5}
         opacity={0.4}
       />
-      {/* Motif */}
-      {motif && motifPaths[motif]}
-      {/* Denomination */}
+      {/* Accent side bars */}
+      <rect
+        x={x}
+        y={y}
+        width={10}
+        height={h}
+        rx={3}
+        fill={accent}
+        opacity={0.55}
+      />
+      <rect
+        x={x + w - 10}
+        y={y}
+        width={10}
+        height={h}
+        rx={3}
+        fill={accent}
+        opacity={0.55}
+      />
+      {/* Denom */}
       <text
-        x={cx}
-        y={cy + r * 0.65}
+        x={x + w / 2}
+        y={y + h * 0.52}
         textAnchor="middle"
-        fontSize={r * 0.42}
+        fontSize={h * 0.35}
         fontWeight="bold"
         fontFamily="Georgia,serif"
-        fill={textFill}
+        fill={stroke}
       >
-        {label}
+        {denom}
       </text>
       {sublabel && (
         <text
-          x={cx}
-          y={cy + r * 0.88}
+          x={x + w / 2}
+          y={y + h * 0.78}
           textAnchor="middle"
-          fontSize={r * 0.3}
+          fontSize={h * 0.2}
           fontFamily="Georgia,serif"
-          fill={textFill}
+          fill={stroke}
           opacity={0.65}
         >
           {sublabel}
@@ -239,386 +235,217 @@ function Coin({
   );
 }
 
-function Note({
-  x,
+// ── Row helper — evenly spaces coins with name labels, returns total height ──
+
+function CoinRow({
+  coins,
   y,
-  w,
-  h,
-  fill,
-  stroke,
-  label,
-  sublabel,
-  colour,
+  viewW,
 }: {
-  x: number;
+  coins: {
+    denom: string;
+    name?: string;
+    r: number;
+    fill: string;
+    stroke: string;
+    motif?: string;
+  }[];
   y: number;
-  w: number;
-  h: number;
-  fill: string;
-  stroke: string;
-  label: string;
-  sublabel?: string;
-  colour: string;
+  viewW: number;
 }) {
+  const n = coins.length;
+  const spacing = viewW / n;
   return (
-    <g>
-      <rect
-        x={x + 3}
-        y={y + 3}
-        width={w}
-        height={h}
-        rx={2}
-        fill="rgba(0,0,0,0.2)"
-      />
-      <rect
-        x={x}
-        y={y}
-        width={w}
-        height={h}
-        rx={2}
-        fill={fill}
-        stroke={stroke}
-        strokeWidth={1}
-      />
-      {/* Cross-hatch border decoration */}
-      <rect
-        x={x + 3}
-        y={y + 3}
-        width={w - 6}
-        height={h - 6}
-        rx={1}
-        fill="none"
-        stroke={stroke}
-        strokeWidth={0.5}
-        opacity={0.5}
-      />
-      {/* Colour band */}
-      <rect
-        x={x}
-        y={y}
-        width={8}
-        height={h}
-        rx={2}
-        fill={colour}
-        opacity={0.6}
-      />
-      <rect
-        x={x + w - 8}
-        y={y}
-        width={8}
-        height={h}
-        rx={2}
-        fill={colour}
-        opacity={0.6}
-      />
-      {/* Label */}
-      <text
-        x={x + w / 2}
-        y={y + h / 2 - 4}
-        textAnchor="middle"
-        fontSize={h * 0.28}
-        fontWeight="bold"
-        fontFamily="Georgia,serif"
-        fill={stroke}
-      >
-        {label}
-      </text>
-      {sublabel && (
-        <text
-          x={x + w / 2}
-          y={y + h / 2 + 9}
-          textAnchor="middle"
-          fontSize={h * 0.16}
-          fontFamily="Georgia,serif"
-          fill={stroke}
-          opacity={0.7}
-        >
-          {sublabel}
-        </text>
-      )}
-    </g>
+    <>
+      {coins.map((c, i) => (
+        <Coin
+          key={i}
+          cx={spacing * i + spacing / 2}
+          cy={y}
+          r={c.r}
+          fill={c.fill}
+          stroke={c.stroke}
+          denom={c.denom}
+          name={c.name}
+          motif={c.motif}
+        />
+      ))}
+    </>
   );
 }
 
-// ── Era SVG layouts ───────────────────────────────────────────────────────────
+// ── Era illustrations ─────────────────────────────────────────────────────────
 
-// 1916–1921: British currency — silver & copper
+const COPPER = { fill: "#c07830", stroke: "#7a4010" };
+const SILVER = { fill: "#cdd5dd", stroke: "#6a7888" };
+const GOLD = { fill: "#d4aa50", stroke: "#907020" };
+
+// 1916–1921: British coinage
 function BritishCoins() {
+  // Two rows: small coins top, large coins bottom
+  // viewBox tall enough: 200px
   return (
-    <svg viewBox="0 0 280 110" style={{ width: "100%", display: "block" }}>
-      <Coin
-        cx={28}
-        cy={55}
-        r={24}
-        fill="#c8a860"
-        stroke="#907030"
-        label="½d"
-        sublabel="Half-penny"
-        motif="crown"
+    <svg viewBox="0 0 280 185" style={{ width: "100%", display: "block" }}>
+      <CoinRow
+        viewW={280}
+        y={38}
+        coins={[
+          { denom: "½d", name: "Halfpenny", r: 22, ...COPPER, motif: "crown" },
+          { denom: "1d", name: "Penny", r: 26, ...COPPER, motif: "crown" },
+          { denom: "3d", name: "Threepence", r: 20, ...SILVER, motif: "crown" },
+          { denom: "6d", name: "Sixpence", r: 22, ...SILVER, motif: "crown" },
+        ]}
       />
-      <Coin
-        cx={80}
-        cy={55}
-        r={26}
-        fill="#b87333"
-        stroke="#8B5A2B"
-        label="1d"
-        sublabel="Penny"
-        motif="crown"
-      />
-      <Coin
-        cx={135}
-        cy={55}
-        r={22}
-        fill="#b0b8c0"
-        stroke="#6a7880"
-        label="3d"
-        sublabel="Threepence"
-        motif="crown"
-      />
-      <Coin
-        cx={183}
-        cy={55}
-        r={24}
-        fill="#c0c8d0"
-        stroke="#708090"
-        label="6d"
-        sublabel="Sixpence"
-        motif="crown"
-      />
-      <Coin
-        cx={234}
-        cy={55}
-        r={26}
-        fill="#d0d8e0"
-        stroke="#8090a0"
-        label="1/-"
-        sublabel="Shilling"
-        motif="crown"
+      <CoinRow
+        viewW={280}
+        y={128}
+        coins={[
+          { denom: "1/-", name: "Shilling", r: 25, ...SILVER, motif: "crown" },
+          { denom: "2/-", name: "Florin", r: 27, ...SILVER, motif: "crown" },
+          {
+            denom: "2/6",
+            name: "Half Crown",
+            r: 28,
+            ...SILVER,
+            motif: "crown",
+          },
+        ]}
       />
       <text
         x={140}
-        y={105}
+        y={178}
         textAnchor="middle"
-        fontSize={7}
+        fontSize={7.5}
         fill="#7a6040"
         fontFamily="Georgia,serif"
         fontStyle="italic"
       >
-        British coinage · Legal tender in Ireland
+        British sterling · Legal tender in Ireland · His Majesty's coinage
       </text>
     </svg>
   );
 }
 
-// 1922–1970: Irish Free State / Republic — the Barnacle-designed animal coins
+// 1922–1970: Irish Free State animal coins
 function IrishPreDecimalCoins() {
   return (
-    <svg viewBox="0 0 300 130" style={{ width: "100%", display: "block" }}>
-      {/* Copper */}
-      <Coin
-        cx={28}
-        cy={45}
-        r={18}
-        fill="#c07830"
-        stroke="#8B5A2B"
-        label="¼d"
-        sublabel="Farthing"
-        motif="woodcock"
-        textFill="#1a0800"
+    <svg viewBox="0 0 300 210" style={{ width: "100%", display: "block" }}>
+      {/* Row 1: copper */}
+      <CoinRow
+        viewW={300}
+        y={38}
+        coins={[
+          {
+            denom: "¼d",
+            name: "Farthing",
+            r: 18,
+            ...COPPER,
+            motif: "woodcock",
+          },
+          { denom: "1d", name: "Penny", r: 22, ...COPPER, motif: "hen" },
+          { denom: "3d", name: "Threepence", r: 20, ...COPPER, motif: "hare" },
+          { denom: "6d", name: "Sixpence", r: 21, ...SILVER, motif: "salmon" },
+        ]}
       />
-      <Coin
-        cx={70}
-        cy={45}
-        r={22}
-        fill="#b87333"
-        stroke="#8B5A2B"
-        label="1d"
-        sublabel="Penny"
-        motif="hen"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={116}
-        cy={45}
-        r={20}
-        fill="#c07830"
-        stroke="#8B5A2B"
-        label="3d"
-        sublabel="Thruppence"
-        motif="hare"
-        textFill="#1a0800"
-      />
-      {/* Silver */}
-      <Coin
-        cx={162}
-        cy={45}
-        r={22}
-        fill="#c8cfd6"
-        stroke="#708090"
-        label="6d"
-        sublabel="Sixpence"
-        motif="salmon"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={210}
-        cy={45}
-        r={24}
-        fill="#d0d8e0"
-        stroke="#8090a0"
-        label="1/-"
-        sublabel="Shilling"
-        motif="bull"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={260}
-        cy={45}
-        r={26}
-        fill="#d8e0e8"
-        stroke="#8090a0"
-        label="2/-"
-        sublabel="Florin"
-        motif="salmon"
-        textFill="#1a0800"
-      />
-      {/* Large silver */}
-      <Coin
-        cx={80}
-        cy={100}
-        r={28}
-        fill="#dce4ec"
-        stroke="#8090a0"
-        label="2/6"
-        sublabel="Half-Crown"
-        motif="horse"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={168}
-        cy={100}
-        r={32}
-        fill="#e0e8f0"
-        stroke="#8898a8"
-        label="10/-"
-        sublabel="Ten Shilling"
-        motif="harp"
-        textFill="#1a0800"
+      {/* Row 2: silver */}
+      <CoinRow
+        viewW={300}
+        y={125}
+        coins={[
+          { denom: "1/-", name: "Shilling", r: 24, ...SILVER, motif: "bull" },
+          { denom: "2/-", name: "Florin", r: 26, ...SILVER, motif: "salmon" },
+          {
+            denom: "2/6",
+            name: "Half Crown",
+            r: 28,
+            ...SILVER,
+            motif: "horse",
+          },
+          {
+            denom: "10/-",
+            name: "Ten Shilling",
+            r: 26,
+            ...GOLD,
+            motif: "harp",
+          },
+        ]}
       />
       <text
         x={150}
-        y={126}
+        y={200}
         textAnchor="middle"
-        fontSize={7}
+        fontSize={7.5}
         fill="#7a6040"
         fontFamily="Georgia,serif"
         fontStyle="italic"
       >
-        Saorstát Éireann · Percy Metcalfe & T.W. Goff designs · Est. 1928
+        Saorstát Éireann · Percy Metcalfe designs · Currency Commission 1928
       </text>
     </svg>
   );
 }
 
-// 1971–1998: Decimal Irish coinage
+// 1971–1998: Decimal punt
 function IrishDecimalCoins() {
   return (
-    <svg viewBox="0 0 300 130" style={{ width: "100%", display: "block" }}>
-      <Coin
-        cx={25}
-        cy={42}
-        r={16}
-        fill="#b87333"
-        stroke="#8B5A2B"
-        label="½p"
-        sublabel="Half-penny"
-        motif="woodcock"
-        textFill="#1a0800"
+    <svg viewBox="0 0 300 210" style={{ width: "100%", display: "block" }}>
+      {/* Row 1: bronze */}
+      <CoinRow
+        viewW={300}
+        y={38}
+        coins={[
+          {
+            denom: "½p",
+            name: "Half Penny",
+            r: 16,
+            ...COPPER,
+            motif: "woodcock",
+          },
+          { denom: "1p", name: "Penny", r: 19, ...COPPER, motif: "hen" },
+          {
+            denom: "2p",
+            name: "Two Pence",
+            r: 21,
+            ...COPPER,
+            motif: "woodcock",
+          },
+          { denom: "5p", name: "Five Pence", r: 20, ...SILVER, motif: "bull" },
+        ]}
       />
-      <Coin
-        cx={62}
-        cy={42}
-        r={18}
-        fill="#c07830"
-        stroke="#8B5A2B"
-        label="1p"
-        sublabel="Penny"
-        motif="hen"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={102}
-        cy={42}
-        r={20}
-        fill="#b87333"
-        stroke="#8B5A2B"
-        label="2p"
-        sublabel=""
-        motif="woodcock"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={146}
-        cy={42}
-        r={20}
-        fill="#c8cfd6"
-        stroke="#708090"
-        label="5p"
-        sublabel=""
-        motif="bull"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={190}
-        cy={42}
-        r={22}
-        fill="#d0d8e0"
-        stroke="#8090a0"
-        label="10p"
-        sublabel=""
-        motif="salmon"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={238}
-        cy={42}
-        r={22}
-        fill="#d8e0e8"
-        stroke="#8898a8"
-        label="20p"
-        sublabel=""
-        motif="horse"
-        textFill="#1a0800"
-      />
-      {/* 50p heptagonal — approximate with larger circle */}
-      <Coin
-        cx={80}
-        cy={100}
-        r={26}
-        fill="#dce4ec"
-        stroke="#8898a8"
-        label="50p"
-        sublabel="Woodcock"
-        motif="woodcock"
-        textFill="#1a0800"
-      />
-      <Coin
-        cx={168}
-        cy={100}
-        r={28}
-        fill="#c8cfd6"
-        stroke="#708090"
-        label="£1"
-        sublabel="Punt"
-        motif="stag"
-        textFill="#1a0800"
+      {/* Row 2: larger */}
+      <CoinRow
+        viewW={300}
+        y={130}
+        coins={[
+          {
+            denom: "10p",
+            name: "Ten Pence",
+            r: 23,
+            ...SILVER,
+            motif: "salmon",
+          },
+          {
+            denom: "20p",
+            name: "Twenty Pence",
+            r: 24,
+            ...SILVER,
+            motif: "horse",
+          },
+          {
+            denom: "50p",
+            name: "Fifty Pence",
+            r: 26,
+            ...SILVER,
+            motif: "woodcock",
+          },
+          { denom: "£1", name: "One Punt", r: 27, ...GOLD, motif: "stag" },
+        ]}
       />
       <text
         x={150}
-        y={127}
+        y={202}
         textAnchor="middle"
-        fontSize={7}
+        fontSize={7.5}
         fill="#7a6040"
         fontFamily="Georgia,serif"
         fontStyle="italic"
@@ -629,113 +456,109 @@ function IrishDecimalCoins() {
   );
 }
 
-// 1999–2000: Last years of the punt, euro on the horizon
+// 1999–2000: Punt fading, euro arriving
 function EuroApproachCoins() {
   return (
-    <svg viewBox="0 0 300 140" style={{ width: "100%", display: "block" }}>
-      {/* Punt coins fading */}
-      <g opacity={0.55}>
-        <Coin
-          cx={50}
-          cy={45}
-          r={22}
-          fill="#c8cfd6"
-          stroke="#708090"
-          label="10p"
-          sublabel="Punt"
-          motif="salmon"
-          textFill="#1a0800"
-        />
-        <Coin
-          cx={108}
-          cy={45}
-          r={24}
-          fill="#dce4ec"
-          stroke="#8898a8"
-          label="50p"
-          sublabel="Punt"
-          motif="woodcock"
-          textFill="#1a0800"
-        />
-        <Coin
-          cx={164}
-          cy={45}
-          r={26}
-          fill="#c8cfd6"
-          stroke="#708090"
-          label="£1"
-          sublabel="Punt"
-          motif="stag"
-          textFill="#1a0800"
+    <svg viewBox="0 0 300 210" style={{ width: "100%", display: "block" }}>
+      {/* Fading punt coins */}
+      <text
+        x={150}
+        y={16}
+        textAnchor="middle"
+        fontSize={8}
+        fill="#9a8060"
+        fontFamily="Georgia,serif"
+        fontStyle="italic"
+        fontWeight="bold"
+      >
+        The Punt — passing into history
+      </text>
+      <g opacity={0.45}>
+        <CoinRow
+          viewW={300}
+          y={52}
+          coins={[
+            { denom: "10p", name: "", r: 22, ...SILVER, motif: "salmon" },
+            { denom: "50p", name: "", r: 25, ...SILVER, motif: "woodcock" },
+            { denom: "£1", name: "", r: 27, ...GOLD, motif: "stag" },
+          ]}
         />
       </g>
-      {/* Euro notes preview */}
+      {/* Euro notes */}
+      <text
+        x={150}
+        y={102}
+        textAnchor="middle"
+        fontSize={8}
+        fill="#3a5a3a"
+        fontFamily="Georgia,serif"
+        fontStyle="italic"
+        fontWeight="bold"
+      >
+        The Euro — arriving 2002
+      </text>
       <Note
-        x={10}
-        y={80}
-        w={70}
-        h={36}
-        fill="#d4e8d0"
-        stroke="#3a6a30"
-        label="€5"
-        sublabel="Euro · 2002"
-        colour="#4a8a40"
+        x={8}
+        y={112}
+        w={82}
+        h={48}
+        fill="#ddeedd"
+        stroke="#2a5a28"
+        accent="#3a8a38"
+        denom="€5"
+        sublabel="2002"
       />
       <Note
-        x={90}
-        y={80}
-        w={75}
-        h={36}
-        fill="#d0dce8"
-        stroke="#304a7a"
-        label="€10"
-        sublabel="Euro · 2002"
-        colour="#3a5a9a"
+        x={100}
+        y={112}
+        w={88}
+        h={48}
+        fill="#d8e4f4"
+        stroke="#28407a"
+        accent="#3858aa"
+        denom="€10"
+        sublabel="2002"
       />
       <Note
-        x={175}
-        y={80}
-        w={80}
-        h={36}
-        fill="#f0dcc0"
-        stroke="#8a6020"
-        label="€20"
-        sublabel="Euro · 2002"
-        colour="#c08030"
+        x={200}
+        y={112}
+        w={92}
+        h={48}
+        fill="#f4e8d0"
+        stroke="#7a5010"
+        accent="#c07820"
+        denom="€20"
+        sublabel="2002"
       />
       <text
         x={150}
-        y={130}
+        y={178}
         textAnchor="middle"
         fontSize={7.5}
         fill="#7a6040"
         fontFamily="Georgia,serif"
         fontStyle="italic"
       >
-        The punt · Ireland signs up to the euro · 1 January 1999
+        Fixed rate: €1 = IR£0.787564 · 1 January 1999
       </text>
       <text
         x={150}
-        y={140}
+        y={190}
         textAnchor="middle"
-        fontSize={6.5}
+        fontSize={7}
         fill="#9a8060"
         fontFamily="Georgia,serif"
         fontStyle="italic"
       >
-        Euro notes &amp; coins enter circulation 1 January 2002
+        Punt notes &amp; coins remain legal tender until 9 February 2002
       </text>
     </svg>
   );
 }
 
-// ── Ad copy by era ────────────────────────────────────────────────────────────
+// ── Ad copy ───────────────────────────────────────────────────────────────────
 
-function getAdCopy(year: number): {
-  headline: string;
-  body: string;
-  footer: string;
-} {
+function getAdCopy(year: number) {
   if (year < 1922)
     return {
       headline: "THE COIN OF THE REALM",
@@ -745,7 +568,7 @@ function getAdCopy(year: number): {
   if (year < 1939)
     return {
       headline: "THE FREE STATE SHILLING",
-      body: "Percy Metcalfe's celebrated designs bear the animals of Ireland — the bull, the horse, the salmon, the woodcock. A new currency for a new nation.",
+      body: "Percy Metcalfe's celebrated animal designs bear the creatures of Ireland — the bull, the horse, the salmon, the woodcock. A new currency for a new nation.",
       footer: "Currency Commission of Ireland · Est. 1927",
     };
   if (year < 1950)
@@ -779,13 +602,13 @@ function getAdCopy(year: number): {
   };
 }
 
-// ── Main component ────────────────────────────────────────────────────────────
+// ── Main ──────────────────────────────────────────────────────────────────────
 
 export default function CurrencyAd({ year }: CurrencyAdProps) {
   const era = getEra(year);
   const copy = getAdCopy(year);
 
-  const bgColour =
+  const bg =
     year < 1940
       ? "#f0e8d0"
       : year < 1960
@@ -793,7 +616,7 @@ export default function CurrencyAd({ year }: CurrencyAdProps) {
         : year < 1980
           ? "#e8e0cc"
           : "#e4dcc8";
-  const borderStyle =
+  const border =
     year < 1930
       ? "4px double #1a1208"
       : year < 1960
@@ -803,25 +626,23 @@ export default function CurrencyAd({ year }: CurrencyAdProps) {
   return (
     <div
       style={{
-        border: borderStyle,
-        background: bgColour,
+        border,
+        background: bg,
         padding: "12px 10px 10px",
         textAlign: "center",
         marginTop: 14,
-        position: "relative",
       }}
     >
-      {/* Top rule */}
       <div
         style={{
           borderBottom: "1px solid #b0a080",
           marginBottom: 8,
-          paddingBottom: 6,
+          paddingBottom: 5,
         }}
       >
         <div
           style={{
-            fontFamily: "Georgia,'Times New Roman',serif",
+            fontFamily: "Georgia,serif",
             fontSize: 8,
             fontWeight: 700,
             textTransform: "uppercase",
@@ -833,31 +654,29 @@ export default function CurrencyAd({ year }: CurrencyAdProps) {
         </div>
       </div>
 
-      {/* Headline */}
       <div
         style={{
           fontFamily: "'Playfair Display',Georgia,serif",
-          fontSize: 14,
+          fontSize: 13,
           fontWeight: 900,
           textTransform: "uppercase",
           letterSpacing: 2,
           color: "#1a1208",
           lineHeight: 1.2,
-          marginBottom: 10,
+          marginBottom: 8,
         }}
       >
         {copy.headline}
       </div>
 
-      {/* Coin / note SVG illustration */}
-      <div style={{ margin: "6px 0 8px" }}>
+      {/* SVG panel — no overflow clipping needed */}
+      <div style={{ margin: "4px 0 6px", lineHeight: 0 }}>
         {era === "british" && <BritishCoins />}
         {era === "predecimal" && <IrishPreDecimalCoins />}
         {era === "decimal" && <IrishDecimalCoins />}
         {era === "euro_approach" && <EuroApproachCoins />}
       </div>
 
-      {/* Divider */}
       <div
         style={{
           borderTop: "1px solid #b0a080",
@@ -872,7 +691,7 @@ export default function CurrencyAd({ year }: CurrencyAdProps) {
             fontFamily: "Georgia,serif",
             fontStyle: "italic",
             color: "#7a6040",
-            letterSpacing: 1,
+            letterSpacing: 0.8,
           }}
         >
           {era === "british" &&
@@ -881,26 +700,23 @@ export default function CurrencyAd({ year }: CurrencyAdProps) {
             "Farthing · Penny · Threepence · Sixpence · Shilling · Florin · Half-Crown · Ten Shilling"}
           {era === "decimal" && "½p · 1p · 2p · 5p · 10p · 20p · 50p · £1 Punt"}
           {era === "euro_approach" &&
-            "The punt at par with sterling 1928–1979 · Independent since · €1 = £Ir 0.787564"}
+            "The punt at par with sterling 1928–1979 · Independent 1979–1999 · €1 = £Ir 0.787564"}
         </div>
       </div>
 
-      {/* Body copy */}
       <p
         style={{
           fontFamily: "Georgia,serif",
           fontSize: 10,
           lineHeight: 1.7,
           color: "#2a1a08",
-          textAlign: "center",
-          margin: "8px 4px 6px",
+          margin: "6px 4px 6px",
           fontStyle: "italic",
         }}
       >
         {copy.body}
       </p>
 
-      {/* Footer */}
       <div
         style={{
           borderTop: "1px solid #b0a080",

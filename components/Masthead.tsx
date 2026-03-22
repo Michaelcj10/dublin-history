@@ -17,16 +17,16 @@ interface DecadeStyle {
   titleLetterSpacing: number;
   titlePaddingY: string;
   accentColor: string;
-  ruleTop: string; // border shorthand for top-strip bottom edge
-  ruleBottom: string; // border shorthand for bottom-strip top edge
-  accentBar?: string; // optional extra accent bar below title block
+  ruleTop: string;
+  ruleBottom: string;
+  accentBar?: string;
   tagline: string;
   taglineFontSize: number;
   taglineLetterSpacing: number;
   taglineColor: string;
   stripColor: string;
   price: string;
-  ornamentChar?: string; // optional unicode ornament around title
+  ornamentChar?: string;
 }
 
 function getDecadeStyle(year: number): DecadeStyle {
@@ -55,7 +55,7 @@ function getDecadeStyle(year: number): DecadeStyle {
       ornamentChar: "❧",
     };
 
-  // ── 1920s: Free State, deep Irish green, Art Nouveau ───────────────────────
+  // ── 1920s: Free State, deep Irish green ─────────────────────────────────────
   if (year <= 1929)
     return {
       bg: "#0d2818",
@@ -144,7 +144,7 @@ function getDecadeStyle(year: number): DecadeStyle {
       price: "Twopence",
     };
 
-  // ── 1960s: Modernising Ireland, dark charcoal, RTÉ-era green ───────────────
+  // ── 1960s: Modernising Ireland, dark charcoal, RTÉ-era optimism ─────────────
   if (year <= 1969)
     return {
       bg: "#222222",
@@ -190,49 +190,55 @@ function getDecadeStyle(year: number): DecadeStyle {
       price: "5p",
     };
 
-  // ── 1980s: Recession + punk, dark purple-tinted, expressive ────────────────
+  // ── 1980s: Recession — dark brown-black, tight serif, subdued amber ─────────
+  // The paper is thinner, the ink cheaper, the mood bleak but dignified.
+  // Think Irish Independent c.1983 — not punk, not trendy, just hard times.
   if (year <= 1989)
     return {
-      bg: "#18141e",
-      stripBg: "#100c16",
+      bg: "#130f0a",
+      stripBg: "#0e0b07",
       titleFont: "'Playfair Display',Georgia,serif",
-      titleSize: "clamp(38px,6.2vw,82px)",
+      titleSize: "clamp(36px,5.8vw,76px)",
       titleWeight: 900,
-      titleColor: "#e8e0f4",
-      titleLetterSpacing: 3,
-      titlePaddingY: "13px",
-      accentColor: "#9060cc",
-      ruleTop: "2px solid #7040aa",
-      ruleBottom: "2px solid #7040aa",
-      tagline: "The Independent Voice of Dublin",
-      taglineFontSize: 8,
-      taglineLetterSpacing: 3,
-      taglineColor: "#b090e0",
-      stripColor: "#b090e0",
+      titleColor: "#d8ccb0",
+      titleLetterSpacing: 2,
+      titlePaddingY: "11px",
+      accentColor: "#a07830",
+      ruleTop: "1px solid #604820",
+      ruleBottom: "3px double #604820",
+      accentBar: "2px solid #a07830",
+      tagline: "The Independent Voice of Dublin · Est. 1859",
+      taglineFontSize: 7,
+      taglineLetterSpacing: 2.5,
+      taglineColor: "#907050",
+      stripColor: "#806040",
       price: "20p",
       ornamentChar: "◆",
     };
 
-  // ── 1990s–2000: Celtic Tiger, clean sans-serif modernism ───────────────────
+  // ── 1990s–2000: Celtic Tiger — warm near-black, gold rule, confident serif ──
+  // The paper has money now. Heavier stock, bolder ink, gold rule.
+  // Still a broadsheet — think Irish Times Saturday supplement c.1998.
   return {
-    bg: "#0f0f12",
-    stripBg: "#08080a",
-    titleFont: "'Arial Black','Impact','Helvetica Neue',sans-serif",
-    titleSize: "clamp(38px,6vw,80px)",
+    bg: "#0e0c08",
+    stripBg: "#0a0806",
+    titleFont: "'Playfair Display',Georgia,serif",
+    titleSize: "clamp(40px,6.5vw,86px)",
     titleWeight: 900,
-    titleColor: "#ffffff",
-    titleLetterSpacing: -1,
-    titlePaddingY: "14px",
-    accentColor: "#00b4d8",
-    ruleTop: "3px solid #00b4d8",
-    ruleBottom: "1px solid #1a1a24",
-    accentBar: "4px solid #00b4d8",
-    tagline: "DUBLIN · IRELAND · THE WORLD",
-    taglineFontSize: 7,
-    taglineLetterSpacing: 6,
-    taglineColor: "#00b4d8",
-    stripColor: "#606070",
-    price: "£1.00",
+    titleColor: "#f4ead0",
+    titleLetterSpacing: 4,
+    titlePaddingY: "15px",
+    accentColor: "#c8960c",
+    ruleTop: "3px double #c8960c",
+    ruleBottom: "3px double #c8960c",
+    accentBar: "4px double #c8960c",
+    tagline: "Dublin · Ireland · Europe · The World",
+    taglineFontSize: 8,
+    taglineLetterSpacing: 5,
+    taglineColor: "#c8960c",
+    stripColor: "#a07820",
+    price: year >= 1999 ? "£1.20" : year >= 1995 ? "£1.00" : "80p",
+    ornamentChar: "❦",
   };
 }
 
@@ -283,12 +289,7 @@ export default function Masthead({ year }: Props) {
       </div>
 
       {/* ── Title block ────────────────────────────────────────────────────── */}
-      <div
-        style={{
-          textAlign: "center",
-          padding: `${s.titlePaddingY} 0 ${s.titlePaddingY}`,
-        }}
-      >
+      <div style={{ textAlign: "center", padding: `${s.titlePaddingY} 0` }}>
         {/* Victorian double-rule ornament above title */}
         {year <= 1919 && (
           <div
@@ -304,11 +305,7 @@ export default function Masthead({ year }: Props) {
         {/* 1970s hard red bar above title */}
         {year >= 1970 && year <= 1979 && (
           <div
-            style={{
-              height: 4,
-              background: s.accentColor,
-              margin: "0 0 8px",
-            }}
+            style={{ height: 4, background: s.accentColor, margin: "0 0 8px" }}
           />
         )}
 
@@ -365,7 +362,7 @@ export default function Masthead({ year }: Props) {
           />
         )}
 
-        {/* Accent bar below title (1960s green / 1970s red / 1990s gold) */}
+        {/* Accent bar */}
         {s.accentBar && year > 1919 && (
           <div
             style={{
@@ -404,12 +401,7 @@ export default function Masthead({ year }: Props) {
       </div>
 
       {/* ── Bottom info strip ──────────────────────────────────────────────── */}
-      <div
-        style={{
-          ...stripStyle,
-          borderTop: s.ruleBottom,
-        }}
-      >
+      <div style={{ ...stripStyle, borderTop: s.ruleBottom }}>
         <span style={{ fontStyle: "italic" }}>Dublin · Ireland</span>
         <span
           style={{

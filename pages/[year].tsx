@@ -2,18 +2,19 @@ import GAAScoreboard from "../components/GAAScoreboard";
 import PoliticalBreakdown, {
   hasPoliticalData,
 } from "../components/politicalbreakdown";
-import CigaretteAd from "../components/cigad";
 import TransportIllustration from "../components/transport";
 import WeatherReport from "../components/WeatherReport";
 import DeathNotices from "../components/DeathNotices";
+import CurrencyAd from "../components/currencyAd";
+import Masthead from "../components/Masthead";
+import PeriodAd from "../components/periodAd";
+import { getAdImages } from "../lib/getAdImages";
 import Head from "next/head";
 import fs from "fs";
 import path from "path";
 import { useRouter } from "next/router";
 import { useEffect, useCallback, useState } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import CurrencyAd from "@/components/currencyAd";
-import Masthead from "../components/Masthead";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -75,12 +76,13 @@ interface YearData {
   imageUrl?: string;
 }
 
-// ── Field helpers ──────────────────────────────────────────────────────────────
+// ── Field helpers ─────────────────────────────────────────────────────────────
 
 const ev = (e: YearData["major_events"][0]) =>
   typeof e === "string"
     ? e
     : [e.name, e.date && `(${e.date})`, e.impact].filter(Boolean).join(" — ");
+
 const arch = (a: YearData["architecture_style"][0]) => {
   if (typeof a === "string") {
     const [s, ...r] = a.split(/[—:–]/);
@@ -88,6 +90,7 @@ const arch = (a: YearData["architecture_style"][0]) => {
   }
   return { style: a.style, ex: (a as any).example ?? "" };
 };
+
 const ind = (i: YearData["major_industries"][0]) => {
   if (typeof i === "string") {
     const [n, ...r] = i.split(/[—:–]/);
@@ -95,6 +98,7 @@ const ind = (i: YearData["major_industries"][0]) => {
   }
   return { name: i.industry, detail: (i as any).significance ?? "" };
 };
+
 const loc = (l: string) => {
   const [p, ...r] = l.split(/[:—–]/);
   return { place: p.trim(), detail: r.join(" ").trim() };
@@ -121,7 +125,7 @@ function getEra(year: number): string {
   return "Celtic Tiger";
 }
 
-// ── Shared primitives ──────────────────────────────────────────────────────────
+// ── Shared primitives ─────────────────────────────────────────────────────────
 
 const HRule = ({ thick }: { thick?: boolean }) => (
   <div
@@ -197,7 +201,7 @@ const SmallCap = ({ children }: { children: string }) => (
   </span>
 );
 
-// ── Guinness pint SVG ──────────────────────────────────────────────────────────
+// ── Guinness pint SVG ─────────────────────────────────────────────────────────
 
 function GuinnessPint({ price }: { price: string }) {
   return (
@@ -305,7 +309,7 @@ function GuinnessPint({ price }: { price: string }) {
   );
 }
 
-// ── Price Ladder table ─────────────────────────────────────────────────────────
+// ── Price Ladder ──────────────────────────────────────────────────────────────
 
 function PriceLadderPanel({ ladder }: { ladder: PriceLadder }) {
   const rows = [
@@ -369,7 +373,7 @@ function PriceLadderPanel({ ladder }: { ladder: PriceLadder }) {
   );
 }
 
-// ── Sport panel ────────────────────────────────────────────────────────────────
+// ── Sport panel ───────────────────────────────────────────────────────────────
 
 function SportPanel({ sport }: { sport: SportItem[] }) {
   return (
@@ -413,7 +417,7 @@ function SportPanel({ sport }: { sport: SportItem[] }) {
   );
 }
 
-// ── Callout box ────────────────────────────────────────────────────────────────
+// ── Callout box ───────────────────────────────────────────────────────────────
 
 function CalloutBox({
   label,
@@ -460,7 +464,7 @@ function CalloutBox({
   );
 }
 
-// ── Audio ──────────────────────────────────────────────────────────────────────
+// ── Audio ─────────────────────────────────────────────────────────────────────
 
 function playRustle() {
   try {
@@ -492,11 +496,18 @@ function playRustle() {
   }
 }
 
-// ── Page ───────────────────────────────────────────────────────────────────────
+// ── Page ──────────────────────────────────────────────────────────────────────
 
-export default function YearPage({ content }: { content: YearData }) {
+export default function YearPage({
+  content,
+  adImages,
+}: {
+  content: YearData;
+  adImages: string[];
+}) {
   const router = useRouter();
   const { year } = content;
+
   const ALL_YEARS = Array.from({ length: 85 }, (_, i) => 1916 + i);
   const HALF = 7;
   const winStart = Math.max(1916, Math.min(year - HALF, 2000 - HALF * 2));
@@ -520,7 +531,6 @@ export default function YearPage({ content }: { content: YearData }) {
     return () => window.removeEventListener("keydown", fn);
   }, [year, go]);
 
-  // useState for typewriter (state must be declared before any early effects)
   const [typedHeadline, setTypedHeadline] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
 
@@ -537,14 +547,13 @@ export default function YearPage({ content }: { content: YearData }) {
     .replace(/,\s+[A-Z][a-z]+\.?\s+\d+.*$/, "")
     .trim();
 
-  // Typewriter effect — only animates the last 5 characters
   const fullHeadline = headlineTitle?.trim() || `Dublin in ${year}`;
   const headlinePrefix = fullHeadline.slice(0, -5);
   const headlineSuffix = fullHeadline.slice(-5);
+
   useEffect(() => {
     setTypedHeadline("");
     setCursorVisible(true);
-    const delay = 120;
     let i = 0;
     const ticker = setInterval(() => {
       i++;
@@ -560,12 +569,11 @@ export default function YearPage({ content }: { content: YearData }) {
           }
         }, 300);
       }
-    }, delay);
+    }, 120);
     return () => clearInterval(ticker);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [year]);
 
-  // Paper background per era — mirrors the SSG <style> blocks below
   const paperBg =
     year <= 1919
       ? "#f0e4c4"
@@ -584,118 +592,6 @@ export default function YearPage({ content }: { content: YearData }) {
                   : year <= 1989
                     ? "#f2efea"
                     : "#ffffff";
-
-  // Masthead background colour per era
-  const mastheadBg =
-    year <= 1919
-      ? "#1a0804" // wartime brown-black
-      : year <= 1929
-        ? "#0d2818" // Free State deep green
-        : year <= 1940
-          ? "#1c1004" // Depression dark umber
-          : year <= 1945
-            ? "#141414" // Emergency near-black
-            : year <= 1959
-              ? "#0a1a2e" // Post-war navy
-              : year <= 1969
-                ? "#1a280e" // Modernising dark teal
-                : year <= 1979
-                  ? "#1a1404" // Troubles olive-black
-                  : year <= 1989
-                    ? "#1c1c1e" // Recession charcoal
-                    : "#0f0f12"; // Celtic Tiger near-black
-
-  // Masthead text/accent colour per era
-  const mastheadText =
-    year <= 1919
-      ? "#f0dfc0"
-      : year <= 1929
-        ? "#d4ecc8"
-        : year <= 1940
-          ? "#f0e4c0"
-          : year <= 1945
-            ? "#d8d8d4"
-            : year <= 1959
-              ? "#c8d8e8"
-              : year <= 1969
-                ? "#c8e8c0"
-                : year <= 1979
-                  ? "#e8dcc0"
-                  : year <= 1989
-                    ? "#e8e4df"
-                    : "#ffffff";
-
-  // Tagline beneath masthead title
-  const mastheadTagline =
-    year <= 1919
-      ? "For King & Country · Dublin, Ireland"
-      : year <= 1929
-        ? "Faithful to the Free State · Dublin, Ireland"
-        : year <= 1940
-          ? "Steady Through Lean Times · Dublin, Ireland"
-          : year <= 1945
-            ? "Steadfast in the Emergency · Dublin, Éire"
-            : year <= 1959
-              ? "Building a New Ireland · Dublin, Ireland"
-              : year <= 1969
-                ? "Dublin Forward · All the News Worth Knowing"
-                : year <= 1979
-                  ? "Reporting Dublin through Difficult Days"
-                  : year <= 1989
-                    ? "The Independent Voice of Dublin"
-                    : "DUBLIN · IRELAND · THE WORLD";
-
-  // Newspaper price per era
-  const mastheadPrice =
-    year <= 1919
-      ? "Price: One Halfpenny"
-      : year <= 1929
-        ? "Price: One Penny"
-        : year <= 1945
-          ? "Price: One Penny"
-          : year <= 1959
-            ? "Price: Twopence"
-            : year <= 1969
-              ? "Price: Threepence"
-              : year <= 1979
-                ? "Price: 5p"
-                : year <= 1989
-                  ? "Price: 20p"
-                  : "Price: £1.00";
-
-  // Masthead title font per era
-  const mastheadFont =
-    year <= 1929
-      ? "'UnifrakturMaguntia','Times New Roman',serif"
-      : year <= 1940
-        ? "'IM Fell English','Times New Roman',serif"
-        : year <= 1945
-          ? "'UnifrakturMaguntia','Times New Roman',serif"
-          : year <= 1969
-            ? "'Playfair Display',Georgia,serif"
-            : year <= 1989
-              ? "'Libre Baskerville',Georgia,serif"
-              : "'Arial Black','Impact','Helvetica Neue',sans-serif";
-
-  // Masthead accent/rule colour per era
-  const mastheadAccent =
-    year <= 1919
-      ? "#b09040"
-      : year <= 1929
-        ? "#3a8030"
-        : year <= 1940
-          ? "#505050"
-          : year <= 1945
-            ? "#504a40"
-            : year <= 1959
-              ? "#2a5888"
-              : year <= 1969
-                ? "#408840"
-                : year <= 1979
-                  ? "#cc2020"
-                  : year <= 1989
-                    ? "#7040aa"
-                    : "#00b4d8";
 
   const stats = [
     { label: "City Population", value: popNum, sub: "city boundary" },
@@ -741,132 +637,38 @@ export default function YearPage({ content }: { content: YearData }) {
           .paper-grid{display:grid;grid-template-columns:220px 10px 1fr 10px 230px}
           @media(max-width:1100px){.paper-grid{grid-template-columns:1fr}}
           @media(max-width:1100px){.paper-grid>*:nth-child(2),.paper-grid>*:nth-child(4){display:none}}
-          .page-turn-overlay{position:fixed;inset:0;z-index:998;pointer-events:none;background:#f0e4c0;clip-path:inset(0 100% 0 0);transition:clip-path 0.18s ease-in}
-          .page-turn-overlay.sweeping{clip-path:inset(0 0% 0 0)}
-          .page-turn-overlay.retreating{clip-path:inset(0 0 0 100%);transition:clip-path 0.18s ease-out}
           .paper-texture::before{content:'';position:fixed;inset:0;z-index:997;pointer-events:none;opacity:0.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");background-repeat:repeat;background-size:200px 200px}
           .paper-texture::after{content:'';position:fixed;inset:0;z-index:996;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(26,18,8,0.18) 100%)}
           .north-box{border:2px solid #8b0000;background:#fdf5f5;padding:12px;margin:10px 0}
           @media print{nav{display:none!important}body{background:#fff!important}.paper-grid{grid-template-columns:1fr 2fr 1fr!important}*{color:#000!important}img{filter:none!important}}
-          .year-carousel::-webkit-scrollbar{display:none}
         `}</style>
 
-        {/* ── 1916–1919: Wartime parchment, heavy vignette ── */}
         {year >= 1916 && year <= 1919 && (
-          <style>{`
-          body{background:#f0e4c4}
-          .paper-texture{background:#f0e4c4 !important}
-          .paper-texture::before{opacity:0.06}
-          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 50%,rgba(26,18,8,0.25) 100%) !important}
-          .stats-banner{background:#ede4c8 !important;border-bottom:4px double #1a1208 !important}
-          .stats-banner .stat{border-right-color:#8a7040 !important}
-          .page-turn-overlay{background:#ede4c8}
-        `}</style>
+          <style>{`body{background:#f0e4c4}.paper-texture{background:#f0e4c4 !important}.paper-texture::before{opacity:0.06}.paper-texture::after{background:radial-gradient(ellipse at center,transparent 50%,rgba(26,18,8,0.25) 100%) !important}.stats-banner{background:#ede4c8 !important;border-bottom:4px double #1a1208 !important}.stats-banner .stat{border-right-color:#8a7040 !important}`}</style>
         )}
-
-        {/* ── 1920–1929: Free State warm cream ── */}
         {year >= 1920 && year <= 1929 && (
-          <style>{`
-          body{background:#f0e8d0}
-          .paper-texture{background:#f0e8d0 !important}
-          .paper-texture::before{opacity:0.035}
-          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 55%,rgba(26,18,8,0.15) 100%) !important}
-          .stats-banner{background:#ece4c8 !important;border-bottom:3px double #1a1208 !important}
-          .stats-banner .stat{border-right-color:#b0a080 !important}
-          .page-turn-overlay{background:#ece4c8}
-        `}</style>
+          <style>{`body{background:#f0e8d0}.paper-texture{background:#f0e8d0 !important}.paper-texture::before{opacity:0.035}.stats-banner{background:#ece4c8 !important}.stats-banner .stat{border-right-color:#b0a080 !important}`}</style>
         )}
-
-        {/* ── 1930–1940: Depression, lighter paper, IM Fell English ── */}
         {year >= 1930 && year <= 1940 && (
-          <style>{`
-          body{background:#f2f0ea}
-          .paper-texture{background:#f5f3ee !important;font-family:'IM Fell English','Lora',Georgia,serif !important}
-          .paper-texture::before{opacity:0.025}
-          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 60%,rgba(26,18,8,0.06) 100%) !important}
-          .stats-banner{background:#f5f3ee !important;border-bottom:2px solid #c8bfa0 !important}
-          .stats-banner .stat{border-right-color:#c8bfa0 !important}
-          .page-turn-overlay{background:#f5f3ee}
-        `}</style>
+          <style>{`body{background:#f2f0ea}.paper-texture{background:#f5f3ee !important}.paper-texture::before{opacity:0.025}.paper-texture::after{background:radial-gradient(ellipse at center,transparent 60%,rgba(26,18,8,0.06) 100%) !important}.stats-banner{background:#f5f3ee !important;border-bottom:2px solid #c8bfa0 !important}.stats-banner .stat{border-right-color:#c8bfa0 !important}`}</style>
         )}
-
-        {/* ── 1941–1945: Emergency, greyish newsprint, heavy vignette ── */}
         {year >= 1941 && year <= 1945 && (
-          <style>{`
-          body{background:#ddd8c0}
-          .paper-texture{background:#ddd8c0 !important}
-          .paper-texture::before{opacity:0.055}
-          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 50%,rgba(26,18,8,0.22) 100%) !important}
-          .stats-banner{background:#d0c8a8 !important;border-bottom:4px double #1a1208 !important}
-          .stats-banner .stat{border-right-color:#a09070 !important}
-          .page-turn-overlay{background:#d8d0b8}
-        `}</style>
+          <style>{`body{background:#ddd8c0}.paper-texture{background:#ddd8c0 !important}.paper-texture::before{opacity:0.055}.paper-texture::after{background:radial-gradient(ellipse at center,transparent 50%,rgba(26,18,8,0.22) 100%) !important}.stats-banner{background:#d0c8a8 !important;border-bottom:4px double #1a1208 !important}.stats-banner .stat{border-right-color:#a09070 !important}`}</style>
         )}
-
-        {/* ── 1946–1959: Post-War, warm grey newsprint ── */}
         {year >= 1946 && year <= 1959 && (
-          <style>{`
-          body{background:#ece8dc}
-          .paper-texture{background:#ece8dc !important}
-          .paper-texture::before{opacity:0.03}
-          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 58%,rgba(26,18,8,0.12) 100%) !important}
-          .stats-banner{background:#e4e0d4 !important;border-bottom:2px solid #888 !important}
-          .stats-banner .stat{border-right-color:#b0a890 !important}
-          .page-turn-overlay{background:#e8e4d8}
-        `}</style>
+          <style>{`body{background:#ece8dc}.paper-texture{background:#ece8dc !important}.paper-texture::before{opacity:0.03}.stats-banner{background:#e4e0d4 !important;border-bottom:2px solid #888 !important}.stats-banner .stat{border-right-color:#b0a890 !important}`}</style>
         )}
-
-        {/* ── 1960–1969: Modernising, near-white, no vignette, Libre Baskerville ── */}
         {year >= 1960 && year <= 1969 && (
-          <style>{`
-          body{background:#fafaf8}
-          .paper-texture{background:#fafaf8 !important;font-family:'Libre Baskerville','Lora',Georgia,serif !important}
-          .paper-texture::before{opacity:0.015}
-          .paper-texture::after{display:none !important}
-          .stats-banner{background:#f0f0ee !important;border-bottom:2px solid #888 !important}
-          .stats-banner .stat{border-right-color:#d0d0d0 !important}
-          .page-turn-overlay{background:#f8f8f6}
-        `}</style>
+          <style>{`body{background:#fafaf8}.paper-texture{background:#fafaf8 !important}.paper-texture::before{opacity:0.015}.paper-texture::after{display:none !important}.stats-banner{background:#f0f0ee !important;border-bottom:2px solid #888 !important}.stats-banner .stat{border-right-color:#d0d0d0 !important}`}</style>
         )}
-
-        {/* ── 1970–1979: Troubles, off-white, deep border, red north-box ── */}
         {year >= 1970 && year <= 1979 && (
-          <style>{`
-          body{background:#f0ede4}
-          .paper-texture{background:#f0ede4 !important}
-          .paper-texture::before{opacity:0.03}
-          .paper-texture::after{background:radial-gradient(ellipse at center,transparent 55%,rgba(26,18,8,0.12) 100%) !important}
-          .stats-banner{background:#e8e4d8 !important;border-bottom:3px solid #1a1208 !important}
-          .stats-banner .stat{border-right-color:#c0b090 !important}
-          .north-box{border:2px solid #8b0000;background:#fdf5f5}
-          .page-turn-overlay{background:#ede8dc}
-        `}</style>
+          <style>{`body{background:#f0ede4}.paper-texture{background:#f0ede4 !important}.paper-texture::before{opacity:0.03}.stats-banner{background:#e8e4d8 !important;border-bottom:3px solid #1a1208 !important}.stats-banner .stat{border-right-color:#c0b090 !important}.north-box{border:2px solid #8b0000;background:#fdf5f5}`}</style>
         )}
-
-        {/* ── 1980–1989: Recession, pale cream, thin border ── */}
         {year >= 1980 && year <= 1989 && (
-          <style>{`
-          body{background:#f2efea}
-          .paper-texture{background:#f2efea !important}
-          .paper-texture::before{opacity:0.02}
-          .paper-texture::after{display:none !important}
-          .stats-banner{background:#ece8e0 !important;border-bottom:1px solid #aaa !important}
-          .stats-banner .stat{border-right-color:#c8c0b0 !important}
-          .page-turn-overlay{background:#eeeae4}
-        `}</style>
+          <style>{`body{background:#f2efea}.paper-texture{background:#f2efea !important}.paper-texture::before{opacity:0.02}.paper-texture::after{display:none !important}.stats-banner{background:#ece8e0 !important;border-bottom:1px solid #aaa !important}.stats-banner .stat{border-right-color:#c8c0b0 !important}`}</style>
         )}
-
-        {/* ── 1990–2000: Celtic Tiger, pure white, no vignette ── */}
         {year >= 1990 && year <= 2000 && (
-          <style>{`
-          body{background:#ffffff}
-          .paper-texture{background:#ffffff !important}
-          .paper-texture::before{opacity:0.01}
-          .paper-texture::after{display:none !important}
-          .stats-banner{background:#f8f8f8 !important;border-bottom:2px solid #1a1208 !important}
-          .stats-banner .stat{border-right-color:#e0e0e0 !important}
-          .page-turn-overlay{background:#f8f8f8}
-        `}</style>
+          <style>{`body{background:#ffffff}.paper-texture{background:#ffffff !important}.paper-texture::before{opacity:0.01}.paper-texture::after{display:none !important}.stats-banner{background:#f8f8f8 !important;border-bottom:2px solid #1a1208 !important}.stats-banner .stat{border-right-color:#e0e0e0 !important}`}</style>
         )}
       </Head>
 
@@ -881,101 +683,7 @@ export default function YearPage({ content }: { content: YearData }) {
         }}
       >
         {/* ══ MASTHEAD ══════════════════════════════════════════════════════════ */}
-        <div
-          style={{
-            background: mastheadBg,
-            color: mastheadText,
-            padding: "0 28px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              borderBottom: `1px solid ${mastheadAccent}55`,
-              padding: "5px 0",
-              fontSize: 8,
-              fontFamily:
-                year >= 1990
-                  ? "'Helvetica Neue',Arial,sans-serif"
-                  : "Georgia,serif",
-              letterSpacing: year >= 1990 ? 3 : 2,
-              textTransform: "uppercase",
-            }}
-          >
-            <span>Established 1859 · Vol. {year - 1859}</span>
-            <span>The Newspaper of Record for the Irish Capital</span>
-            <span>{mastheadPrice}</span>
-          </div>
-          <div style={{ textAlign: "center", padding: "14px 0 6px" }}>
-            <div
-              style={{
-                fontFamily: mastheadFont,
-                fontSize: "clamp(40px,7vw,84px)",
-                lineHeight: 1,
-                letterSpacing: year >= 1990 ? -2 : 3,
-              }}
-            >
-              The Dublin Chronicle
-            </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                justifyContent: "center",
-                marginTop: 6,
-                fontSize: year >= 1990 ? 7 : 8,
-                letterSpacing: year >= 1990 ? 6 : 3,
-                textTransform: "uppercase",
-                fontFamily:
-                  year >= 1990
-                    ? "'Helvetica Neue',Arial,sans-serif"
-                    : "Georgia,serif",
-                opacity: 0.7,
-                color: year >= 1990 ? mastheadAccent : mastheadText,
-              }}
-            >
-              <div
-                style={{
-                  flex: 1,
-                  height: year >= 1990 ? 2 : 1,
-                  background: mastheadAccent,
-                  opacity: year >= 1990 ? 0.7 : 0.27,
-                }}
-              />
-              {mastheadTagline}
-              <div
-                style={{
-                  flex: 1,
-                  height: year >= 1990 ? 2 : 1,
-                  background: mastheadAccent,
-                  opacity: year >= 1990 ? 0.7 : 0.27,
-                }}
-              />
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              borderTop: `${year >= 1990 ? 3 : 1}px solid ${year >= 1990 ? mastheadAccent : mastheadText + "33"}`,
-              padding: "5px 0",
-              fontSize: 9,
-              fontFamily:
-                year >= 1990
-                  ? "'Helvetica Neue',Arial,sans-serif"
-                  : "Georgia,serif",
-            }}
-          >
-            <span style={{ fontStyle: "italic" }}>Dublin · Ireland</span>
-            <span style={{ letterSpacing: 3, fontWeight: 700, fontSize: 11 }}>
-              The Year of Our Lord {year} · Final Edition
-            </span>
-            <span style={{ fontStyle: "italic" }}>{mastheadPrice}</span>
-          </div>
-        </div>
+        <Masthead year={year} />
 
         {/* ══ STATS BANNER ══════════════════════════════════════════════════════ */}
         <div className="stats-banner">
@@ -1081,7 +789,7 @@ export default function YearPage({ content }: { content: YearData }) {
           </div>
         </div>
 
-        {/* ══ 3-COLUMN BODY ══════════════════════════════════════════════════════ */}
+        {/* ══ 3-COLUMN BODY ═════════════════════════════════════════════════════ */}
         <div
           style={{
             maxWidth: 1240,
@@ -1142,7 +850,7 @@ export default function YearPage({ content }: { content: YearData }) {
 
               <HRule />
               <SecHead>Notable Addresses</SecHead>
-              <div id="key-locations" style={{ paddingTop: 6 }}>
+              <div style={{ paddingTop: 6 }}>
                 {content.key_locations.slice(0, 7).map((l, i) => {
                   const { place, detail } = loc(l);
                   return (
@@ -1226,7 +934,6 @@ export default function YearPage({ content }: { content: YearData }) {
                 })}
               </div>
 
-              {/* Notable Death */}
               {content.notable_death && (
                 <>
                   <HRule />
@@ -1263,7 +970,6 @@ export default function YearPage({ content }: { content: YearData }) {
 
             {/* ── CENTRE COLUMN ─────────────────────────────────────────────── */}
             <div style={{ padding: "12px 20px" }}>
-              {/* Northern headline — conditional, only for Troubles era */}
               {content.north_headline && (
                 <>
                   <div className="north-box">
@@ -1366,7 +1072,6 @@ export default function YearPage({ content }: { content: YearData }) {
                 </div>
               )}
 
-              {/* Sport */}
               {content.sport && content.sport.length > 0 && (
                 <>
                   <HRule />
@@ -1471,7 +1176,6 @@ export default function YearPage({ content }: { content: YearData }) {
               </div>
               <HRule thick />
 
-              {/* Quirky story */}
               {content.quirky_story && (
                 <>
                   <SecHead>The Talk of the Town</SecHead>
@@ -1565,7 +1269,6 @@ export default function YearPage({ content }: { content: YearData }) {
                 </>
               )}
 
-              {/* Commerce & Industry */}
               <SecHead>Commerce &amp; Industry</SecHead>
               <div style={{ paddingTop: 6 }}>
                 {content.major_industries.map((industry, i) => {
@@ -1607,7 +1310,6 @@ export default function YearPage({ content }: { content: YearData }) {
               </div>
               <HRule />
 
-              {/* Currency display */}
               <CurrencyAd year={year} />
               <HRule />
             </div>
@@ -1616,10 +1318,8 @@ export default function YearPage({ content }: { content: YearData }) {
 
             {/* ── RIGHT COLUMN ──────────────────────────────────────────────── */}
             <div style={{ padding: "12px 0 12px 14px" }}>
-              {/* Era-relevant period ad */}
-              <CigaretteAd year={year} />
+              <PeriodAd year={year} adImages={adImages} />
 
-              {/* Price of a Pint */}
               <SecHead>The Price of a Pint</SecHead>
               <div
                 style={{
@@ -1648,7 +1348,6 @@ export default function YearPage({ content }: { content: YearData }) {
                 </p>
               </div>
 
-              {/* Price Ladder */}
               {content.price_ladder && (
                 <>
                   <HRule />
@@ -1658,7 +1357,6 @@ export default function YearPage({ content }: { content: YearData }) {
               )}
               <HRule />
 
-              {/* Number One Song */}
               {content.number_one_song && (
                 <>
                   <SecHead>On the Wireless</SecHead>
@@ -1691,7 +1389,6 @@ export default function YearPage({ content }: { content: YearData }) {
                 </>
               )}
 
-              {/* Notable emigrant */}
               {content.notable_emigrant && (
                 <>
                   <SecHead>The Emigrant Ship</SecHead>
@@ -1758,30 +1455,26 @@ export default function YearPage({ content }: { content: YearData }) {
                 transport_snapshot={content.transport_snapshot}
               />
               <div style={{ paddingTop: 6 }}>
-                {content.transport_snapshot.map((t, i) => {
-                  const text = typeof t === "string" ? t : JSON.stringify(t);
-                  return (
-                    <p
-                      key={i}
-                      style={{
-                        fontFamily: "Georgia,serif",
-                        fontSize: 11,
-                        lineHeight: 1.8,
-                        color: "#2a1a08",
-                        marginBottom: 8,
-                        paddingBottom: 8,
-                        borderBottom: "1px dotted #c0b090",
-                        textAlign: "justify",
-                      }}
-                    >
-                      {text}
-                    </p>
-                  );
-                })}
+                {content.transport_snapshot.map((t, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      fontFamily: "Georgia,serif",
+                      fontSize: 11,
+                      lineHeight: 1.8,
+                      color: "#2a1a08",
+                      marginBottom: 8,
+                      paddingBottom: 8,
+                      borderBottom: "1px dotted #c0b090",
+                      textAlign: "justify",
+                    }}
+                  >
+                    {typeof t === "string" ? t : JSON.stringify(t)}
+                  </p>
+                ))}
               </div>
               <HRule />
 
-              {/* Guinness ad */}
               <div
                 style={{
                   border: "3px double #1a1208",
@@ -1848,10 +1541,8 @@ export default function YearPage({ content }: { content: YearData }) {
                   ❝ My Goodness, My Guinness ❞
                 </div>
               </div>
-
               <HRule />
 
-              {/* Weather event */}
               {content.weather_event && (
                 <>
                   <SecHead>Weather &amp; the Elements</SecHead>
@@ -1871,18 +1562,13 @@ export default function YearPage({ content }: { content: YearData }) {
                   <HRule />
                 </>
               )}
+
               <WeatherReport year={year} weather={(content as any).weather} />
 
               {content.slang_or_phrase && (
                 <>
                   <SecHead>The Vernacular</SecHead>
-                  <div
-                    style={{
-                      padding: "10px 0 8px",
-                      textAlign: "center",
-                      position: "relative",
-                    }}
-                  >
+                  <div style={{ padding: "10px 0 8px", textAlign: "center" }}>
                     <div
                       style={{
                         fontFamily: "'Playfair Display',Georgia,serif",
@@ -1975,7 +1661,6 @@ export default function YearPage({ content }: { content: YearData }) {
             width: "100%",
           }}
         >
-          {/* ← prev */}
           <button
             onClick={() => go(year - 1)}
             disabled={year <= 1916}
@@ -1994,7 +1679,6 @@ export default function YearPage({ content }: { content: YearData }) {
             ←
           </button>
 
-          {/* Year + era label */}
           <div style={{ textAlign: "center", minWidth: 54, flexShrink: 0 }}>
             <div
               style={{
@@ -2020,7 +1704,6 @@ export default function YearPage({ content }: { content: YearData }) {
             </div>
           </div>
 
-          {/* 15-year carousel window */}
           <div
             style={{
               flex: 1,
@@ -2030,7 +1713,6 @@ export default function YearPage({ content }: { content: YearData }) {
               overflow: "hidden",
             }}
           >
-            {/* Fade left */}
             <div
               style={{
                 position: "absolute",
@@ -2086,7 +1768,6 @@ export default function YearPage({ content }: { content: YearData }) {
                 );
               })}
             </div>
-            {/* Fade right */}
             <div
               style={{
                 position: "absolute",
@@ -2102,7 +1783,6 @@ export default function YearPage({ content }: { content: YearData }) {
             />
           </div>
 
-          {/* → next */}
           <button
             onClick={() => go(year + 1)}
             disabled={year >= 2000}
@@ -2151,5 +1831,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   );
   if (!fs.existsSync(filePath)) return { notFound: true };
   const content: YearData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-  return { props: { content } };
+  const adImages = getAdImages(parseInt(year));
+  return { props: { content, adImages } };
 };

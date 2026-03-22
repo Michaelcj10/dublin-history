@@ -870,159 +870,145 @@ function EarlyMotorCar() {
 // ── 5: CIÉ single-deck bus (1950s) ───────────────────────────────────────────
 function CIEBus() {
   return (
-    <svg viewBox="0 0 280 160" style={{ width: "100%", display: "block" }}>
-      <Tarmac />
-      {/* body */}
-      <rect
-        x="15"
-        y="72"
-        width="248"
-        height="68"
-        rx="6"
-        fill="#2a5c2a"
-        stroke="#1a3a1a"
-        strokeWidth="2"
-      />
-      {/* cream band */}
-      <rect
-        x="15"
-        y="88"
-        width="248"
-        height="18"
-        fill="#f0e8d0"
-        stroke="none"
-      />
-      {/* route number box */}
-      <rect x="18" y="74" width="36" height="20" rx="3" fill="#1a1208" />
-      <text
-        x="36"
-        y="88"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="12"
-        fill="#f0e8d0"
-        fontWeight="bold"
-      >
-        8
-      </text>
-      {/* destination */}
-      <rect x="58" y="74" width="160" height="18" rx="2" fill="#1a1208" />
-      <text
-        x="138"
-        y="86"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="8"
-        fill="#f0e8d0"
-        letterSpacing="1.5"
-      >
-        NELSON PILLAR via RATHMINES
-      </text>
-      {/* windows */}
-      {[28, 72, 116, 160, 204].map((x, i) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="200"
+      height="200"
+      viewBox="0 0 200 200"
+    >
+      <defs>
+        <linearGradient id="busBody" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#e7e2d8" />
+          <stop offset="1" stop-color="#c9c2b6" />
+        </linearGradient>
+        <linearGradient id="busLower" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2b3238" />
+          <stop offset="1" stop-color="#0f1418" />
+        </linearGradient>
+        <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#6f8799" />
+          <stop offset="1" stop-color="#1b2a35" />
+        </linearGradient>
+      </defs>
+
+      <g transform="translate(6 10)">
+        <ellipse cx="96" cy="170" rx="70" ry="10" fill="#000" opacity=".12" />
+
+        <polygon
+          points="25,70 110,45 110,155 25,165"
+          fill="url(#busBody)"
+          stroke="#1a2a36"
+          stroke-width="2.2"
+        />
         <rect
-          key={i}
-          x={x}
-          y="110"
-          width="36"
-          height="22"
-          rx="3"
-          fill="#c8dce8"
-          stroke="#1a3a1a"
-          strokeWidth="1"
-          opacity="0.85"
+          x="110"
+          y="45"
+          width="65"
+          height="110"
+          rx="10"
+          fill="url(#busBody)"
+          stroke="#1a2a36"
+          stroke-width="2.2"
         />
-      ))}
-      {/* door */}
-      <rect
-        x="232"
-        y="100"
-        width="28"
-        height="40"
-        rx="2"
-        fill="#1e4a1e"
-        stroke="#1a3a1a"
-        strokeWidth="1"
-      />
-      <line
-        x1="246"
-        y1="100"
-        x2="246"
-        y2="140"
-        stroke="#1a3a1a"
-        strokeWidth="1"
-      />
-      <circle cx="237" cy="120" r="2.5" fill="#c8a040" />
-      {/* CIÉ logo area */}
-      <rect x="108" y="92" width="62" height="14" rx="2" fill="#2a5c2a" />
-      <text
-        x="139"
-        y="102"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="9"
-        fill="#f0e8d0"
-        fontWeight="bold"
-        letterSpacing="2"
-      >
-        CIÉ
-      </text>
-      {/* underside */}
-      <rect x="15" y="136" width="248" height="8" rx="2" fill="#1a3a1a" />
-      {/* wheels */}
-      {[55, 210].map((cx, i) => (
-        <g key={i}>
-          <circle
-            cx={cx}
-            cy="146"
-            r="16"
-            fill="#222"
-            stroke="#444"
-            strokeWidth="2"
-          />
-          <circle
-            cx={cx}
-            cy="146"
-            r="9"
-            fill="#333"
-            stroke="#555"
-            strokeWidth="1"
-          />
-          <circle cx={cx} cy="146" r="4" fill="#555" />
-          {[0, 60, 120].map((a, j) => {
-            const r = (a * Math.PI) / 180;
-            return (
-              <line
-                key={j}
-                x1={cx}
-                y1={146}
-                x2={cx + 8 * Math.cos(r)}
-                y2={146 + 8 * Math.sin(r)}
-                stroke="#555"
-                strokeWidth="1.5"
-              />
-            );
-          })}
+
+        <polygon points="25,115 110,100 110,155 25,165" fill="url(#busLower)" />
+        <rect x="110" y="100" width="65" height="55" fill="url(#busLower)" />
+
+        <g fill="url(#glass)" stroke="#1b2a35" stroke-width="1.6">
+          <polygon points="32,78 50,73 50,92 32,96" />
+          <polygon points="54,72 72,66 72,86 54,90" />
+          <polygon points="76,65 94,59 94,80 76,85" />
         </g>
-      ))}
-      {/* exhaust */}
-      <path
-        d="M260,138 Q268,134 272,128"
-        fill="none"
-        stroke="#888"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      {[0, 1, 2].map((i) => (
-        <circle
-          key={i}
-          cx={272 + i * 4}
-          cy={128 - i * 5}
-          r={2 + i}
-          fill="#aaa"
-          opacity={0.4 - i * 0.1}
+
+        <g fill="url(#glass)" stroke="#1b2a35" stroke-width="1.6">
+          <polygon points="32,110 50,108 50,130 32,132" />
+          <polygon points="54,106 72,102 72,126 54,128" />
+          <polygon points="76,101 94,98 94,122 76,124" />
+        </g>
+
+        <g fill="url(#glass)" stroke="#1b2a35" stroke-width="2">
+          <rect x="118" y="52" width="25" height="22" rx="3" />
+          <rect x="145" y="52" width="25" height="22" rx="3" />
+          <rect x="118" y="78" width="52" height="30" rx="3" />
+        </g>
+
+        <rect
+          x="118"
+          y="72"
+          width="52"
+          height="18"
+          rx="3"
+          fill="#204a87"
+          stroke="#1a2a36"
+          stroke-width="1.5"
         />
-      ))}
+        <text x="122" y="79" font-size="5" fill="#ffd84d" font-family="Arial">
+          EVENING
+        </text>
+        <text x="122" y="85" font-size="5" fill="#ffffff" font-family="Arial">
+          HERALD
+        </text>
+        <text x="122" y="90" font-size="4.5" fill="#ffd84d" font-family="Arial">
+          DONNYBROOK
+        </text>
+
+        <rect x="118" y="110" width="52" height="45" fill="#0e1317" />
+
+        <g stroke="#1c2730" stroke-width="1.5">
+          <circle cx="130" cy="120" r="5.5" fill="#f5e6a8" />
+          <circle cx="155" cy="120" r="5.5" fill="#f5e6a8" />
+          <circle cx="130" cy="135" r="4.5" fill="#d9dee3" />
+          <circle cx="155" cy="135" r="4.5" fill="#d9dee3" />
+        </g>
+
+        <rect
+          x="130"
+          y="140"
+          width="25"
+          height="8"
+          rx="2"
+          fill="#000"
+          stroke="#d9dfe3"
+          stroke-width="1"
+        />
+        <text x="134" y="146" font-size="5" fill="#fff" font-family="Arial">
+          ZH
+        </text>
+
+        <g>
+          <circle cx="60" cy="168" r="13" fill="#1a1f24" />
+          <circle cx="135" cy="168" r="13" fill="#1a1f24" />
+          <circle cx="60" cy="168" r="6" fill="#9aa3ab" />
+          <circle cx="135" cy="168" r="6" fill="#9aa3ab" />
+        </g>
+
+        <g fill="none" stroke="#2d3c47" stroke-width="1.8">
+          <path d="M45 150 C50 140, 55 138, 60 138 C65 138, 70 140, 75 150" />
+          <path d="M120 150 C125 140, 130 138, 135 138 C140 138, 145 140, 150 150" />
+        </g>
+
+        <g opacity=".18" stroke="#ffffff" stroke-width="2">
+          <line x1="35" y1="80" x2="45" y2="75" />
+          <line x1="60" y1="72" x2="70" y2="67" />
+          <line x1="80" y1="66" x2="90" y2="61" />
+          <line x1="120" y1="56" x2="140" y2="70" />
+        </g>
+
+        <path
+          d="M25 70 110 45 175 45 175 155 25 165Z"
+          fill="none"
+          stroke="#0f202c"
+          stroke-width="2.3"
+        />
+        <line
+          x1="110"
+          y1="45"
+          x2="110"
+          y2="155"
+          stroke="#31414c"
+          stroke-width="2"
+        />
+      </g>
     </svg>
   );
 }
@@ -1030,157 +1016,285 @@ function CIEBus() {
 // ── 6: CIÉ double-decker (1960s–80s Leyland) ────────────────────────────────
 function DoubleDecker() {
   return (
-    <svg viewBox="0 0 280 160" style={{ width: "100%", display: "block" }}>
-      <Tarmac />
-      {/* lower body */}
-      <rect
-        x="12"
-        y="90"
-        width="252"
-        height="52"
-        rx="4"
-        fill="#cc2200"
-        stroke="#881100"
-        strokeWidth="2"
-      />
-      {/* upper body */}
-      <rect
-        x="16"
-        y="42"
-        width="244"
-        height="52"
-        rx="4"
-        fill="#cc2200"
-        stroke="#881100"
-        strokeWidth="1.5"
-      />
-      {/* cream band lower */}
-      <rect x="12" y="106" width="252" height="12" fill="#f0e8d0" />
-      {/* upper windows */}
-      {[26, 68, 110, 152, 194, 228].map((x, i) => (
-        <rect
-          key={i}
-          x={x}
-          y="50"
-          width="32"
-          height="28"
-          rx="2"
-          fill="#c8dce8"
-          stroke="#881100"
-          strokeWidth="1"
-          opacity="0.9"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="200"
+      height="200"
+      viewBox="0 0 200 200"
+    >
+      <defs>
+        <linearGradient id="body" x1="0" y1="0" x2="0.9" y2="1">
+          <stop offset="0" stop-color="#7da846" />
+          <stop offset="1" stop-color="#587f2f" />
+        </linearGradient>
+        <linearGradient id="front" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#86b34c" />
+          <stop offset="1" stop-color="#648f36" />
+        </linearGradient>
+        <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3a5870" />
+          <stop offset="1" stop-color="#182734" />
+        </linearGradient>
+        <linearGradient id="glass2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#5d7c93" />
+          <stop offset="1" stop-color="#1b2a38" />
+        </linearGradient>
+        <linearGradient id="shadow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#24323d" />
+          <stop offset="1" stop-color="#0e151b" />
+        </linearGradient>
+      </defs>
+
+      <g transform="translate(4 8)">
+        <ellipse cx="106" cy="171" rx="68" ry="9" fill="#000" opacity=".14" />
+
+        <polygon
+          points="26,58 104,36 104,150 26,164"
+          fill="url(#body)"
+          stroke="#142432"
+          stroke-width="2"
         />
-      ))}
-      {/* lower windows */}
-      {[26, 68, 110, 152, 194].map((x, i) => (
-        <rect
-          key={i}
-          x={x}
-          y="94"
-          width="32"
-          height="22"
-          rx="2"
-          fill="#c8dce8"
-          stroke="#881100"
-          strokeWidth="1"
-          opacity="0.9"
+
+        <path
+          d="M104 36h61c8 0 14 6 14 14v92c0 8-6 14-14 14h-61z"
+          fill="url(#front)"
+          stroke="#142432"
+          stroke-width="2"
         />
-      ))}
-      {/* destination upper */}
-      <rect x="18" y="44" width="200" height="14" rx="2" fill="#1a1208" />
-      <text
-        x="118"
-        y="54"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="8"
-        fill="#f0e8d0"
-        letterSpacing="1"
-      >
-        AN LÁR · CITY CENTRE
-      </text>
-      {/* route box */}
-      <rect x="222" y="44" width="32" height="22" rx="2" fill="#f0e8d0" />
-      <text
-        x="238"
-        y="58"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="13"
-        fill="#cc2200"
-        fontWeight="bold"
-      >
-        16
-      </text>
-      {/* door */}
-      <rect
-        x="232"
-        y="94"
-        width="30"
-        height="48"
-        rx="2"
-        fill="#aa1a00"
-        stroke="#881100"
-        strokeWidth="1"
-      />
-      <line
-        x1="247"
-        y1="94"
-        x2="247"
-        y2="142"
-        stroke="#881100"
-        strokeWidth="1"
-      />
-      {/* undercarriage */}
-      <rect x="12" y="138" width="252" height="8" rx="2" fill="#881100" />
-      {/* wheels */}
-      {[50, 205].map((cx, i) => (
-        <g key={i}>
-          <circle
-            cx={cx}
-            cy="147"
-            r="17"
-            fill="#1a1a1a"
-            stroke="#333"
-            strokeWidth="2.5"
-          />
-          <circle
-            cx={cx}
-            cy="147"
-            r="9"
-            fill="#2a2a2a"
-            stroke="#444"
-            strokeWidth="1"
-          />
-          <circle cx={cx} cy="147" r="4" fill="#444" />
-          {[0, 45, 90, 135].map((a, j) => {
-            const r = (a * Math.PI) / 180;
-            return (
-              <line
-                key={j}
-                x1={cx}
-                y1={147}
-                x2={cx + 8 * Math.cos(r)}
-                y2={147 + 8 * Math.sin(r)}
-                stroke="#444"
-                strokeWidth="1.5"
-              />
-            );
-          })}
+
+        <path
+          d="M108 31h54c7 0 12 3 16 9l-6 4c-2-3-5-4-10-4h-54z"
+          fill="#8db95b"
+          opacity=".9"
+        />
+
+        <g fill="url(#glass)" stroke="#10202d" stroke-width="1.8">
+          <polygon points="34,66 52,61 52,85 34,89" rx="2" />
+          <polygon points="56,60 75,55 75,81 56,85" />
+          <polygon points="80,53 98,48 98,76 80,80" />
         </g>
-      ))}
-      {/* passengers upper deck silhouettes */}
-      {[38, 80, 122, 164].map((x, i) => (
-        <ellipse
-          key={i}
-          cx={x + 6}
-          cy="56"
-          rx="5"
-          ry="5"
-          fill="#881100"
-          opacity="0.5"
+
+        <g fill="url(#glass2)" stroke="#10202d" stroke-width="1.8">
+          <polygon points="34,101 52,98 52,123 34,126" />
+          <polygon points="56,97 75,93 75,120 56,123" />
+          <polygon points="80,91 98,87 98,116 80,119" />
+        </g>
+
+        <g opacity=".22" stroke="#dceaf5" stroke-width="2">
+          <line x1="38" y1="68" x2="48" y2="62" />
+          <line x1="60" y1="63" x2="71" y2="57" />
+          <line x1="84" y1="56" x2="95" y2="49" />
+          <line x1="38" y1="103" x2="49" y2="99" />
+          <line x1="60" y1="99" x2="72" y2="94" />
+          <line x1="84" y1="93" x2="96" y2="88" />
+        </g>
+
+        <polygon
+          points="57,84 87,77 87,129 57,134"
+          fill="#7a4b3f"
+          opacity=".65"
+          stroke="#9fb35d"
+          stroke-width="1"
         />
-      ))}
+        <line
+          x1="28"
+          y1="129"
+          x2="104"
+          y2="119"
+          stroke="#f06f3b"
+          stroke-width="2"
+        />
+
+        <rect
+          x="114"
+          y="63"
+          width="58"
+          height="22"
+          rx="4"
+          fill="#11181e"
+          stroke="#2a3740"
+          stroke-width="1.5"
+        />
+        <text
+          x="120"
+          y="73"
+          font-size="5.4"
+          fill="#eef6ff"
+          font-family="Arial, Helvetica, sans-serif"
+        >
+          Spiddal Park
+        </text>
+        <text
+          x="150"
+          y="81"
+          font-size="13"
+          fill="#eef6ff"
+          font-weight="700"
+          font-family="Arial, Helvetica, sans-serif"
+        >
+          79
+        </text>
+
+        <g fill="url(#glass)" stroke="#10202d" stroke-width="2">
+          <rect x="112" y="39" width="31" height="22" rx="3" />
+          <rect x="143" y="39" width="33" height="22" rx="3" />
+        </g>
+        <g opacity=".22" stroke="#dceaf5" stroke-width="2">
+          <line x1="116" y1="42" x2="139" y2="58" />
+          <line x1="147" y1="41" x2="171" y2="57" />
+        </g>
+
+        <rect
+          x="112"
+          y="88"
+          width="64"
+          height="28"
+          rx="3"
+          fill="url(#glass2)"
+          stroke="#10202d"
+          stroke-width="2"
+        />
+        <g opacity=".2" stroke="#dceaf5" stroke-width="2">
+          <line x1="116" y1="91" x2="172" y2="110" />
+          <line x1="122" y1="90" x2="122" y2="114" />
+          <line x1="149" y1="90" x2="149" y2="114" />
+        </g>
+
+        <g stroke="#1c242b" stroke-width="2.2" stroke-linecap="round">
+          <line x1="126" y1="114" x2="136" y2="101" />
+          <line x1="159" y1="114" x2="149" y2="101" />
+        </g>
+        <g
+          stroke="#1c242b"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M103 83c-5 2-8 5-10 10" />
+          <path d="M93 93v15" />
+          <rect x="88" y="93" width="6" height="14" rx="2" fill="#1f2d39" />
+          <path d="M179 86c4 2 7 5 9 9" />
+          <path d="M188 95v16" />
+          <rect x="187" y="96" width="6" height="14" rx="2" fill="#1f2d39" />
+        </g>
+
+        <line
+          x1="105"
+          y1="128"
+          x2="177"
+          y2="128"
+          stroke="#f06f3b"
+          stroke-width="2"
+        />
+        <rect
+          x="117"
+          y="107"
+          width="8"
+          height="8"
+          rx="1.5"
+          fill="#f19627"
+          stroke="#553100"
+          stroke-width="1"
+        />
+        <rect
+          x="167"
+          y="107"
+          width="8"
+          height="8"
+          rx="1.5"
+          fill="#f19627"
+          stroke="#553100"
+          stroke-width="1"
+        />
+        <g stroke="#f06f3b" stroke-width="1.4" fill="none" opacity=".95">
+          <path d="M125 129c2-3 5-5 8-5 3 0 6 2 7 5m-14 0h14m-10 0v5m6-5v5" />
+          <path d="M149 129c2-3 5-5 8-5 3 0 6 2 7 5m-14 0h14m-10 0v5m6-5v5" />
+        </g>
+        <rect x="136" y="127" width="12" height="8" rx="2" fill="#172026" />
+        <rect
+          x="132"
+          y="139"
+          width="28"
+          height="11"
+          rx="2"
+          fill="#10161b"
+          stroke="#d7dbe0"
+          stroke-width="1"
+        />
+        <text
+          x="136"
+          y="147"
+          font-size="7"
+          fill="#f2f4f6"
+          font-family="Arial, Helvetica, sans-serif"
+        >
+          839
+        </text>
+
+        <g stroke="#23313b" stroke-width="1.5">
+          <circle cx="119" cy="131" r="6.6" fill="#ffd973" />
+          <circle cx="119" cy="146" r="5.4" fill="#dfe7ee" />
+          <circle cx="165" cy="131" r="6.6" fill="#dfe7ee" />
+          <circle cx="170" cy="146" r="5.8" fill="#ffd973" />
+          <circle cx="165" cy="146" r="5.4" fill="#dfe7ee" />
+        </g>
+
+        <path d="M105 150h74v9c0 3-2 5-5 5h-64c-3 0-5-2-5-5z" fill="#10161b" />
+
+        <g stroke="#85a35b" stroke-width="1" opacity=".65">
+          <line x1="52" y1="60" x2="52" y2="124" />
+          <line x1="75" y1="54" x2="75" y2="120" />
+          <line x1="98" y1="48" x2="98" y2="117" />
+          <line x1="26" y1="92" x2="104" y2="82" />
+          <line x1="26" y1="138" x2="104" y2="128" />
+        </g>
+
+        <polygon points="26,150 104,139 104,150 26,164" fill="#405527" />
+
+        <g>
+          <ellipse cx="58" cy="166" rx="12" ry="12.5" fill="#1a1f24" />
+          <ellipse cx="142" cy="166" rx="13" ry="13.5" fill="#1a1f24" />
+          <ellipse cx="58" cy="166" rx="5.2" ry="5.2" fill="#5d646b" />
+          <ellipse cx="142" cy="166" rx="5.2" ry="5.2" fill="#5d646b" />
+        </g>
+
+        <path
+          d="M44 154c3-6 8-9 14-9 6 0 11 3 14 9"
+          fill="none"
+          stroke="#33481f"
+          stroke-width="2"
+        />
+        <path
+          d="M127 153c3-6 9-10 15-10 7 0 13 4 16 10"
+          fill="none"
+          stroke="#33481f"
+          stroke-width="2"
+        />
+
+        <path
+          d="M26 58 104 36h61c8 0 14 6 14 14v92c0 8-6 14-14 14L26 164Z"
+          fill="none"
+          stroke="#0f1e2b"
+          stroke-width="2.2"
+          stroke-linejoin="round"
+        />
+
+        <line
+          x1="104"
+          y1="36"
+          x2="104"
+          y2="150"
+          stroke="#31481f"
+          stroke-width="2"
+        />
+
+        <g fill="#fff" opacity=".22">
+          <rect x="114" y="66" width="22" height="1.5" />
+          <rect x="114" y="91" width="26" height="1.5" />
+          <rect x="35" y="104" width="8" height="1.5" />
+        </g>
+      </g>
     </svg>
   );
 }
@@ -1188,185 +1302,288 @@ function DoubleDecker() {
 // ── 7: DART train (1984+) ─────────────────────────────────────────────────────
 function DARTTrain() {
   return (
-    <svg viewBox="0 0 280 160" style={{ width: "100%", display: "block" }}>
-      {/* platform */}
-      <rect x="0" y="128" width="280" height="32" fill="#c8bca8" />
-      <rect x="0" y="124" width="280" height="6" fill="#a09888" />
-      {/* rails */}
-      <line x1="0" y1="132" x2="280" y2="132" stroke="#666" strokeWidth="2.5" />
-      <line x1="0" y1="140" x2="280" y2="140" stroke="#666" strokeWidth="2.5" />
-      {Array.from({ length: 10 }, (_, i) => (
-        <rect
-          key={i}
-          x={i * 28 + 4}
-          y="130"
-          width="10"
-          height="12"
-          fill="#8a7a60"
-          rx="1"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="200"
+      height="200"
+      viewBox="0 0 200 200"
+    >
+      <defs>
+        <linearGradient id="dartBody" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#7cab2e" />
+          <stop offset="1" stop-color="#4e8e22" />
+        </linearGradient>
+        <linearGradient id="dartFront" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#8ab641" />
+          <stop offset="1" stop-color="#5f9827" />
+        </linearGradient>
+        <linearGradient id="dartGlass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4f6f86" />
+          <stop offset="1" stop-color="#182635" />
+        </linearGradient>
+        <linearGradient id="dartGlass2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6888a1" />
+          <stop offset="1" stop-color="#203140" />
+        </linearGradient>
+      </defs>
+
+      <g transform="translate(6 18)">
+        <ellipse cx="96" cy="152" rx="82" ry="10" fill="#000" opacity=".12" />
+
+        <g opacity=".95">
+          <path d="M10 150 L164 150 L182 156 L30 156 Z" fill="#0d1f31" />
+          <path d="M18 145 L171 145 L188 150 L35 150 Z" fill="#c08a47" />
+          <path d="M0 156 L25 156 L42 163 L17 163 Z" fill="#0d1f31" />
+          <path d="M26 156 L180 156 L194 163 L39 163 Z" fill="#c08a47" />
+          <g stroke="#d7d1c8" stroke-width="3" opacity=".8">
+            <line x1="16" y1="150" x2="32" y2="157" />
+            <line x1="36" y1="150" x2="52" y2="157" />
+            <line x1="56" y1="150" x2="72" y2="157" />
+            <line x1="76" y1="150" x2="92" y2="157" />
+            <line x1="96" y1="150" x2="112" y2="157" />
+            <line x1="116" y1="150" x2="132" y2="157" />
+            <line x1="136" y1="150" x2="152" y2="157" />
+            <line x1="156" y1="150" x2="172" y2="157" />
+          </g>
+        </g>
+
+        <polygon
+          points="16,88 103,53 103,133 16,133"
+          fill="url(#dartBody)"
+          stroke="#102437"
+          stroke-width="2.2"
+          stroke-linejoin="round"
         />
-      ))}
-      {/* DART body — two carriages */}
-      {/* Carriage 1 */}
-      <rect
-        x="8"
-        y="64"
-        width="124"
-        height="62"
-        rx="5"
-        fill="#006a4e"
-        stroke="#004a34"
-        strokeWidth="2"
-      />
-      <rect x="8" y="64" width="124" height="16" rx="5" fill="#f0e8d0" />
-      <rect x="8" y="74" width="124" height="6" fill="#f0e8d0" />
-      {/* windows car 1 */}
-      {[18, 52, 86, 116].map((x, i) => (
-        <rect
-          key={i}
-          x={x}
-          y="84"
-          width="26"
-          height="28"
-          rx="2"
-          fill="#c8dce8"
-          stroke="#004a34"
-          strokeWidth="1"
-          opacity="0.9"
+        <polygon
+          points="16,88 103,53 151,56 68,93"
+          fill="#5d9329"
+          stroke="#102437"
+          stroke-width="2.2"
+          stroke-linejoin="round"
         />
-      ))}
-      {/* DART logo car 1 */}
-      <text
-        x="70"
-        y="76"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="9"
-        fill="#006a4e"
-        fontWeight="bold"
-        letterSpacing="2"
-      >
-        DART
-      </text>
-      {/* door car 1 */}
-      <rect x="126" y="80" width="8" height="46" fill="#004a34" />
-      {/* Carriage 2 */}
-      <rect
-        x="140"
-        y="64"
-        width="130"
-        height="62"
-        rx="5"
-        fill="#006a4e"
-        stroke="#004a34"
-        strokeWidth="2"
-      />
-      <rect x="140" y="64" width="130" height="16" rx="5" fill="#f0e8d0" />
-      <rect x="140" y="74" width="130" height="6" fill="#f0e8d0" />
-      {[150, 184, 218, 248].map((x, i) => (
-        <rect
-          key={i}
-          x={x}
-          y="84"
-          width="26"
-          height="28"
-          rx="2"
-          fill="#c8dce8"
-          stroke="#004a34"
-          strokeWidth="1"
-          opacity="0.9"
+
+        <path
+          d="M103 53 L151 56 C163 57 172 64 172 75 L172 126 C172 135 166 142 157 142 L103 133 Z"
+          fill="url(#dartFront)"
+          stroke="#102437"
+          stroke-width="2.2"
+          stroke-linejoin="round"
         />
-      ))}
-      <text
-        x="202"
-        y="76"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="9"
-        fill="#006a4e"
-        fontWeight="bold"
-        letterSpacing="2"
-      >
-        DART
-      </text>
-      {/* destination board */}
-      <rect x="148" y="66" width="90" height="12" rx="2" fill="#1a1208" />
-      <text
-        x="193"
-        y="75"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="7"
-        fill="#f0e8d0"
-        letterSpacing="1"
-      >
-        BRAY · HOWTH
-      </text>
-      {/* bogies */}
-      {[35, 100, 168, 232].map((cx, i) => (
-        <g key={i}>
-          <rect x={cx - 18} y="124" width="36" height="8" rx="2" fill="#333" />
-          <circle
-            cx={cx - 10}
-            cy="132"
-            r="6"
-            fill="#222"
-            stroke="#444"
-            strokeWidth="1.5"
+
+        <path d="M26 99 L92 74 L92 88 L26 112 Z" fill="#e6db3b" />
+        <path d="M103 88 L172 88 L172 106 L103 106 Z" fill="#e6db3b" />
+
+        <g fill="url(#dartGlass)" stroke="#102437" stroke-width="1.8">
+          <polygon points="24,92 37,87 37,105 24,109" />
+          <polygon points="41,85 57,79 57,99 41,104" />
+          <polygon points="61,77 79,70 79,91 61,97" />
+          <polygon points="83,68 97,62 97,84 83,89" />
+        </g>
+
+        <g opacity=".22" stroke="#e7f3ff" stroke-width="1.8">
+          <line x1="27" y1="94" x2="35" y2="89" />
+          <line x1="44" y1="87" x2="54" y2="81" />
+          <line x1="65" y1="79" x2="76" y2="73" />
+          <line x1="86" y1="71" x2="95" y2="66" />
+        </g>
+
+        <g>
+          <polygon
+            points="60,97 76,91 76,128 60,128"
+            fill="#3f7c25"
+            stroke="#102437"
+            stroke-width="1.6"
           />
-          <circle
-            cx={cx + 10}
-            cy="132"
-            r="6"
-            fill="#222"
-            stroke="#444"
-            strokeWidth="1.5"
+          <line
+            x1="68"
+            y1="94"
+            x2="68"
+            y2="128"
+            stroke="#8dae60"
+            stroke-width="1.2"
           />
         </g>
-      ))}
-      {/* pantograph */}
-      <line x1="70" y1="64" x2="70" y2="42" stroke="#555" strokeWidth="1.5" />
-      <line x1="55" y1="42" x2="85" y2="42" stroke="#444" strokeWidth="2" />
-      <line
-        x1="0"
-        y1="38"
-        x2="280"
-        y2="38"
-        stroke="#666"
-        strokeWidth="1"
-        strokeDasharray="4,3"
-      />
-      {/* platform sign */}
-      <rect
-        x="240"
-        y="90"
-        width="36"
-        height="24"
-        rx="3"
-        fill="#006a4e"
-        stroke="#004a34"
-        strokeWidth="1"
-      />
-      <text
-        x="258"
-        y="100"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="6"
-        fill="#f0e8d0"
-      >
-        DART
-      </text>
-      <text
-        x="258"
-        y="109"
-        textAnchor="middle"
-        fontFamily="Georgia,serif"
-        fontSize="5"
-        fill="#f0e8d0"
-      >
-        Platform
-      </text>
+
+        <g stroke="#7ca451" stroke-width="1" opacity=".7">
+          <line x1="16" y1="117" x2="103" y2="117" />
+          <line x1="37" y1="87" x2="37" y2="132" />
+          <line x1="57" y1="79" x2="57" y2="132" />
+          <line x1="79" y1="70" x2="79" y2="132" />
+          <line x1="97" y1="62" x2="97" y2="133" />
+        </g>
+
+        <g
+          stroke="#122334"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          fill="none"
+        >
+          <line x1="96" y1="50" x2="112" y2="30" />
+          <line x1="112" y1="30" x2="130" y2="34" />
+          <line x1="108" y1="42" x2="128" y2="33" />
+          <line x1="128" y1="33" x2="142" y2="36" />
+          <line x1="140" y1="36" x2="162" y2="30" />
+        </g>
+        <line
+          x1="136"
+          y1="30"
+          x2="188"
+          y2="30"
+          stroke="#31414f"
+          stroke-width="1.6"
+          opacity=".7"
+        />
+
+        <rect
+          x="121"
+          y="60"
+          width="39"
+          height="16"
+          rx="3"
+          fill="#eef5fb"
+          stroke="#102437"
+          stroke-width="1.6"
+        />
+        <text
+          x="127"
+          y="67"
+          font-size="4.6"
+          fill="#1b2630"
+          font-family="Arial, Helvetica, sans-serif"
+        >
+          Howth
+        </text>
+        <text
+          x="126"
+          y="73"
+          font-size="4.6"
+          fill="#1b2630"
+          font-family="Arial, Helvetica, sans-serif"
+        >
+          Binn Éadair
+        </text>
+
+        <g fill="url(#dartGlass2)" stroke="#102437" stroke-width="2">
+          <rect x="113" y="79" width="20" height="30" rx="3" />
+          <rect x="134" y="79" width="17" height="30" rx="3" />
+          <rect x="152" y="79" width="14" height="30" rx="3" />
+        </g>
+
+        <g opacity=".2" stroke="#e6f2ff" stroke-width="2">
+          <line x1="116" y1="82" x2="129" y2="104" />
+          <line x1="138" y1="82" x2="148" y2="103" />
+          <line x1="154" y1="83" x2="163" y2="103" />
+        </g>
+
+        <g stroke="#1d2b36" stroke-width="2" stroke-linecap="round">
+          <line x1="122" y1="109" x2="121" y2="83" />
+          <line x1="148" y1="109" x2="147" y2="83" />
+          <line x1="160" y1="108" x2="162" y2="87" />
+        </g>
+
+        <g transform="translate(131 120)">
+          <text
+            x="0"
+            y="0"
+            font-size="6.5"
+            fill="#112130"
+            font-style="italic"
+            font-weight="700"
+            font-family="Arial, Helvetica, sans-serif"
+          >
+            DART
+          </text>
+          <line
+            x1="2"
+            y1="4"
+            x2="22"
+            y2="4"
+            stroke="#f49a1d"
+            stroke-width="1.8"
+          />
+          <line
+            x1="3"
+            y1="7"
+            x2="20"
+            y2="7"
+            stroke="#1f6d38"
+            stroke-width="1.8"
+          />
+        </g>
+
+        <text
+          x="148"
+          y="97"
+          font-size="5.5"
+          fill="#112130"
+          font-family="Arial, Helvetica, sans-serif"
+        >
+          8123
+        </text>
+
+        <g stroke="#25333d" stroke-width="1.5">
+          <rect x="114" y="116" width="9" height="10" rx="1.5" fill="#fff3bf" />
+          <rect x="160" y="116" width="9" height="10" rx="1.5" fill="#fff3bf" />
+        </g>
+
+        <rect x="103" y="132" width="69" height="8" fill="#e14520" />
+        <g stroke="#992313" stroke-width="1.2" opacity=".55">
+          <line x1="108" y1="136" x2="166" y2="136" />
+          <line x1="108" y1="139" x2="162" y2="139" />
+        </g>
+
+        <g fill="#111920" stroke="#293741" stroke-width="1.2">
+          <rect x="112" y="140" width="46" height="8" rx="1.5" />
+          <rect x="97" y="139" width="7" height="10" rx="1" />
+          <circle cx="160" cy="145" r="3.8" fill="#2d3944" />
+        </g>
+
+        <g>
+          <g transform="translate(55 136)">
+            <rect x="-18" y="-1" width="34" height="8" rx="2" fill="#2a3742" />
+            <circle cx="-10" cy="10" r="9" fill="#1a2127" />
+            <circle cx="10" cy="10" r="9" fill="#1a2127" />
+            <circle cx="-10" cy="10" r="3.8" fill="#5c656d" />
+            <circle cx="10" cy="10" r="3.8" fill="#5c656d" />
+          </g>
+          <g transform="translate(115 138)">
+            <rect x="-19" y="-2" width="38" height="8" rx="2" fill="#2a3742" />
+            <circle cx="-10" cy="10" r="9.5" fill="#1a2127" />
+            <circle cx="11" cy="10" r="9.5" fill="#1a2127" />
+            <circle cx="-10" cy="10" r="4" fill="#5c656d" />
+            <circle cx="11" cy="10" r="4" fill="#5c656d" />
+          </g>
+        </g>
+
+        <g fill="#5d6771" opacity=".7">
+          <rect x="27" y="130" width="12" height="5" rx="1" />
+          <rect x="44" y="130" width="10" height="5" rx="1" />
+          <rect x="80" y="130" width="13" height="5" rx="1" />
+        </g>
+
+        <g fill="#fff" opacity=".16">
+          <path d="M26 92 L90 67 L90 71 L26 96 Z" />
+          <path d="M107 57 L147 59 C154 60 160 63 164 68 L164 70 C158 66 153 64 146 63 L107 61 Z" />
+        </g>
+
+        <path
+          d="M16 88 L103 53 L151 56 C163 57 172 64 172 75 L172 126 C172 135 166 142 157 142 L103 133 L16 133 Z"
+          fill="none"
+          stroke="#0b2238"
+          stroke-width="2.3"
+          stroke-linejoin="round"
+        />
+
+        <line
+          x1="103"
+          y1="53"
+          x2="103"
+          y2="133"
+          stroke="#395123"
+          stroke-width="2"
+        />
+      </g>
     </svg>
   );
 }
