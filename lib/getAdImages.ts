@@ -10,7 +10,8 @@ function yearToDecade(year: number): string {
   if (year < 1970) return "1960s";
   if (year < 1980) return "1970s";
   if (year < 1990) return "1980s";
-  return "1990s";
+  if (year < 2000) return "1990s";
+  return "2000s";
 }
 
 export function getAdImages(year: number): string[] {
